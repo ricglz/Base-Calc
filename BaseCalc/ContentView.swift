@@ -26,16 +26,24 @@ struct ContentView: View {
 struct Header: View {
     var body: some View {
         HStack {
-            Text("BASE 10")
-                .padding(.horizontal, 15)
-                .padding(.vertical, 5)
-                .background(Color.orange)
+            HeaderBaseLabel()
             Spacer()
             Button(action: {}) {
                 Image(systemName: "info.circle")
             }
             .accentColor(.orange)
         }.padding()
+    }
+}
+
+struct HeaderBaseLabel: View {
+    @EnvironmentObject var calculatorState: CalculatorState
+
+    var body: some View {
+        Text("BASE \(calculatorState.currentBase.rawValue)")
+            .padding(.horizontal, 15)
+            .padding(.vertical, 5)
+            .background(Color.orange)
     }
 }
 
@@ -96,35 +104,49 @@ struct Keypad: View {
 struct KeypadButton: View {
     let label: String
     let width, height: CGFloat
+    let operationBtns = ["AC", "±", "+", "-", "ß", "=", ".", "X"]
+    let digits = [
+        "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B",
+        "C", "D", "E", "F"
+    ]
+    @EnvironmentObject var calculatorState: CalculatorState
 
     var body: some View {
-        Button(action: {}) {
+        let enabled = value() < calculatorState.currentBase.rawValue
+        return Button(action: {}) {
             Text(label)
                 .font(.title)
                 .foregroundColor(.white)
                 .frame(width: width,height: height)
-                .background(btnColor())
+                .background(btnColor(enabled))
+                .disabled(!enabled)
         }
     }
 
-    func btnColor() -> Color {
+    func btnColor(_ enabled: Bool) -> Color {
         switch label {
         case "AC", "±", "+", "-", "ß", "X":
             return Color.orange
         default:
-            return Color.enabledHexColor
+            return enabled ? Color.enabledDigit : Color.disabledDigit
         }
+    }
+
+    func value() -> Int {
+        operationBtns.contains(label) ? 0 : digits.firstIndex(of: label)!
     }
 }
 
 extension Color {
-    static let enabledHexColor = Color(hue: 359, saturation: 0, brightness: 0.67)
+    static let enabledDigit = Color(hue: 359, saturation: 0, brightness: 0.67)
+    static let disabledDigit = Color(hue: 359, saturation: 0, brightness: 0.27)
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         // ContentView().previewDevice(PreviewDevice(rawValue: "iPhone 11 Pro Max"))
         // ContentView().previewDevice(PreviewDevice(rawValue: "iPhone 8"))
-        ContentView().previewDevice(PreviewDevice(rawValue: "iPhone SE"))
+        ContentView().environmentObject(CalculatorState())
+            .previewDevice(PreviewDevice(rawValue: "iPhone SE"))
     }
 }
