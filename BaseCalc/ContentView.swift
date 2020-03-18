@@ -17,7 +17,7 @@ struct ContentView: View {
                 Header()
                 Spacer()
                 NumberLabel()
-                KeypadWrapper()
+                Keypad()
             }
         }
     }
@@ -40,10 +40,20 @@ struct HeaderBaseLabel: View {
     @EnvironmentObject var calculatorState: CalculatorState
 
     var body: some View {
-        Text("BASE \(calculatorState.currentBase.rawValue)")
-            .padding(.horizontal, 15)
-            .padding(.vertical, 5)
-            .background(Color.orange)
+        Button(action: {
+            let curBase = self.calculatorState.currentBase.rawValue
+            if curBase == 16 {
+                self.calculatorState.currentBase = Base.Base2
+            } else {
+                self.calculatorState.currentBase = Base(rawValue: curBase + 1)!
+            }
+        }) {
+            Text("BASE \(calculatorState.currentBase.rawValue)")
+                .padding(.horizontal, 15)
+                .padding(.vertical, 5)
+                .background(Color.orange)
+        }
+        .accentColor(.black)
     }
 }
 
@@ -58,23 +68,9 @@ struct NumberLabel: View {
     }
 }
 
-struct KeypadWrapper: View {
-    let btnPadding: CGFloat = 6
-
-    var body: some View {
-        GeometryReader { geometry in
-            Keypad(
-                btnsWidth: (geometry.size.width - 5 * self.btnPadding) / 4,
-                btnsHeight: (geometry.size.height - 7 * self.btnPadding) / 6)
-        }
-    }
-}
-
 struct Keypad: View {
-
     let btnPadding: CGFloat = 6
-
-    let btnsWidth, btnsHeight: CGFloat
+    
     let buttons = [
         ["D", "E", "F", "AC"],
         ["A", "B", "C", "±"],
@@ -85,15 +81,17 @@ struct Keypad: View {
     ]
 
     var body: some View {
-        VStack(spacing: btnPadding) {
-            ForEach(buttons, id: \.self) { row in
-                HStack(spacing: self.btnPadding) {
-                    ForEach(row, id: \.self) { label in
-                        KeypadButton (
-                            label: label,
-                            width: self.btnsWidth,
-                            height: self.btnsHeight
-                        )
+        GeometryReader { geometry in
+            VStack(spacing: self.btnPadding) {
+                ForEach(self.buttons, id: \.self) { row in
+                    HStack(spacing: self.btnPadding) {
+                        ForEach(row, id: \.self) { label in
+                            KeypadButton (
+                                label: label,
+                                width: (geometry.size.width - 5 * self.btnPadding) / 4,
+                                height: (geometry.size.height - 7 * self.btnPadding) / 6
+                            )
+                        }
                     }
                 }
             }
@@ -116,11 +114,11 @@ struct KeypadButton: View {
         return Button(action: {}) {
             Text(label)
                 .font(.title)
-                .foregroundColor(.white)
+                .foregroundColor(enabled ? .white : .gray)
                 .frame(width: width,height: height)
                 .background(btnColor(enabled))
-                .disabled(!enabled)
         }
+        .disabled(!enabled)
     }
 
     func btnColor(_ enabled: Bool) -> Color {
@@ -144,8 +142,10 @@ extension Color {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        // ContentView().previewDevice(PreviewDevice(rawValue: "iPhone 11 Pro Max"))
-        // ContentView().previewDevice(PreviewDevice(rawValue: "iPhone 8"))
+//         ContentView().environmentObject(CalculatorState())
+//            .previewDevice(PreviewDevice(rawValue: "iPhone 11 Pro Max"))
+//        ContentView().environmentObject(CalculatorState()).
+//            previewDevice(PreviewDevice(rawValue: "iPhone 8"))
         ContentView().environmentObject(CalculatorState())
             .previewDevice(PreviewDevice(rawValue: "iPhone SE"))
     }
