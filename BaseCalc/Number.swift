@@ -22,15 +22,19 @@ class Number: NSObject {
 
     init(number: String, base: Base){
         self.base = base
-        let digits = Array(number)
+        var num = number
+
+        if num.last == "." {
+            num = String(num.dropLast())
+        }
+
+        var digits = Array(num)
         let sign = digits[0] == "-" ? -1.0 : 1.0
 
-        let dotPos = digits.lastIndex(of: ".")
-
         // Check if hasFract
-        if dotPos != nil && digits.last != "." {
-            let wholeStr = String(digits[0..<dotPos!])
-            let fractStr = String(digits[(dotPos!+1)...])
+        if let dotPos = digits.lastIndex(of: ".") {
+            let wholeStr = String(digits[0..<dotPos])
+            let fractStr = String(digits[(dotPos+1)...])
 
             // Calculate Fract Denominator
             let fractNum = Int(fractStr, radix: base.rawValue)!
@@ -44,7 +48,7 @@ class Number: NSObject {
             self.hasFract = true
 
         } else {
-            self.value = Double(Int(number, radix: base.rawValue)!)
+            self.value = Double(Int(num, radix: base.rawValue)!)
             self.hasFract = false
         }
     }
@@ -75,8 +79,8 @@ class Number: NSObject {
         let wholeStr = String(wholeNum, radix: base.rawValue, uppercase: true)
 
         let fractNum = abs(value) - abs(Double(wholeNum))
-        let fractStr = hasFract ? fractToString(fractNum, base) : ""
+        let fractStr = hasFract ? "." + fractToString(fractNum, base) : ""
 
-        return wholeStr + "." + fractStr
+        return wholeStr + fractStr
     }
 }
