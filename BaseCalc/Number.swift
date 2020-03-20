@@ -28,7 +28,7 @@ class Number: NSObject {
             num = String(num.dropLast())
         }
 
-        var digits = Array(num)
+        let digits = Array(num)
         let sign = digits[0] == "-" ? -1.0 : 1.0
 
         // Check if hasFract
