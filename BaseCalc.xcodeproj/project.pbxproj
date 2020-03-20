@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		992275B224244E470019004F /* BaseCalcTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992275B124244E470019004F /* BaseCalcTests.swift */; };
 		992C4B41241F039400F496FC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C4B40241F039400F496FC /* AppDelegate.swift */; };
 		992C4B43241F039400F496FC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C4B42241F039400F496FC /* SceneDelegate.swift */; };
 		992C4B45241F039400F496FC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C4B44241F039400F496FC /* ContentView.swift */; };
@@ -16,7 +17,20 @@
 		998DE0CD2421871D00A18EE3 /* CalculatorState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998DE0CC2421871D00A18EE3 /* CalculatorState.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		992275B424244E470019004F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 992C4B35241F039400F496FC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 992C4B3C241F039400F496FC;
+			remoteInfo = BaseCalc;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		992275AF24244E470019004F /* BaseCalcTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BaseCalcTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		992275B124244E470019004F /* BaseCalcTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCalcTests.swift; sourceTree = "<group>"; };
+		992275B324244E470019004F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		992C4B3D241F039400F496FC /* BaseCalc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BaseCalc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		992C4B40241F039400F496FC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		992C4B42241F039400F496FC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -29,6 +43,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		992275AC24244E470019004F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		992C4B3A241F039400F496FC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -39,10 +60,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		992275B024244E470019004F /* BaseCalcTests */ = {
+			isa = PBXGroup;
+			children = (
+				992275B124244E470019004F /* BaseCalcTests.swift */,
+				992275B324244E470019004F /* Info.plist */,
+			);
+			path = BaseCalcTests;
+			sourceTree = "<group>";
+		};
 		992C4B34241F039400F496FC = {
 			isa = PBXGroup;
 			children = (
 				992C4B3F241F039400F496FC /* BaseCalc */,
+				992275B024244E470019004F /* BaseCalcTests */,
 				992C4B3E241F039400F496FC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -51,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				992C4B3D241F039400F496FC /* BaseCalc.app */,
+				992275AF24244E470019004F /* BaseCalcTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -81,6 +113,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		992275AE24244E470019004F /* BaseCalcTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 992275B824244E470019004F /* Build configuration list for PBXNativeTarget "BaseCalcTests" */;
+			buildPhases = (
+				992275AB24244E470019004F /* Sources */,
+				992275AC24244E470019004F /* Frameworks */,
+				992275AD24244E470019004F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				992275B524244E470019004F /* PBXTargetDependency */,
+			);
+			name = BaseCalcTests;
+			productName = BaseCalcTests;
+			productReference = 992275AF24244E470019004F /* BaseCalcTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		992C4B3C241F039400F496FC /* BaseCalc */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 992C4B51241F039600F496FC /* Build configuration list for PBXNativeTarget "BaseCalc" */;
@@ -108,6 +158,10 @@
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "The Senate";
 				TargetAttributes = {
+					992275AE24244E470019004F = {
+						CreatedOnToolsVersion = 11.3.1;
+						TestTargetID = 992C4B3C241F039400F496FC;
+					};
 					992C4B3C241F039400F496FC = {
 						CreatedOnToolsVersion = 11.3.1;
 					};
@@ -127,11 +181,19 @@
 			projectRoot = "";
 			targets = (
 				992C4B3C241F039400F496FC /* BaseCalc */,
+				992275AE24244E470019004F /* BaseCalcTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		992275AD24244E470019004F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		992C4B3B241F039400F496FC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -145,6 +207,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		992275AB24244E470019004F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				992275B224244E470019004F /* BaseCalcTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		992C4B39241F039400F496FC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -158,6 +228,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		992275B524244E470019004F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 992C4B3C241F039400F496FC /* BaseCalc */;
+			targetProxy = 992275B424244E470019004F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		992C4B4B241F039600F496FC /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -170,6 +248,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		992275B624244E470019004F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = BaseCalcTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "The-Senate.BaseCalcTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BaseCalc.app/BaseCalc";
+			};
+			name = Debug;
+		};
+		992275B724244E470019004F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = BaseCalcTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "The-Senate.BaseCalcTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BaseCalc.app/BaseCalc";
+			};
+			name = Release;
+		};
 		992C4B4F241F039600F496FC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -325,6 +441,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		992275B824244E470019004F /* Build configuration list for PBXNativeTarget "BaseCalcTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				992275B624244E470019004F /* Debug */,
+				992275B724244E470019004F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		992C4B38241F039400F496FC /* Build configuration list for PBXProject "BaseCalc" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
