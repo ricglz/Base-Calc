@@ -16,7 +16,7 @@ struct PopUpPickerView: View {
             if manager.isShowing {
                 Color.black
                      .edgesIgnoringSafeArea(.all)
-                     .opacity(0.5)
+                     .opacity(0.75)
                 GeometryReader { (geometry) in
                     VStack {
                         Spacer()
@@ -24,9 +24,12 @@ struct PopUpPickerView: View {
                             height: geometry.size.height / 2
                         )
                     }
+                    .edgesIgnoringSafeArea(.bottom)
                 }
+                .transition(.move(edge: .bottom))
+                .animation(.default)
             }
-        }
+        }.animation(.default)
     }
 }
 
@@ -59,7 +62,7 @@ struct CustomToolbar: View {
     }
     
     func hidePopUp() {
-        let newBase = Base.init(rawValue: manager.currentIndex + 2)
+        let newBase = Base(rawValue: manager.currentIndex + 2)
         calculator.currentBase = newBase!
         manager.isShowing = false
     }
@@ -72,7 +75,7 @@ struct CustomPickerView: View {
         ZStack {
             Color.pickerviewBackground
             HStack {
-                Picker("", selection: $manager.currentIndex) {
+                Picker("Select base", selection: $manager.currentIndex) {
                     ForEach(2..<17) { (number) in
                         Text("Base \(number)").tag(number)
                     }
