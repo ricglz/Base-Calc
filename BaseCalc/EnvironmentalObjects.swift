@@ -15,8 +15,14 @@ class CalculatorState: ObservableObject {
 
 class PopUpPickerViewManager: ObservableObject {
     @Published var isShowing: Bool = false
+    @Published var currentIndex: Int = 8
     
     init(_ showing: Bool? = nil) {
         isShowing = showing ?? false
+    }
+    
+    func showPickerView(_ currentBase: Base) {
+        isShowing = true
+        currentIndex = currentBase.rawValue - 2
     }
 }

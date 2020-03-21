@@ -44,12 +44,13 @@ struct PickerViewWithDoneToolbar: View {
 
 struct CustomToolbar: View {
     @EnvironmentObject var manager: PopUpPickerViewManager
+    @EnvironmentObject var calculator: CalculatorState
     
     var body: some View {
         ZStack {
             Color.toolbarBackground
             HStack {
-                Button(action: {}) {
+                Button(action: hidePopUp) {
                     Text("Done").foregroundColor(Color.blue)
                 }.padding(.leading)
                 Spacer()
@@ -57,17 +58,21 @@ struct CustomToolbar: View {
         }
     }
     
-    
+    func hidePopUp() {
+        let newBase = Base.init(rawValue: manager.currentIndex + 2)
+        calculator.currentBase = newBase!
+        manager.isShowing = false
+    }
 }
 
 struct CustomPickerView: View {
-    @State var currentNumber = 0
+    @EnvironmentObject var manager: PopUpPickerViewManager
     
     var body: some View {
         ZStack {
             Color.pickerviewBackground
             HStack {
-                Picker("", selection: $currentNumber) {
+                Picker("", selection: $manager.currentIndex) {
                     ForEach(2..<17) { (number) in
                         Text("Base \(number)").tag(number)
                     }
