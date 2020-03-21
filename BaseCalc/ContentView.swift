@@ -58,19 +58,22 @@ struct HeaderBaseLabel: View {
 }
 
 struct NumberLabel: View {
+    @EnvironmentObject var calculatorState: CalculatorState
+
     var body: some View {
         HStack {
             Spacer()
-            Text("0")
+            Text(calculatorState.currentText)
                 .font(.system(size: 50))
                 .foregroundColor(.white)
+                .lineLimit(1)
         }.padding()
     }
 }
 
 struct Keypad: View {
     let btnPadding: CGFloat = 6
-    
+
     let buttons = [
         ["D", "E", "F", "AC"],
         ["A", "B", "C", "±"],
@@ -107,7 +110,7 @@ struct KeypadButton: View {
         "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B",
         "C", "D", "E", "F"
     ]
-    
+
     @EnvironmentObject var calculatorState: CalculatorState
 
     var body: some View {
@@ -131,15 +134,15 @@ struct KeypadButton: View {
             return enabled ? Color.enabledDigit : Color.disabledDigit
         }
     }
-    
+
     func btnAction(_ isAnOperationBtn: Bool) -> () -> Void {
-        isAnOperationBtn ? operationAction() : digitAction
+        isAnOperationBtn ? operationAction() : addDigit
     }
-    
+
     func operationAction() -> () -> Void {
         switch label {
         case "AC":
-            return clearAction
+            return calculatorState.clearText
         case "±":
             return changeSign
         case "+":
@@ -151,42 +154,34 @@ struct KeypadButton: View {
         case "=":
             return solve
         case ".":
-            return addDecimalDot
+            return addDigit
         default:
             return { print(self.label) }
         }
     }
-    
-    func digitAction() {
-        print(label)
+
+    func addDigit() {
+        calculatorState.addDigit(label)
     }
-    
-    func clearAction() {
-        print("Clearing")
-    }
-    
+
     func changeSign() {
         print("Changing sign")
     }
-    
+
     func sum() {
         print("Suming")
     }
-    
+
     func substract() {
         print("Substraction")
     }
-    
+
     func baseComplement() {
         print("Performing base complement")
     }
-    
+
     func solve() {
         print("Solving problem")
-    }
-    
-    func addDecimalDot() {
-        print("Adding decimal dot")
     }
 
     func value(_ isAnOperationBtn: Bool) -> Int {
