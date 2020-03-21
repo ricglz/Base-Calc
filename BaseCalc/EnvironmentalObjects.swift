@@ -12,3 +12,11 @@ import SwiftUI
 class CalculatorState: ObservableObject {
     @Published var currentBase: Base = .Base2
 }
+
+class PopUpPickerViewManager: ObservableObject {
+    @Published var isShowing: Bool = false
+    
+    init(_ showing: Bool? = nil) {
+        isShowing = showing ?? false
+    }
+}

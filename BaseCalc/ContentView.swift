@@ -19,6 +19,7 @@ struct ContentView: View {
                 NumberLabel()
                 Keypad()
             }
+            PopUpPickerView()
         }
     }
 }
@@ -135,18 +136,15 @@ struct KeypadButton: View {
     }
 }
 
-extension Color {
-    static let enabledDigit = Color(hue: 359, saturation: 0, brightness: 0.67)
-    static let disabledDigit = Color(hue: 359, saturation: 0, brightness: 0.27)
-}
-
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
 //         ContentView().environmentObject(CalculatorState())
 //            .previewDevice(PreviewDevice(rawValue: "iPhone 11 Pro Max"))
 //        ContentView().environmentObject(CalculatorState()).
 //            previewDevice(PreviewDevice(rawValue: "iPhone 8"))
-        ContentView().environmentObject(CalculatorState())
+        ContentView()
+            .environmentObject(CalculatorState())
+            .environmentObject(PopUpPickerViewManager(true))
             .previewDevice(PreviewDevice(rawValue: "iPhone SE"))
     }
 }
