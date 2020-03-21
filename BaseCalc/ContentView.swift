@@ -39,15 +39,13 @@ struct Header: View {
 
 struct HeaderBaseLabel: View {
     @EnvironmentObject var calculatorState: CalculatorState
+    @EnvironmentObject var manager: PopUpPickerViewManager
 
     var body: some View {
         Button(action: {
-            let curBase = self.calculatorState.currentBase.rawValue
-            if curBase == 16 {
-                self.calculatorState.currentBase = Base.Base2
-            } else {
-                self.calculatorState.currentBase = Base(rawValue: curBase + 1)!
-            }
+            self.manager.showPickerView(
+                self.calculatorState.currentBase
+            )
         }) {
             Text("BASE \(calculatorState.currentBase.rawValue)")
                 .padding(.horizontal, 15)
@@ -56,6 +54,7 @@ struct HeaderBaseLabel: View {
         }
         .accentColor(.black)
     }
+    
 }
 
 struct NumberLabel: View {
@@ -144,7 +143,7 @@ struct ContentView_Previews: PreviewProvider {
 //            previewDevice(PreviewDevice(rawValue: "iPhone 8"))
         ContentView()
             .environmentObject(CalculatorState())
-            .environmentObject(PopUpPickerViewManager(true))
+            .environmentObject(PopUpPickerViewManager())
             .previewDevice(PreviewDevice(rawValue: "iPhone SE"))
     }
 }
