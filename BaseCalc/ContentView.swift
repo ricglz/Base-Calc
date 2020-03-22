@@ -67,7 +67,9 @@ struct NumberLabel: View {
                 .font(.system(size: 50))
                 .foregroundColor(.white)
                 .lineLimit(1)
-        }.padding()
+                .allowsTightening(true)
+                .minimumScaleFactor(0.5)
+        }.padding().frame(minHeight: 92)
     }
 }
 
