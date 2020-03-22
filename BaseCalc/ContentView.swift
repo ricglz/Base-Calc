@@ -58,19 +58,24 @@ struct HeaderBaseLabel: View {
 }
 
 struct NumberLabel: View {
+    @EnvironmentObject var calculatorState: CalculatorState
+
     var body: some View {
         HStack {
             Spacer()
-            Text("0")
+            Text(calculatorState.currentText)
                 .font(.system(size: 50))
                 .foregroundColor(.white)
-        }.padding()
+                .lineLimit(1)
+                .allowsTightening(true)
+                .minimumScaleFactor(0.5)
+        }.padding().frame(minHeight: 92)
     }
 }
 
 struct Keypad: View {
     let btnPadding: CGFloat = 6
-    
+
     let buttons = [
         ["D", "E", "F", "AC"],
         ["A", "B", "C", "±"],
@@ -107,11 +112,13 @@ struct KeypadButton: View {
         "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B",
         "C", "D", "E", "F"
     ]
+
     @EnvironmentObject var calculatorState: CalculatorState
 
     var body: some View {
-        let enabled = value() < calculatorState.currentBase.rawValue
-        return Button(action: {}) {
+        let isAnOperationBtn = operationBtns.contains(label)
+        let enabled = value(isAnOperationBtn) < calculatorState.currentBase.rawValue
+        return Button(action: btnAction(isAnOperationBtn)) {
             Text(label)
                 .font(.title)
                 .foregroundColor(enabled ? .white : .gray)
@@ -130,8 +137,57 @@ struct KeypadButton: View {
         }
     }
 
-    func value() -> Int {
-        operationBtns.contains(label) ? 0 : digits.firstIndex(of: label)!
+    func btnAction(_ isAnOperationBtn: Bool) -> () -> Void {
+        isAnOperationBtn ? operationAction() : addDigit
+    }
+
+    func operationAction() -> () -> Void {
+        switch label {
+        case "AC":
+            return calculatorState.clearText
+        case "±":
+            return changeSign
+        case "+":
+            return sum
+        case "-":
+            return substract
+        case "ß":
+            return baseComplement
+        case "=":
+            return solve
+        case ".":
+            return addDigit
+        default:
+            return { print(self.label) }
+        }
+    }
+
+    func addDigit() {
+        calculatorState.addDigit(label)
+    }
+
+    func changeSign() {
+        print("Changing sign")
+    }
+
+    func sum() {
+        print("Suming")
+    }
+
+    func substract() {
+        print("Substraction")
+    }
+
+    func baseComplement() {
+        print("Performing base complement")
+    }
+
+    func solve() {
+        print("Solving problem")
+    }
+
+    func value(_ isAnOperationBtn: Bool) -> Int {
+        isAnOperationBtn ? 0 : digits.firstIndex(of: label)!
     }
 }
 

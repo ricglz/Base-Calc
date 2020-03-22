@@ -11,6 +11,28 @@ import SwiftUI
 
 class CalculatorState: ObservableObject {
     @Published var currentBase: Base = .Base2
+    @Published var prevNumber: Number? = nil
+    @Published var currentText: String = "0"
+    @Published var hasDecimalDot: Bool = false
+
+    func addDigit(_ digitToAdd: String) {
+        let digitToAddIsDot = digitToAdd == "."
+        if hasDecimalDot && digitToAddIsDot {
+            return
+        }
+
+        if currentText == "0" && !digitToAddIsDot {
+            currentText = digitToAdd
+        } else {
+            currentText += digitToAdd
+            hasDecimalDot = hasDecimalDot || digitToAddIsDot
+        }
+    }
+
+    func clearText() {
+        currentText = "0"
+        hasDecimalDot = false
+    }
 }
 
 class PopUpPickerViewManager: ObservableObject {
