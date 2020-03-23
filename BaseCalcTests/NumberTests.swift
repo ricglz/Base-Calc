@@ -59,32 +59,32 @@ class NumberTests: XCTestCase {
 
     //MARK:- Testing hasFract of numbers
 
-    func testWholePositiveFractValue() {
+    func testWholePositiveFract() {
         number = Number(number: "F", base: .Base16)
         XCTAssertEqual(number.hasFract, false)
     }
 
-    func testWholeNegativeFractValue() {
+    func testWholeNegativeFract() {
         number = Number(number: "-42", base: .Base5)
         XCTAssertEqual(number.hasFract, false)
     }
 
-    func testFloatingPositiveFractValue() {
+    func testFloatingPositiveFract() {
         number = Number(number: "3.14", base: .Base8)
         XCTAssertEqual(number.hasFract, true)
     }
 
-    func testFloatingNegativeFractValue() {
+    func testFloatingNegativeFract() {
         number = Number(number: "-0.15", base: .Base10)
         XCTAssertEqual(number.hasFract, true)
     }
 
-    func testWholeWithDecimalFractValue() {
+    func testWholeWithDecimalFract() {
         number = Number(number: "3.00000", base: .Base10)
         XCTAssertEqual(number.hasFract, false)
     }
 
-    func testWholeWithPointFractValue() {
+    func testWholeWithPointFract() {
         number = Number(number: "3.", base: .Base13)
         XCTAssertEqual(number.hasFract, false)
     }
