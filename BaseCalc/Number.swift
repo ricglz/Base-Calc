@@ -84,7 +84,7 @@ class Number: NSObject {
         return wholeStr + fractStr
     }
     
-    func setBase(base: Base) {
+    private func setBase(base: Base) {
         self.base = base
     }
     
