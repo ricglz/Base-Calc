@@ -45,7 +45,7 @@ class Number: NSObject {
             let wholeVal = Int(wholeStr, radix: base.rawValue)!
             let fractVal = Double(fractNum) / Double(fractDen)
             self.value = (abs(Double(wholeVal)) + fractVal) * sign
-            self.hasFract = true
+            self.hasFract = self.value != floor(self.value)
 
         } else {
             self.value = Double(Int(num, radix: base.rawValue)!)
