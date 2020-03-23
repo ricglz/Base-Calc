@@ -144,6 +144,7 @@ class NumberTests: XCTestCase {
         num2 = Number(number: "A", base: .Base16)
         num3 = num1 + num2
         XCTAssertEqual(num3.value, 25)
+        XCTAssertFalse(num3.hasFract)
     }
     
     func testDifferentBaseWholeAddition() {
@@ -151,6 +152,7 @@ class NumberTests: XCTestCase {
         num2 = Number(number: "100", base: .Base7)
         num3 = num1 + num2
         XCTAssertEqual(num3.value, 94)
+        XCTAssertFalse(num3.hasFract)
     }
     
     func testSameBaseFloatingAddition() {
@@ -158,6 +160,7 @@ class NumberTests: XCTestCase {
         num2 = Number(number: "1.1", base: .Base2)
         num3 = num1 + num2
         XCTAssertEqual(num3.value, 6.75)
+        XCTAssertTrue(num3.hasFract)
     }
     
     func testDifferentBaseFloatingAddition() {
@@ -165,6 +168,7 @@ class NumberTests: XCTestCase {
         num2 = Number(number: "35.6", base: .Base15)
         num3 = num1 + num2
         XCTAssertEqual(num3.value, 225.8)
+        XCTAssertTrue(num3.hasFract)
     }
     
     func testNegativeAddition() {
@@ -172,6 +176,7 @@ class NumberTests: XCTestCase {
         num2 = Number(number: "-11", base: .Base7)
         num3 = num1 + num2
         XCTAssertEqual(num3.value, 2.5)
+        XCTAssertTrue(num3.hasFract)
     }
     
     func testBaseAfterAddition() {
@@ -181,25 +186,12 @@ class NumberTests: XCTestCase {
         XCTAssertEqual(num3.base, Base.Base16)
     }
     
-    func testHasFractAfterAdditionWithWholeResult() {
-        num1 = Number(number: "1.5", base: .Base10)
-        num2 = Number(number: "0.1", base: .Base2)
-        num3 = num1 + num2
-        XCTAssertEqual(num3.hasFract, false)
-    }
-    
-    func testHasFractAfterAdditionWithFractResult() {
-        num1 = Number(number: "1.5", base: .Base10)
-        num2 = Number(number: "0", base: .Base2)
-        num3 = num1 + num2
-        XCTAssertEqual(num3.hasFract, true)
-    }
-    
     func testAdditionWithPlusEquals() {
         num1 = Number(number: "1.5", base: .Base10)
         num2 = Number(number: "0.5", base: .Base10)
         num2 += num1
         XCTAssertEqual(num2.value, 2)
+        XCTAssertFalse(num2.hasFract)
     }
     
     //MARK:- Testing number subtraction
@@ -209,6 +201,7 @@ class NumberTests: XCTestCase {
         num2 = Number(number: "A", base: .Base16)
         num3 = num1 - num2
         XCTAssertEqual(num3.value, 5)
+        XCTAssertFalse(num3.hasFract)
     }
     
     func testDifferentBaseWholeSubtraction() {
@@ -216,6 +209,7 @@ class NumberTests: XCTestCase {
         num2 = Number(number: "100", base: .Base7)
         num3 = num1 - num2
         XCTAssertEqual(num3.value, -4)
+        XCTAssertFalse(num3.hasFract)
     }
     
     func testSameBaseFloatingSubtraction() {
@@ -223,6 +217,7 @@ class NumberTests: XCTestCase {
         num2 = Number(number: "1.1", base: .Base2)
         num3 = num1 - num2
         XCTAssertEqual(num3.value, 3.75)
+        XCTAssertTrue(num3.hasFract)
     }
     
     func testDifferentBaseFloatingSubtraction() {
@@ -230,6 +225,7 @@ class NumberTests: XCTestCase {
         num2 = Number(number: "35.6", base: .Base15)
         num3 = num1 - num2
         XCTAssertEqual(num3.value, 125)
+        XCTAssertFalse(num3.hasFract)
     }
     
     func testNegativeSubtraction() {
@@ -237,6 +233,7 @@ class NumberTests: XCTestCase {
         num2 = Number(number: "-11", base: .Base7)
         num3 = num1 - num2
         XCTAssertEqual(num3.value, 18.5)
+        XCTAssertTrue(num3.hasFract)
     }
     
     func testBaseAfterSubtraction() {
@@ -246,25 +243,12 @@ class NumberTests: XCTestCase {
         XCTAssertEqual(num3.base, Base.Base16)
     }
     
-    func testHasFractAfterSubtractionWithWholeResult() {
-        num1 = Number(number: "1.5", base: .Base10)
-        num2 = Number(number: "0.1", base: .Base2)
-        num3 = num1 - num2
-        XCTAssertEqual(num3.hasFract, false)
-    }
-    
-    func testHasFractAfterSubtractionWithFractResult() {
-        num1 = Number(number: "1.5", base: .Base10)
-        num2 = Number(number: "0", base: .Base2)
-        num3 = num1 - num2
-        XCTAssertEqual(num3.hasFract, true)
-    }
-    
     func testSubtractionWithPlusEquals() {
         num1 = Number(number: "0.5", base: .Base10)
         num2 = Number(number: "1.5", base: .Base10)
         num2 -= num1
         XCTAssertEqual(num2.value, 1)
+        XCTAssertFalse(num2.hasFract)
     }
     
     //MARK:- Testing number multiplication (Double)
@@ -273,6 +257,7 @@ class NumberTests: XCTestCase {
         num1 = Number(number: "0.5", base: .Base10)
         num2 = num1 * 2
         XCTAssertEqual(num2.value, 1)
+        XCTAssertFalse(num2.hasFract)
     }
 
 }
