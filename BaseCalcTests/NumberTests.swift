@@ -171,6 +171,14 @@ class NumberTests: XCTestCase {
         XCTAssertTrue(num3.hasFract)
     }
     
+    func testFloatingAdditionThatAddsToWhole() {
+        num1 = Number(number: "0.3", base: .Base10)
+        num2 = Number(number: "0.7", base: .Base10)
+        num3 = num1 + num2
+        XCTAssertEqual(num3.value, 1)
+        XCTAssertFalse(num3.hasFract)
+    }
+    
     func testNegativeAddition() {
         num1 = Number(number: "10.5", base: .Base10)
         num2 = Number(number: "-11", base: .Base7)
@@ -192,6 +200,14 @@ class NumberTests: XCTestCase {
         num2 += num1
         XCTAssertEqual(num2.value, 2)
         XCTAssertFalse(num2.hasFract)
+    }
+    
+    func testAdditionWithPlusEqualsThatAddsToWhole() {
+        num1 = Number(number: "1.3", base: .Base10)
+        num2 = Number(number: "1.7", base: .Base10)
+        num1 += num2
+        XCTAssertEqual(num1.value, 3)
+        XCTAssertFalse(num1.hasFract)
     }
     
     //MARK:- Testing number subtraction
@@ -228,6 +244,14 @@ class NumberTests: XCTestCase {
         XCTAssertFalse(num3.hasFract)
     }
     
+    func testSubstractionThatEndsWithWhole() {
+        num1 = Number(number: "1.7", base: .Base10)
+        num2 = Number(number: "0.7", base: .Base10)
+        num3 = num1 - num2
+        XCTAssertEqual(num3.value, 1)
+        XCTAssertFalse(num3.hasFract)
+    }
+    
     func testNegativeSubtraction() {
         num1 = Number(number: "10.5", base: .Base10)
         num2 = Number(number: "-11", base: .Base7)
@@ -243,12 +267,20 @@ class NumberTests: XCTestCase {
         XCTAssertEqual(num3.base, Base.Base16)
     }
     
-    func testSubtractionWithPlusEquals() {
+    func testSubtractionWithMinusEquals() {
         num1 = Number(number: "0.5", base: .Base10)
         num2 = Number(number: "1.5", base: .Base10)
         num2 -= num1
         XCTAssertEqual(num2.value, 1)
         XCTAssertFalse(num2.hasFract)
+    }
+    
+    func testSubstractionWithMinusEqualThatEndsWithWhole() {
+        num1 = Number(number: "1.3", base: .Base10)
+        num2 = Number(number: "0.3", base: .Base10)
+        num1 -= num2
+        XCTAssertEqual(num1.value, 1)
+        XCTAssertFalse(num1.hasFract)
     }
     
     //MARK:- Testing number multiplication (Double)
