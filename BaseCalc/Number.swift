@@ -83,4 +83,37 @@ class Number: NSObject {
 
         return wholeStr + fractStr
     }
+    
+    func setBase(base: Base) {
+        self.base = base
+    }
+    
+    static func + (leftNum: Number, rightNum: Number) -> Number {
+        let sumValue = leftNum.value + rightNum.value
+        let newNum = Number(number: String(sumValue), base: .Base10)
+        newNum.setBase(base: rightNum.base)
+        
+        return newNum
+    }
+    
+    static func += (leftNum: Number, rightNum: Number) -> Number {
+        return leftNum + rightNum
+    }
+    
+    static func - (leftNum: Number, rightNum: Number) -> Number {
+        let negNum = rightNum * -1
+        return leftNum + negNum
+    }
+    
+    static func -= (leftNum: Number, rightNum: Number) -> Number {
+        return leftNum - rightNum
+    }
+    
+    static func * (leftNum: Number, rightNum: Double) -> Number {
+        let multValue = leftNum.value * rightNum
+        let newNum = Number(number: String(multValue), base: .Base10)
+        newNum.setBase(base: leftNum.base)
+        
+        return newNum
+    }
 }
