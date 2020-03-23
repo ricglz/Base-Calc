@@ -96,8 +96,8 @@ class Number: NSObject {
         return newNum
     }
     
-    static func += (leftNum: Number, rightNum: Number) -> Number {
-        return leftNum + rightNum
+    static func += (leftNum: inout Number, rightNum: Number) {
+        leftNum = leftNum + rightNum
     }
     
     static func - (leftNum: Number, rightNum: Number) -> Number {
@@ -105,8 +105,8 @@ class Number: NSObject {
         return leftNum + negNum
     }
     
-    static func -= (leftNum: Number, rightNum: Number) -> Number {
-        return leftNum - rightNum
+    static func -= (leftNum: inout Number, rightNum: Number) {
+        leftNum = leftNum - rightNum
     }
     
     static func * (leftNum: Number, rightNum: Double) -> Number {
