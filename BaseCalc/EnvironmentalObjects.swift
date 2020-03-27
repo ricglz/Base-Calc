@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 class CalculatorState: ObservableObject {
-    @Published var currentBase: Base = .Base2
+    @Published var currentBase: Base = .Base10
     @Published var prevNumber: Number? = nil
     @Published var currentText: String = "0"
     @Published var hasDecimalDot: Bool = false
