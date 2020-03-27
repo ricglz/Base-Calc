@@ -183,7 +183,7 @@ struct KeypadButton: View {
         case "ß":
             return baseComplement
         case "=":
-            return solve
+            return calculatorState.solve
         case ".":
             return addDigit
         default:

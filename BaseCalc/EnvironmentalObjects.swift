@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-enum Operation {
+enum Operation: String {
     case add; case subtract;
 }
 
@@ -23,6 +23,21 @@ class CalculatorState: ObservableObject {
 
     func addDigit(_ digitToAdd: String) {
         let digitToAddIsDot = digitToAdd == "."
+        
+        if willPerformArithmetic {
+            prevNumber = Number(number: currentText, base: currentBase)
+            
+            if digitToAddIsDot {
+                currentText = "0."
+            } else {
+                currentText = digitToAdd
+            }
+            
+            willPerformArithmetic = false
+            hasDecimalDot = digitToAddIsDot
+            return
+        }
+        
         if hasDecimalDot && digitToAddIsDot {
             return
         }
@@ -38,6 +53,26 @@ class CalculatorState: ObservableObject {
     func clearText() {
         currentText = "0"
         hasDecimalDot = false
+    }
+    
+    func solve() {
+        if prevOperation != nil {
+            var answer: Number!
+            let currentNumber = Number(number: currentText, base: currentBase)
+            
+            switch prevOperation {
+            case .add:
+                answer = (prevNumber ?? currentNumber) + currentNumber
+            case .subtract:
+                answer = (prevNumber ?? currentNumber) - currentNumber
+            default:
+                print(prevOperation!.rawValue)
+            }
+            
+            prevNumber = answer
+            currentText = answer.toString()
+            prevOperation = nil
+        }
     }
 }
 
