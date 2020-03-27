@@ -50,9 +50,12 @@ class CalculatorState: ObservableObject {
         }
     }
 
-    func clearText() {
+    func allClear() {
         currentText = "0"
         hasDecimalDot = false
+        willPerformArithmetic = false
+        prevOperation = nil
+        prevNumber = nil
     }
     
     func solve() {

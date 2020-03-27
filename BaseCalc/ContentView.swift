@@ -173,7 +173,7 @@ struct KeypadButton: View {
     func operationAction() -> () -> Void {
         switch label {
         case "AC":
-            return calculatorState.clearText
+            return calculatorState.allClear
         case "±":
             return changeSign
         case "+":
