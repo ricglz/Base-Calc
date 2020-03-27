@@ -9,11 +9,17 @@
 import Foundation
 import SwiftUI
 
+enum Operation {
+    case add; case subtract;
+}
+
 class CalculatorState: ObservableObject {
     @Published var currentBase: Base = .Base10
     @Published var prevNumber: Number? = nil
+    @Published var prevOperation: Operation? = nil
     @Published var currentText: String = "0"
     @Published var hasDecimalDot: Bool = false
+    @Published var willPerformArithmetic: Bool = false
 
     func addDigit(_ digitToAdd: String) {
         let digitToAddIsDot = digitToAdd == "."
