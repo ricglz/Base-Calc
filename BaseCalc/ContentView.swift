@@ -121,19 +121,48 @@ struct KeypadButton: View {
         return Button(action: btnAction(isAnOperationBtn)) {
             Text(label)
                 .font(.title)
-                .foregroundColor(enabled ? .white : .gray)
                 .frame(width: width,height: height)
-                .background(btnColor(enabled))
+                .foregroundColor(btnForegroundColor(enabled))
+                .background(btnBackgroundColor(enabled))
         }
         .disabled(!enabled)
     }
 
-    func btnColor(_ enabled: Bool) -> Color {
+    func btnBackgroundColor(_ enabled: Bool) -> Color {
+        let willAdd = calculatorState.willPerformArithmetic &&
+            calculatorState.prevOperation == Operation.add
+        
+        let willSubtract = calculatorState.willPerformArithmetic &&
+            calculatorState.prevOperation == Operation.subtract
+        
         switch label {
-        case "AC", "±", "+", "-", "ß", "X":
+        case "+":
+            return willAdd ? .white : .orange
+        case "-":
+            return willSubtract  ? .white : .orange
+        case "AC", "±", "ß", "X":
             return Color.orange
         default:
             return enabled ? Color.enabledDigit : Color.disabledDigit
+        }
+    }
+    
+    func btnForegroundColor(_ enabled: Bool) -> Color {
+        let willAdd = calculatorState.willPerformArithmetic &&
+            calculatorState.prevOperation == Operation.add
+        
+        let willSubtract = calculatorState.willPerformArithmetic &&
+            calculatorState.prevOperation == Operation.subtract
+        
+        switch label {
+        case "+":
+            return willAdd ? .orange : .white
+        case "-":
+            return willSubtract ? .orange : .white
+        case "AC", "±", "ß", "X":
+            return Color.white
+        default:
+            return enabled ? .white : .gray
         }
     }
 
@@ -144,7 +173,7 @@ struct KeypadButton: View {
     func operationAction() -> () -> Void {
         switch label {
         case "AC":
-            return calculatorState.clearText
+            return calculatorState.allClear
         case "±":
             return changeSign
         case "+":
@@ -154,7 +183,7 @@ struct KeypadButton: View {
         case "ß":
             return baseComplement
         case "=":
-            return solve
+            return calculatorState.solve
         case ".":
             return addDigit
         default:
@@ -171,11 +200,13 @@ struct KeypadButton: View {
     }
 
     func sum() {
-        print("Suming")
+        calculatorState.willPerformArithmetic = true
+        calculatorState.prevOperation = .add
     }
 
     func substract() {
-        print("Substraction")
+        calculatorState.willPerformArithmetic = true
+        calculatorState.prevOperation = .subtract
     }
 
     func baseComplement() {
