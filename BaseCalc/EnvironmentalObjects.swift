@@ -20,6 +20,7 @@ class CalculatorState: ObservableObject {
     @Published var currentText: String = "0"
     @Published var hasDecimalDot: Bool = false
     @Published var willPerformArithmetic: Bool = false
+    @Published var isNegative: Bool = false
 
     func addDigit(_ digitToAdd: String) {
         let digitToAddIsDot = digitToAdd == "."
@@ -54,8 +55,21 @@ class CalculatorState: ObservableObject {
         currentText = "0"
         hasDecimalDot = false
         willPerformArithmetic = false
+        isNegative = false
         prevOperation = nil
         prevNumber = nil
+    }
+    
+    func changeSign() {
+        if currentText != "0" {
+            if currentText.prefix(1) == "-" {
+                currentText.remove(at: currentText.startIndex)
+                isNegative = false
+            } else {
+                currentText = "-" + currentText
+                isNegative = true
+            }
+        }
     }
     
     func solve() {
@@ -74,6 +88,7 @@ class CalculatorState: ObservableObject {
             
             prevNumber = answer
             currentText = answer.toString()
+            isNegative = answer.value < 0
             prevOperation = nil
         }
     }

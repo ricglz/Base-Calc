@@ -117,7 +117,7 @@ struct KeypadButton: View {
 
     var body: some View {
         let isAnOperationBtn = operationBtns.contains(label)
-        let enabled = value(isAnOperationBtn) < calculatorState.currentBase.rawValue
+        let enabled = isButtonEnabled(isAnOperationBtn)
         return Button(action: btnAction(isAnOperationBtn)) {
             Text(label)
                 .font(.title)
@@ -140,10 +140,12 @@ struct KeypadButton: View {
             return willAdd ? .white : .orange
         case "-":
             return willSubtract  ? .white : .orange
-        case "AC", "±", "ß", "X":
+        case "ß":
+            return calculatorState.isNegative ? .disabledOrange : .orange
+        case "AC", "±", "X":
             return Color.orange
         default:
-            return enabled ? Color.enabledDigit : Color.disabledDigit
+            return enabled ? .enabledDigit : .disabledDigit
         }
     }
     
@@ -159,8 +161,10 @@ struct KeypadButton: View {
             return willAdd ? .orange : .white
         case "-":
             return willSubtract ? .orange : .white
-        case "AC", "±", "ß", "X":
-            return Color.white
+        case "ß":
+            return calculatorState.isNegative ? .gray : .white
+        case "AC", "±", "X":
+            return .white
         default:
             return enabled ? .white : .gray
         }
@@ -175,7 +179,7 @@ struct KeypadButton: View {
         case "AC":
             return calculatorState.allClear
         case "±":
-            return changeSign
+            return calculatorState.changeSign
         case "+":
             return sum
         case "-":
@@ -195,10 +199,6 @@ struct KeypadButton: View {
         calculatorState.addDigit(label)
     }
 
-    func changeSign() {
-        print("Changing sign")
-    }
-
     func sum() {
         calculatorState.willPerformArithmetic = true
         calculatorState.prevOperation = .add
@@ -216,9 +216,15 @@ struct KeypadButton: View {
     func solve() {
         print("Solving problem")
     }
-
-    func value(_ isAnOperationBtn: Bool) -> Int {
-        isAnOperationBtn ? 0 : digits.firstIndex(of: label)!
+    
+    func isButtonEnabled(_ isAnOperationBtn: Bool) -> Bool {
+        if !isAnOperationBtn {
+            return digits.firstIndex(of: label)! < calculatorState.currentBase.rawValue
+        } else if label == "ß" {
+            return !calculatorState.isNegative
+        }
+        
+        return true
     }
 }
 
