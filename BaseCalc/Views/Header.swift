@@ -47,22 +47,46 @@ struct NumberLabel: View {
     let generator = UIImpactFeedbackGenerator(style: .light)
 
     var body: some View {
-        HStack {
-            Spacer()
-            Text(calculatorState.currentText)
-                .font(.system(size: 50))
-                .foregroundColor(.white)
-                .lineLimit(1)
-                .allowsTightening(true)
-                .minimumScaleFactor(0.5)
-        }.padding().frame(minHeight: 92)
-            .onLongPressGesture(perform: copyToClipboard)
+        VStack(alignment: .trailing) {
+            HStack {
+                Spacer()
+                Text(calculatorState.currentText)
+                    .font(.system(size: 50))
+                    .foregroundColor(.white)
+                    .lineLimit(1)
+                    .allowsTightening(true)
+                    .minimumScaleFactor(0.5)
+            }.padding().frame(minHeight: 92)
+                .onLongPressGesture(perform: copyToClipboard)
+
+            Text(formatBinaryString())
+                .font(.system(size: 14, design: .monospaced))
+                .foregroundColor(.gray)
+                .padding(.horizontal)
+        }
     }
 
     func copyToClipboard() {
         self.generator.impactOccurred()
         UIPasteboard.general.string = calculatorState.currentText
         toastManager.showToast(content: "Copied to Clipboard")
+    }
+
+    func formatBinaryString() -> String {
+        let num = Number(
+            number: calculatorState.currentText,
+            base: calculatorState.currentBase
+        ).toString(base: .Base2)
+
+        let pad = String(repeating: "0", count: max(32 - num.count, 0))
+        var ans = pad + num
+
+        for i in stride(from: ans.count, to: 0, by: -4) {
+            let index = ans.index(ans.startIndex, offsetBy: i)
+            ans.insert(" ", at: index)
+        }
+
+        return ans
     }
 }
 
