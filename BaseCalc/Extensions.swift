@@ -10,9 +10,9 @@ import Foundation
 import SwiftUI
 
 extension Color {
-    static let enabledDigit = Color(hue: 359, saturation: 0, brightness: 0.67)
-    static let disabledDigit = Color(hue: 359, saturation: 0, brightness: 0.27)
-    static let disabledOrange = Color(red: 0.62, green: 0.39, blue: 0.13)
+    static let enabledDigitBG = Color(hue: 359, saturation: 0, brightness: 0.67)
+    static let disabledDigitBG = Color(hue: 359, saturation: 0, brightness: 0.27)
+    static let disabledOrangeBG = Color(red: 0.62, green: 0.39, blue: 0.13)
     static let toolbarBackground = Color(red: 0.2, green: 0.2, blue: 0.2)
     static let pickerviewBackground = Color(red: 0.15, green: 0.15, blue: 0.15)
 }

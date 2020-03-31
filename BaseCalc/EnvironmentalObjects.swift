@@ -60,6 +60,16 @@ class CalculatorState: ObservableObject {
         prevNumber = nil
     }
     
+    func sum() {
+        willPerformArithmetic = true
+        prevOperation = .add
+    }
+    
+    func substract() {
+        willPerformArithmetic = true
+        prevOperation = .subtract
+    }
+    
     func changeSign() {
         if currentText != "0" {
             if currentText.prefix(1) == "-" {
