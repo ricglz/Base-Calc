@@ -50,9 +50,11 @@ struct ComplementAlert: View {
 
 struct AlertContent: View {
     @State var digits: String
+    let lowerDigitLimit: String
     
     init(digitValue: String) {
         _digits = State(initialValue: digitValue)
+        lowerDigitLimit = digitValue
     }
     
     var body: some View {
@@ -78,11 +80,15 @@ struct AlertContent: View {
                         .stroke(Color.gray, lineWidth: 0.5)
                 )
             
-            Text("Enter a value between X and XXXX")
-                .font(.caption)
-                .foregroundColor(Color.gray)
+                Text("Enter a value between \(lowerDigitLimit) and 24")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+                    .opacity(Int(self.digits) ?? 0 > 24 || Int(self.digits) ?? 0 < Int(self.lowerDigitLimit)! ? 1 : 0)
             
-            AlertButtons(digits: digits)
+            AlertButtons(
+                digits: digits,
+                lowerDigitLimit: lowerDigitLimit
+            )
         }
         .padding(.horizontal)
     }
@@ -93,6 +99,7 @@ struct AlertButtons: View {
     @EnvironmentObject var calculatorState: CalculatorState
     
     let digits: String
+    let lowerDigitLimit: String
     
     var body: some View {
         HStack {
@@ -112,8 +119,8 @@ struct AlertButtons: View {
                 self.manager.isShowing = false
             }){
                 Text("ß compl.")
-            }
-            
+            }.disabled(Int(self.digits) ?? 0 > 24 || Int(self.digits) ?? 0 < Int(self.lowerDigitLimit)!)
+                        
             Spacer()
             
             Button(action: {
@@ -123,7 +130,8 @@ struct AlertButtons: View {
                 self.manager.isShowing = false
             }){
                 Text("ß⁻¹ compl.")
-            }
+            }.disabled(Int(self.digits) ?? 0 > 24 || Int(self.digits) ?? 0 < Int(self.lowerDigitLimit)!)
+            
         }
         .padding(.vertical)
     }
