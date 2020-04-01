@@ -9,43 +9,51 @@
 import SwiftUI
 
 struct ComplementAlert: View {
+    @EnvironmentObject var manager: ComplementAlertManager
+    @EnvironmentObject var calculatorState: CalculatorState
+    
     var body: some View {
         ZStack() {
-            Color.black
-                .edgesIgnoringSafeArea(.all)
-                .opacity(0.75)
-            
-            GeometryReader { geometry in
-                VStack {
-                    ZStack(alignment: .center){
-                        Color.alertBackground
-                        
-                        VStack {
-                            AlertBody()
-                            AlertButtons()
+            if manager.isShowing {
+                Color.black
+                    .edgesIgnoringSafeArea(.all)
+                    .opacity(0.75)
+                
+                GeometryReader { geometry in
+                    VStack {
+                        ZStack(alignment: .center){
+                            Color.alertBackground
+                            AlertContent(
+                                digitValue: String(self.calculatorState.currentText.count)
+                            )
                         }
-                        .padding(.horizontal)
+                        .frame(
+                            width: geometry.size.width * 0.9,
+                            height: 200
+                        )
+                        .cornerRadius(10)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.gray, lineWidth: 0.5)
+                        )
+                        
+                        Spacer()
+                            .frame(height: geometry.size.width * 0.75)
                     }
-                    .frame(
-                        width: geometry.size.width * 0.9,
-                        height: 200
-                    )
-                    .cornerRadius(10)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.gray, lineWidth: 0.5)
-                    )
-                    
-                    Spacer()
-                        .frame(height: geometry.size.width * 0.75)
                 }
+                .transition(AnyTransition.scale(scale: 0.95).combined(with: .opacity))
+                .animation(.default)
             }
-        }
+        }.animation(.default)
     }
 }
 
-struct AlertBody: View {
-    @State var digits: String = "10"
+struct AlertContent: View {
+    @State var digits: String
+    
+    init(digitValue: String) {
+        _digits = State(initialValue: digitValue)
+    }
     
     var body: some View {
         VStack {
@@ -73,28 +81,48 @@ struct AlertBody: View {
             Text("Enter a value between X and XXXX")
                 .font(.caption)
                 .foregroundColor(Color.gray)
+            
+            AlertButtons(digits: digits)
         }
+        .padding(.horizontal)
     }
 }
 
 struct AlertButtons: View {
+    @EnvironmentObject var manager: ComplementAlertManager
+    @EnvironmentObject var calculatorState: CalculatorState
+    
+    let digits: String
+    
     var body: some View {
         HStack {
-            Button(action: {}){
+            Button(action: {
+                self.manager.isShowing = false
+            }){
                 Text("Cancel")
                     .accentColor(Color.red)
             }
             
             Spacer()
             
-            Button(action: {}){
+            Button(action: {
+                let number = Number(number: self.calculatorState.currentText, base: self.calculatorState.currentBase)
+                let complement = number.radixComplement(digits: Int(self.digits))
+                self.calculatorState.currentText = complement.toString()
+                self.manager.isShowing = false
+            }){
                 Text("ß compl.")
             }
             
             Spacer()
             
-            Button(action: {}){
-                Text("ß-1 compl.")
+            Button(action: {
+                let number = Number(number: self.calculatorState.currentText, base: self.calculatorState.currentBase)
+                let complement = number.radixComplementDiminished(digits: Int(self.digits))
+                self.calculatorState.currentText = complement.toString()
+                self.manager.isShowing = false
+            }){
+                Text("ß⁻¹ compl.")
             }
         }
         .padding(.vertical)

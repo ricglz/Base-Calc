@@ -20,6 +20,7 @@ struct ContentView: View {
                 Keypad()
             }
             PopUpPickerView()
+            ComplementAlert()
         }
     }
 }
@@ -29,6 +30,7 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
             .environmentObject(CalculatorState())
             .environmentObject(PopUpPickerViewManager())
+            .environmentObject(ComplementAlertManager())
             .previewDevice(PreviewDevice(rawValue: "iPhone SE"))
     }
 }
