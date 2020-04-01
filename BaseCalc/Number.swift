@@ -52,6 +52,8 @@ class Number: NSObject {
             self.hasFract = false
         }
     }
+    
+    //MARK:- Base Conversions
 
     private func fractToString(_ fract: Double, _ base: Base) -> String {
         var fractNum = fract
@@ -88,6 +90,8 @@ class Number: NSObject {
         self.base = base
     }
     
+    //MARK:- Arithmetic Operations
+    
     static func + (leftNum: Number, rightNum: Number) -> Number {
         let sumValue = leftNum.value + rightNum.value
         let newNum = Number(number: String(sumValue), base: .Base10)
@@ -115,5 +119,18 @@ class Number: NSObject {
         newNum.setBase(base: leftNum.base)
         
         return newNum
+    }
+    
+    //MARK:- Radix Complement
+    
+    func radixComplement(digits: Int? = nil) -> Number {
+        let digits = digits ?? self.toString().count
+        let complementNumber = "1" + String(repeating: "0", count: digits)
+        
+        return Number(number: complementNumber, base: base) - self
+    }
+    
+    func radixComplementDiminished(digits: Int? = nil) -> Number {
+        return radixComplement(digits: digits) - Number(number: "1", base: base)
     }
 }
