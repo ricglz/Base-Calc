@@ -21,57 +21,48 @@ struct KeypadButton: View {
     func createButton() -> AnyView {
         switch label {
         case "AC":
-            // orange button
             return AnyView(Button(action: calculatorState.allClear) {
                 Text(label)
                     .modifier(OrangeButton(width: width, height: height))
             })
         case "±":
-            // orange button
             return AnyView(Button(action: calculatorState.changeSign) {
                 Text(label)
                     .modifier(OrangeButton(width: width, height: height))
             })
         case "ß":
-            // orange button
             return AnyView(Button(action: {}) {
                 Text(label)
                     .modifier(ComplementButton(width: width, height: height, enabled: !calculatorState.isNegative))
             }.disabled(calculatorState.isNegative))
         case "+":
-            // sum button
+            let selected = calculatorState.willPerformArithmetic && calculatorState.prevOperation == Operation.add
             return AnyView(Button(action: calculatorState.sum) {
                 Text(label)
-                    .modifier(ArithmeticButton(width: width, height: height, enabled: calculatorState.willPerformArithmetic &&
-                    calculatorState.prevOperation == Operation.add))
+                    .modifier(ArithmeticButton(width: width, height: height, selected: selected))
             })
         case "-":
-            // sum button
+            let selected = calculatorState.willPerformArithmetic && calculatorState.prevOperation == Operation.subtract
             return AnyView(Button(action: calculatorState.substract) {
                 Text(label)
-                    .modifier(ArithmeticButton(width: width, height: height, enabled: calculatorState.willPerformArithmetic &&
-                    calculatorState.prevOperation == Operation.subtract))
+                    .modifier(ArithmeticButton(width: width, height: height, selected: selected))
                 })
         case "=":
-            // gray button
             return AnyView(Button(action: calculatorState.solve) {
                 Text(label)
                     .modifier(GrayButton(width: width, height: height))
             })
         case ".", "0":
-            // gray button
             return AnyView(Button(action: addDigit) {
                 Text(label)
                     .modifier(GrayButton(width: width, height: height))
             })
         case "X":
-            // gray button
             return AnyView(Button(action: {}) {
                 Text(label)
                     .modifier(OrangeButton(width: width, height: height))
             })
         default:
-            // digit button
             let digits = [
                 "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B",
                 "C", "D", "E", "F"
@@ -90,9 +81,9 @@ struct KeypadButton: View {
 }
 struct KeypadButton_Previews: PreviewProvider {
     static var previews: some View {
-        Keypad()
+        KeypadButton(label: "AC", width: 64, height: 64)
             .environmentObject(CalculatorState())
             .environmentObject(PopUpPickerViewManager())
-            .previewLayout(.fixed(width: 400, height: 600))
+            .previewLayout(.sizeThatFits)
     }
 }

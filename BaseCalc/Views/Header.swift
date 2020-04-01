@@ -62,6 +62,6 @@ struct Header_Previews: PreviewProvider {
         Header()
             .environmentObject(CalculatorState())
             .environmentObject(PopUpPickerViewManager())
-            .previewLayout(.fixed(width: 400, height: 60))
+            .previewLayout(.sizeThatFits)
     }
 }

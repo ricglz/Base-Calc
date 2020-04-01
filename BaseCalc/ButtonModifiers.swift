@@ -45,13 +45,13 @@ struct ComplementButton: ViewModifier {
 
 struct ArithmeticButton: ViewModifier {
     let width, height: CGFloat
-    let enabled: Bool
+    let selected: Bool
     
     func body(content: Content) -> some View {
         content
             .modifier(CustomButton(width: width, height: height))
-            .foregroundColor(enabled ? Color.orange : Color.white)
-            .background(enabled ? Color.white : Color.orange)
+            .foregroundColor(selected ? Color.orange : Color.white)
+            .background(selected ? Color.white : Color.orange)
     }
 }
 
