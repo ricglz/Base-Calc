@@ -22,6 +22,7 @@
 		DBC1DC392432C95F00AC308C /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC1DC382432C95F00AC308C /* Header.swift */; };
 		DBC1DC3B2432CA1000AC308C /* Keypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC1DC3A2432CA1000AC308C /* Keypad.swift */; };
 		DBC1DC3D2432CB3600AC308C /* KeypadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC1DC3C2432CB3600AC308C /* KeypadButton.swift */; };
+		DBF0AA8E243528D90047A80D /* ComplementAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF0AA8D243528D90047A80D /* ComplementAlert.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		DBC1DC382432C95F00AC308C /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		DBC1DC3A2432CA1000AC308C /* Keypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keypad.swift; sourceTree = "<group>"; };
 		DBC1DC3C2432CB3600AC308C /* KeypadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeypadButton.swift; sourceTree = "<group>"; };
+		DBF0AA8D243528D90047A80D /* ComplementAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplementAlert.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +137,7 @@
 				DBC1DC3C2432CB3600AC308C /* KeypadButton.swift */,
 				DBC1DC382432C95F00AC308C /* Header.swift */,
 				99E0B95B242698D400E357F4 /* PopUpPickerView.swift */,
+				DBF0AA8D243528D90047A80D /* ComplementAlert.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -252,6 +255,7 @@
 				DB29CDD1242401BD00AC13C9 /* Number.swift in Sources */,
 				DBC1DC392432C95F00AC308C /* Header.swift in Sources */,
 				992C4B41241F039400F496FC /* AppDelegate.swift in Sources */,
+				DBF0AA8E243528D90047A80D /* ComplementAlert.swift in Sources */,
 				DBC1DC3B2432CA1000AC308C /* Keypad.swift in Sources */,
 				992C4B43241F039400F496FC /* SceneDelegate.swift in Sources */,
 				992C4B45241F039400F496FC /* ContentView.swift in Sources */,
