@@ -11,6 +11,13 @@ import SwiftUI
 struct GeneralPopUpView: View {
     let isShowing: Bool;
     let Content: () -> AnyView;
+    let transition: AnyTransition
+    
+    init(isShowing: Bool, transition: AnyTransition = .move(edge: .bottom), Content: @escaping () -> AnyView) {
+        self.isShowing = isShowing
+        self.Content = Content
+        self.transition = transition
+    }
     
     var body: some View {
         ZStack {
@@ -19,7 +26,7 @@ struct GeneralPopUpView: View {
                      .edgesIgnoringSafeArea(.all)
                      .opacity(0.75)
                 Content()
-                .transition(.move(edge: .bottom))
+                .transition(transition)
                 .animation(.default)
             }
         }.animation(.default)
