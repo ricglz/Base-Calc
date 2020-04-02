@@ -13,6 +13,7 @@ struct KeypadButton: View {
     let width, height: CGFloat
 
     @EnvironmentObject var calculatorState: CalculatorState
+    @EnvironmentObject var complementManager: ComplementAlertManager
 
     var body: some View {
         return createButton()
@@ -31,9 +32,12 @@ struct KeypadButton: View {
                     .modifier(OrangeButton(width: width, height: height))
             })
         case "ß":
-            return AnyView(Button(action: {}) {
+            let enabled = !(calculatorState.isNegative || calculatorState.hasDecimalDot)
+            return AnyView(Button(action: {
+                self.complementManager.isShowing = true
+            }) {
                 Text(label)
-                    .modifier(ComplementButton(width: width, height: height, enabled: !calculatorState.isNegative))
+                    .modifier(ComplementButton(width: width, height: height, enabled: enabled))
             }.disabled(calculatorState.isNegative))
         case "+":
             let selected = calculatorState.willPerformArithmetic && calculatorState.prevOperation == Operation.add

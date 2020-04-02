@@ -291,5 +291,27 @@ class NumberTests: XCTestCase {
         XCTAssertEqual(num2.value, 1)
         XCTAssertFalse(num2.hasFract)
     }
+    
+    //MARK:- Testing radix complement
+    
+    func testRadixComplementNoDigits() {
+        num1 = Number(number: "124", base: .Base16)
+        XCTAssertEqual(num1.radixComplement().toString(), "EDC")
+    }
+    
+    func testRadixComplementWithDigits() {
+        num1 = Number(number: "7312", base: .Base10)
+        XCTAssertEqual(num1.radixComplement(digits: 6).toString(), "992688")
+    }
+    
+    func testRadixComplementDiminishedNoDigits() {
+        num1 = Number(number: "1", base: .Base8)
+        XCTAssertEqual(num1.radixComplementDiminished().toString(), "6")
+    }
+    
+    func testRadixComplementDiminishedWithDigits() {
+        num1 = Number(number: "1010", base: .Base2)
+        XCTAssertEqual(num1.radixComplementDiminished(digits: 8).toString(), "11110101")
+    }
 
 }

@@ -15,4 +15,5 @@ extension Color {
     static let disabledOrangeBG = Color(red: 0.62, green: 0.39, blue: 0.13)
     static let toolbarBackground = Color(red: 0.2, green: 0.2, blue: 0.2)
     static let pickerviewBackground = Color(red: 0.15, green: 0.15, blue: 0.15)
+    static let alertBackground = Color(red: 0.10, green: 0.10, blue: 0.10)    
 }

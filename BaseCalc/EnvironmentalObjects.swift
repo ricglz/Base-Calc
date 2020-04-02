@@ -113,3 +113,11 @@ class PopUpPickerViewManager: ObservableObject {
         currentIndex = currentBase.rawValue - 2
     }
 }
+
+class ComplementAlertManager: ObservableObject {
+    @Published var isShowing: Bool = false
+    
+    func showPickerView(_ currentBase: Base) {
+        isShowing = true
+    }
+}
