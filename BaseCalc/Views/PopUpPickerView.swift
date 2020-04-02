@@ -12,24 +12,17 @@ struct PopUpPickerView: View {
     @EnvironmentObject var manager: PopUpPickerViewManager
     
     var body: some View {
-        ZStack {
-            if manager.isShowing {
-                Color.black
-                     .edgesIgnoringSafeArea(.all)
-                     .opacity(0.75)
-                GeometryReader { (geometry) in
-                    VStack {
-                        Spacer()
-                        PickerViewWithDoneToolbar().frame(
-                            height: geometry.size.height / 2
-                        )
-                    }
-                    .edgesIgnoringSafeArea(.bottom)
+        GeneralPopUpView(isShowing: manager.isShowing) { () -> AnyView in
+            AnyView(GeometryReader { (geometry) in
+                VStack {
+                    Spacer()
+                    PickerViewWithDoneToolbar().frame(
+                        height: geometry.size.height / 2
+                    )
                 }
-                .transition(.move(edge: .bottom))
-                .animation(.default)
-            }
-        }.animation(.default)
+                .edgesIgnoringSafeArea(.bottom)
+            })
+        }
     }
 }
 

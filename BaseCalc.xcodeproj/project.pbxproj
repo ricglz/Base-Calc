@@ -13,6 +13,7 @@
 		992C4B47241F039600F496FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 992C4B46241F039600F496FC /* Assets.xcassets */; };
 		992C4B4A241F039600F496FC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 992C4B49241F039600F496FC /* Preview Assets.xcassets */; };
 		992C4B4D241F039600F496FC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 992C4B4B241F039600F496FC /* LaunchScreen.storyboard */; };
+		993B2E6124356E3500DBFF2D /* GeneralPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993B2E6024356E3500DBFF2D /* GeneralPopUpView.swift */; };
 		998DE0CD2421871D00A18EE3 /* EnvironmentalObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998DE0CC2421871D00A18EE3 /* EnvironmentalObjects.swift */; };
 		99E0B95C242698D400E357F4 /* PopUpPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E0B95B242698D400E357F4 /* PopUpPickerView.swift */; };
 		99E0B9622426A11E00E357F4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E0B9612426A11E00E357F4 /* Extensions.swift */; };
@@ -46,6 +47,7 @@
 		992C4B49241F039600F496FC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		992C4B4C241F039600F496FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		992C4B4E241F039600F496FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		993B2E6024356E3500DBFF2D /* GeneralPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPopUpView.swift; sourceTree = "<group>"; };
 		998DE0CC2421871D00A18EE3 /* EnvironmentalObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentalObjects.swift; sourceTree = "<group>"; };
 		99E0B95B242698D400E357F4 /* PopUpPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpPickerView.swift; sourceTree = "<group>"; };
 		99E0B9612426A11E00E357F4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				DBC1DC3C2432CB3600AC308C /* KeypadButton.swift */,
 				DBC1DC382432C95F00AC308C /* Header.swift */,
 				99E0B95B242698D400E357F4 /* PopUpPickerView.swift */,
+				993B2E6024356E3500DBFF2D /* GeneralPopUpView.swift */,
 				DBF0AA8D243528D90047A80D /* ComplementAlert.swift */,
 			);
 			path = Views;
@@ -262,6 +265,7 @@
 				998DE0CD2421871D00A18EE3 /* EnvironmentalObjects.swift in Sources */,
 				99E0B95C242698D400E357F4 /* PopUpPickerView.swift in Sources */,
 				DBC1DC362432C7DF00AC308C /* ButtonModifiers.swift in Sources */,
+				993B2E6124356E3500DBFF2D /* GeneralPopUpView.swift in Sources */,
 				99E0B9622426A11E00E357F4 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

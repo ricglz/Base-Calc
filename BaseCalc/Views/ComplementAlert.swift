@@ -144,6 +144,7 @@ struct AlertButtons: View {
 struct ComplementAlert_Previews: PreviewProvider {
     static var previews: some View {
         ComplementAlert()
+            .environmentObject(ComplementAlertManager())
             .previewDevice(PreviewDevice(rawValue: "iPhone SE"))
     }
 }
