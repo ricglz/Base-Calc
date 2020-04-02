@@ -23,7 +23,7 @@ struct ComplementAlert: View {
                     VStack {
                         ZStack(alignment: .center){
                             Color.alertBackground
-                            AlertContent(
+                            ComplementAlertContent(
                                 digitValue: String(self.calculatorState.currentText.count)
                             )
                         }
@@ -48,7 +48,7 @@ struct ComplementAlert: View {
     }
 }
 
-struct AlertContent: View {
+struct ComplementAlertContent: View {
     @State var digits: String
     let lowerDigitLimit: String
     
@@ -83,14 +83,18 @@ struct AlertContent: View {
                 Text("Enter a value between \(lowerDigitLimit) and 24")
                     .font(.caption)
                     .foregroundColor(.gray)
-                    .opacity(Int(self.digits) ?? 0 > 24 || Int(self.digits) ?? 0 < Int(self.lowerDigitLimit)! ? 1 : 0)
+                    .opacity(isDigitCountValid() ? 0 : 1)
             
             AlertButtons(
                 digits: digits,
-                lowerDigitLimit: lowerDigitLimit
+                isDigitCountValid: isDigitCountValid()
             )
         }
         .padding(.horizontal)
+    }
+    
+    func isDigitCountValid() -> Bool {
+        Int(self.digits) ?? 0 <= 24 && Int(self.digits) ?? 0 >= Int(self.lowerDigitLimit)!
     }
 }
 
@@ -99,7 +103,7 @@ struct AlertButtons: View {
     @EnvironmentObject var calculatorState: CalculatorState
     
     let digits: String
-    let lowerDigitLimit: String
+    let isDigitCountValid: Bool
     
     var body: some View {
         HStack {
@@ -119,7 +123,7 @@ struct AlertButtons: View {
                 self.manager.isShowing = false
             }){
                 Text("ß compl.")
-            }.disabled(Int(self.digits) ?? 0 > 24 || Int(self.digits) ?? 0 < Int(self.lowerDigitLimit)!)
+            }.disabled(!isDigitCountValid)
                         
             Spacer()
             
@@ -130,7 +134,7 @@ struct AlertButtons: View {
                 self.manager.isShowing = false
             }){
                 Text("ß⁻¹ compl.")
-            }.disabled(Int(self.digits) ?? 0 > 24 || Int(self.digits) ?? 0 < Int(self.lowerDigitLimit)!)
+            }.disabled(!isDigitCountValid)
             
         }
         .padding(.vertical)
