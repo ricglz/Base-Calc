@@ -12,13 +12,13 @@ struct GeneralPopUpView: View {
     let isShowing: Bool;
     let Content: () -> AnyView;
     let transition: AnyTransition
-    
+
     init(isShowing: Bool, transition: AnyTransition = .move(edge: .bottom), Content: @escaping () -> AnyView) {
         self.isShowing = isShowing
         self.Content = Content
         self.transition = transition
     }
-    
+
     var body: some View {
         ZStack {
             if isShowing {

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct PopUpPickerView: View {
     @EnvironmentObject var manager: PopUpPickerViewManager
-    
+
     var body: some View {
         GeneralPopUpView(isShowing: manager.isShowing) { () -> AnyView in
             AnyView(GeometryReader { (geometry) in
@@ -41,7 +41,7 @@ struct PickerViewWithDoneToolbar: View {
 struct CustomToolbar: View {
     @EnvironmentObject var manager: PopUpPickerViewManager
     @EnvironmentObject var calculator: CalculatorState
-    
+
     var body: some View {
         ZStack {
             Color.toolbarBackground
@@ -53,7 +53,7 @@ struct CustomToolbar: View {
             }
         }
     }
-    
+
     func hidePopUp() {
         let newBase = Base(rawValue: manager.currentIndex + 2)
         let currNumber = Number(number: calculator.currentText, base: calculator.currentBase)
@@ -65,7 +65,7 @@ struct CustomToolbar: View {
 
 struct CustomPickerView: View {
     @EnvironmentObject var manager: PopUpPickerViewManager
-    
+
     var body: some View {
         ZStack {
             Color.pickerviewBackground
