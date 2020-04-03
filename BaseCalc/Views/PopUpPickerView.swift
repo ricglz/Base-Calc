@@ -10,26 +10,19 @@ import SwiftUI
 
 struct PopUpPickerView: View {
     @EnvironmentObject var manager: PopUpPickerViewManager
-    
+
     var body: some View {
-        ZStack {
-            if manager.isShowing {
-                Color.black
-                     .edgesIgnoringSafeArea(.all)
-                     .opacity(0.75)
-                GeometryReader { (geometry) in
-                    VStack {
-                        Spacer()
-                        PickerViewWithDoneToolbar().frame(
-                            height: geometry.size.height / 2
-                        )
-                    }
-                    .edgesIgnoringSafeArea(.bottom)
+        GeneralPopUpView(isShowing: manager.isShowing) { () -> AnyView in
+            AnyView(GeometryReader { (geometry) in
+                VStack {
+                    Spacer()
+                    PickerViewWithDoneToolbar().frame(
+                        height: geometry.size.height / 2
+                    )
                 }
-                .transition(.move(edge: .bottom))
-                .animation(.default)
-            }
-        }.animation(.default)
+                .edgesIgnoringSafeArea(.bottom)
+            })
+        }
     }
 }
 
@@ -48,7 +41,7 @@ struct PickerViewWithDoneToolbar: View {
 struct CustomToolbar: View {
     @EnvironmentObject var manager: PopUpPickerViewManager
     @EnvironmentObject var calculator: CalculatorState
-    
+
     var body: some View {
         ZStack {
             Color.toolbarBackground
@@ -60,7 +53,7 @@ struct CustomToolbar: View {
             }
         }
     }
-    
+
     func hidePopUp() {
         let newBase = Base(rawValue: manager.currentIndex + 2)
         let currNumber = Number(number: calculator.currentText, base: calculator.currentBase)
@@ -72,7 +65,7 @@ struct CustomToolbar: View {
 
 struct CustomPickerView: View {
     @EnvironmentObject var manager: PopUpPickerViewManager
-    
+
     var body: some View {
         ZStack {
             Color.pickerviewBackground
