@@ -24,21 +24,21 @@ class CalculatorState: ObservableObject {
 
     func addDigit(_ digitToAdd: String) {
         let digitToAddIsDot = digitToAdd == "."
-        
+
         if willPerformArithmetic {
             prevNumber = Number(number: currentText, base: currentBase)
-            
+
             if digitToAddIsDot {
                 currentText = "0."
             } else {
                 currentText = digitToAdd
             }
-            
+
             willPerformArithmetic = false
             hasDecimalDot = digitToAddIsDot
             return
         }
-        
+
         if hasDecimalDot && digitToAddIsDot {
             return
         }
@@ -59,17 +59,17 @@ class CalculatorState: ObservableObject {
         prevOperation = nil
         prevNumber = nil
     }
-    
+
     func sum() {
         willPerformArithmetic = true
         prevOperation = .add
     }
-    
+
     func substract() {
         willPerformArithmetic = true
         prevOperation = .subtract
     }
-    
+
     func changeSign() {
         if currentText != "0" {
             if currentText.prefix(1) == "-" {
@@ -81,12 +81,12 @@ class CalculatorState: ObservableObject {
             }
         }
     }
-    
+
     func solve() {
         if prevOperation != nil {
             var answer: Number!
             let currentNumber = Number(number: currentText, base: currentBase)
-            
+
             switch prevOperation {
             case .add:
                 answer = (prevNumber ?? currentNumber) + currentNumber
@@ -95,7 +95,7 @@ class CalculatorState: ObservableObject {
             default:
                 print(prevOperation!.rawValue)
             }
-            
+
             prevNumber = answer
             currentText = answer.toString()
             isNegative = answer.value < 0
