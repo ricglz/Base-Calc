@@ -84,7 +84,7 @@ struct CustomPickerView: View {
 struct PopUpPickerView_Previews: PreviewProvider {
     static var previews: some View {
         PopUpPickerView()
-            .environmentObject(PopUpPickerViewManager())
+            .environmentObject(PopUpPickerViewManager(isShowing: true))
             .previewDevice(PreviewDevice(rawValue: "iPhone SE"))
     }
 }

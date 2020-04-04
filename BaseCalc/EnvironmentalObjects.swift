@@ -104,20 +104,35 @@ class CalculatorState: ObservableObject {
     }
 }
 
-class PopUpPickerViewManager: ObservableObject {
+class GeneralAlertManager: ObservableObject {
     @Published var isShowing: Bool = false
+
+    init(isShowing: Bool = false) {
+        self.isShowing = isShowing
+    }
+}
+
+class PopUpPickerViewManager: GeneralAlertManager {
     @Published var currentIndex: Int = 8
-    
+
     func showPickerView(_ currentBase: Base) {
         isShowing = true
         currentIndex = currentBase.rawValue - 2
     }
 }
 
-class ComplementAlertManager: ObservableObject {
-    @Published var isShowing: Bool = false
-    
-    func showPickerView(_ currentBase: Base) {
+class ComplementAlertManager: GeneralAlertManager {}
+
+class ToastManager: GeneralAlertManager {
+    @Published var content: String = ""
+
+    init(isShowing: Bool = false, content: String = "") {
+        super.init(isShowing: isShowing)
+        self.content = content
+    }
+
+    func showToast(content: String) {
         isShowing = true
+        self.content = content
     }
 }

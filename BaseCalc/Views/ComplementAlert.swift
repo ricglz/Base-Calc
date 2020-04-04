@@ -14,8 +14,8 @@ struct ComplementAlert: View {
 
     var body: some View {
         GeneralPopUpView(
-            isShowing: manager.isShowing,
-            transition: AnyTransition.scale(scale: 0.95).combined(with: .opacity)
+            transition: AnyTransition.scale(scale: 0.95).combined(with: .opacity),
+            isShowing: manager.isShowing
         ) { () -> AnyView in
             AnyView(GeometryReader { geometry in
                 VStack {
@@ -139,7 +139,8 @@ struct AlertButtons: View {
 struct ComplementAlert_Previews: PreviewProvider {
     static var previews: some View {
         ComplementAlert()
-            .environmentObject(ComplementAlertManager())
+            .environmentObject(CalculatorState())
+            .environmentObject(ComplementAlertManager(isShowing: true))
             .previewDevice(PreviewDevice(rawValue: "iPhone SE"))
     }
 }

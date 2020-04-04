@@ -12,17 +12,23 @@ struct GeneralPopUpView: View {
     let isShowing: Bool;
     let Content: () -> AnyView;
     let transition: AnyTransition
+    let bgColor: Color
 
-    init(isShowing: Bool, transition: AnyTransition = .move(edge: .bottom), Content: @escaping () -> AnyView) {
+    init(bgColor: Color = Color.black,
+         transition: AnyTransition = .move(edge: .bottom),
+         isShowing: Bool,
+         Content: @escaping () -> AnyView
+    ) {
         self.isShowing = isShowing
         self.Content = Content
         self.transition = transition
+        self.bgColor = bgColor
     }
 
     var body: some View {
         ZStack {
             if isShowing {
-                Color.black
+                bgColor
                      .edgesIgnoringSafeArea(.all)
                      .opacity(0.75)
                 Content()
