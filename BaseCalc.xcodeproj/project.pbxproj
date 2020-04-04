@@ -15,6 +15,7 @@
 		992C4B4D241F039600F496FC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 992C4B4B241F039600F496FC /* LaunchScreen.storyboard */; };
 		993B2E6124356E3500DBFF2D /* GeneralPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993B2E6024356E3500DBFF2D /* GeneralPopUpView.swift */; };
 		998DE0CD2421871D00A18EE3 /* EnvironmentalObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998DE0CC2421871D00A18EE3 /* EnvironmentalObjects.swift */; };
+		999C4CBC243941B70092E2AD /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C4CBB243941B70092E2AD /* Toast.swift */; };
 		99E0B95C242698D400E357F4 /* PopUpPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E0B95B242698D400E357F4 /* PopUpPickerView.swift */; };
 		99E0B9622426A11E00E357F4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E0B9612426A11E00E357F4 /* Extensions.swift */; };
 		DB29CDD1242401BD00AC13C9 /* Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB29CDD0242401BD00AC13C9 /* Number.swift */; };
@@ -49,6 +50,7 @@
 		992C4B4E241F039600F496FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		993B2E6024356E3500DBFF2D /* GeneralPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPopUpView.swift; sourceTree = "<group>"; };
 		998DE0CC2421871D00A18EE3 /* EnvironmentalObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentalObjects.swift; sourceTree = "<group>"; };
+		999C4CBB243941B70092E2AD /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		99E0B95B242698D400E357F4 /* PopUpPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpPickerView.swift; sourceTree = "<group>"; };
 		99E0B9612426A11E00E357F4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		DB29CDD0242401BD00AC13C9 /* Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Number.swift; sourceTree = "<group>"; };

@@ -38,11 +38,12 @@ struct HeaderBaseLabel: View {
         }
         .accentColor(.black)
     }
-    
+
 }
 
 struct NumberLabel: View {
     @EnvironmentObject var calculatorState: CalculatorState
+    @EnvironmentObject var toastManager: ToastManager
 
     var body: some View {
         HStack {
@@ -54,6 +55,12 @@ struct NumberLabel: View {
                 .allowsTightening(true)
                 .minimumScaleFactor(0.5)
         }.padding().frame(minHeight: 92)
+            .onLongPressGesture(perform: copyToClipboard)
+    }
+
+    func copyToClipboard() {
+        UIPasteboard.general.string = calculatorState.currentText
+        toastManager.showToast(content: "Copied to Clipboard")
     }
 }
 

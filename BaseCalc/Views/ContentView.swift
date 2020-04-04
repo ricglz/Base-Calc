@@ -21,6 +21,7 @@ struct ContentView: View {
             }
             PopUpPickerView()
             ComplementAlert()
+            Toast()
         }
     }
 }
@@ -31,6 +32,7 @@ struct ContentView_Previews: PreviewProvider {
             .environmentObject(CalculatorState())
             .environmentObject(PopUpPickerViewManager())
             .environmentObject(ComplementAlertManager())
+            .environmentObject(ToastManager())
             .previewDevice(PreviewDevice(rawValue: "iPhone SE"))
     }
 }
