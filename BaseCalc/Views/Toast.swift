@@ -24,31 +24,31 @@ struct Toast: View {
                                 .foregroundColor(.white)
                             Spacer()
                         }
-                            .frame(width: geometry.size.width * 0.75)
-                            .background(Color.disabledDigitBG)
-                    .cornerRadius(15)
-                    }.padding(.top, 40)
-                        .frame(width: geometry.size.width)
-                        .transition(
-                            AnyTransition.scale(scale: 0.75)
-                                .combined(with: .opacity)
-                                .combined(with: .slide)
-                        )
-                        .animation(.default)
-                        .onAppear(perform: self.countDownToDissapear)
+                        .frame(width: geometry.size.width * 0.75)
+                        .background(Color.disabledDigitBG)
+                        .cornerRadius(10)
+                        
+                        Spacer()
+                    }
+                    .padding(.top, 40)
+                    .frame(width: geometry.size.width)
                 }
+                .transition(
+                    AnyTransition.move(edge: .top)
+                )
+                .animation(.default)
+                .zIndex(1)
+                .onAppear(perform: self.countDownToDissapear)
             } else {
                 EmptyView()
             }
         }
     }
     
-    /// Wait to later on dissapear with animation
+    /// Wait to later on disappear with animation
     func countDownToDissapear() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-          withAnimation {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.manager.isShowing = false
-          }
         }
     }
 }

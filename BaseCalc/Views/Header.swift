@@ -44,6 +44,7 @@ struct HeaderBaseLabel: View {
 struct NumberLabel: View {
     @EnvironmentObject var calculatorState: CalculatorState
     @EnvironmentObject var toastManager: ToastManager
+    let generator = UIImpactFeedbackGenerator(style: .light)
 
     var body: some View {
         HStack {
@@ -59,6 +60,7 @@ struct NumberLabel: View {
     }
 
     func copyToClipboard() {
+        self.generator.impactOccurred()
         UIPasteboard.general.string = calculatorState.currentText
         toastManager.showToast(content: "Copied to Clipboard")
     }
