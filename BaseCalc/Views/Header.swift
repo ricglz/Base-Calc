@@ -38,11 +38,13 @@ struct HeaderBaseLabel: View {
         }
         .accentColor(.black)
     }
-    
+
 }
 
 struct NumberLabel: View {
     @EnvironmentObject var calculatorState: CalculatorState
+    @EnvironmentObject var toastManager: ToastManager
+    let generator = UIImpactFeedbackGenerator(style: .light)
 
     var body: some View {
         HStack {
@@ -54,6 +56,13 @@ struct NumberLabel: View {
                 .allowsTightening(true)
                 .minimumScaleFactor(0.5)
         }.padding().frame(minHeight: 92)
+            .onLongPressGesture(perform: copyToClipboard)
+    }
+
+    func copyToClipboard() {
+        self.generator.impactOccurred()
+        UIPasteboard.general.string = calculatorState.currentText
+        toastManager.showToast(content: "Copied to Clipboard")
     }
 }
 
