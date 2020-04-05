@@ -7,10 +7,15 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct KeypadButton: View {
     let label: String
     let width, height: CGFloat
+
+    /// UX feedback when clicking
+    let systemSoundID: SystemSoundID = 1104
+    let generator = UIImpactFeedbackGenerator(style: .light)
 
     @EnvironmentObject var calculatorState: CalculatorState
     @EnvironmentObject var complementManager: ComplementAlertManager
@@ -18,51 +23,51 @@ struct KeypadButton: View {
     var body: some View {
         return createButton()
     }
-    
+
     func createButton() -> AnyView {
         switch label {
         case "AC":
-            return AnyView(Button(action: calculatorState.allClear) {
+            return AnyView(Button(action: generalAction(calculatorState.allClear)) {
                 Text(label)
                     .modifier(OrangeButton(width: width, height: height))
             })
         case "±":
-            return AnyView(Button(action: calculatorState.changeSign) {
+            return AnyView(Button(action: generalAction(calculatorState.changeSign)) {
                 Text(label)
                     .modifier(OrangeButton(width: width, height: height))
             })
         case "ß":
             let enabled = !(calculatorState.isNegative || calculatorState.hasDecimalDot)
-            return AnyView(Button(action: {
+            return AnyView(Button(action: generalAction({
                 self.complementManager.isShowing = true
-            }) {
+            })) {
                 Text(label)
                     .modifier(ComplementButton(width: width, height: height, enabled: enabled))
             }.disabled(calculatorState.isNegative))
         case "+":
             let selected = calculatorState.willPerformArithmetic && calculatorState.prevOperation == Operation.add
-            return AnyView(Button(action: calculatorState.sum) {
+            return AnyView(Button(action: generalAction(calculatorState.sum)) {
                 Text(label)
                     .modifier(ArithmeticButton(width: width, height: height, selected: selected))
             })
         case "-":
             let selected = calculatorState.willPerformArithmetic && calculatorState.prevOperation == Operation.subtract
-            return AnyView(Button(action: calculatorState.substract) {
+            return AnyView(Button(action: generalAction(calculatorState.substract)) {
                 Text(label)
                     .modifier(ArithmeticButton(width: width, height: height, selected: selected))
                 })
         case "=":
-            return AnyView(Button(action: calculatorState.solve) {
+            return AnyView(Button(action: generalAction(calculatorState.solve)) {
                 Text(label)
                     .modifier(GrayButton(width: width, height: height))
             })
         case ".", "0":
-            return AnyView(Button(action: addDigit) {
+            return AnyView(Button(action: generalAction(addDigit)) {
                 Text(label)
                     .modifier(GrayButton(width: width, height: height))
             })
         case "X":
-            return AnyView(Button(action: {}) {
+            return AnyView(Button(action: generalAction({})) {
                 Text(label)
                     .modifier(OrangeButton(width: width, height: height))
             })
@@ -72,10 +77,18 @@ struct KeypadButton: View {
                 "C", "D", "E", "F"
             ]
             let enabled = digits.firstIndex(of: label)! < calculatorState.currentBase.rawValue
-            return AnyView(Button(action: addDigit) {
+            return AnyView(Button(action: generalAction(addDigit)) {
                 Text(label)
                     .modifier(DigitButton(width: width, height: height, enabled: enabled))
             }.disabled(!enabled))
+        }
+    }
+
+    func generalAction(_ callback: @escaping () -> Void) -> () -> Void {
+        return {
+            AudioServicesPlaySystemSound(self.systemSoundID)
+            self.generator.impactOccurred()
+            callback()
         }
     }
 
