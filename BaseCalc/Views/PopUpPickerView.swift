@@ -56,9 +56,7 @@ struct CustomToolbar: View {
 
     func hidePopUp() {
         let newBase = Base(rawValue: manager.currentIndex + 2)
-        let currNumber = Number(number: calculator.currentText, base: calculator.currentBase)
-        calculator.currentText = currNumber.toString(base: newBase)
-        calculator.currentBase = newBase!
+        calculator.changeBase(newBase!)
         manager.isShowing = false
     }
 }
