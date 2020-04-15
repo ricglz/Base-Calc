@@ -81,6 +81,13 @@ class CalculatorState: ObservableObject {
             }
         }
     }
+    
+    func changeBase(_ newBase: Base) {
+        let currNumber = Number(number: currentText, base: currentBase)
+        currentText = currNumber.toString(base: newBase)
+        hasDecimalDot = currNumber.hasFract
+        currentBase = newBase
+    }
 
     func solve() {
         if prevOperation != nil {
