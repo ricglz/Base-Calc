@@ -13,32 +13,12 @@ struct ComplementAlert: View {
     @EnvironmentObject var calculatorState: CalculatorState
 
     var body: some View {
-        GeneralPopUpView(
-            transition: AnyTransition.scale(scale: 0.95).combined(with: .opacity),
+        GeneralAlert(
             isShowing: manager.isShowing
-        ) { () -> AnyView in
-            AnyView(GeometryReader { geometry in
-                VStack {
-                    ZStack(alignment: .center){
-                        Color.alertBackground
-                        ComplementAlertContent(
-                            digitValue: String(self.calculatorState.currentText.count)
-                        )
-                    }
-                    .frame(
-                        width: geometry.size.width * 0.9,
-                        height: 200
-                    )
-                    .cornerRadius(10)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.gray, lineWidth: 0.5)
-                    )
-
-                    Spacer()
-                        .frame(height: geometry.size.width * 0.75)
-                }
-            })
+        ){ () -> AnyView in
+            AnyView(ComplementAlertContent(
+                digitValue: String(self.calculatorState.currentText.count)
+            ))
         }
     }
 }

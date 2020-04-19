@@ -13,32 +13,12 @@ struct FloatingPointAlert: View {
     @EnvironmentObject var manager: FloatingPointAlertManager
     
     var body: some View {
-        GeneralPopUpView(
-            transition: AnyTransition.scale(scale: 0.95).combined(with: .opacity),
+        GeneralAlert(
             isShowing: manager.isShowing
-        ) { () -> AnyView in
-            AnyView(GeometryReader { geometry in
-                VStack {
-                    ZStack(alignment: .center){
-                        Color.alertBackground
-                        FloatingPointAlertContent(
-                            number: Number(number: self.calculatorState.currentText, base: self.calculatorState.currentBase)
-                        )
-                    }
-                    .frame(
-                        width: geometry.size.width * 0.9,
-                        height: 200
-                    )
-                    .cornerRadius(10)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.gray, lineWidth: 0.5)
-                    )
-
-                    Spacer()
-                        .frame(height: geometry.size.width * 0.75)
-                }
-            })
+        ){ () -> AnyView in
+            AnyView(FloatingPointAlertContent(
+                number: Number(number: self.calculatorState.currentText, base: self.calculatorState.currentBase)
+            ))
         }
     }
 }
