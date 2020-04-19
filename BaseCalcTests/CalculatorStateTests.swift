@@ -56,10 +56,12 @@ class CalculatorStateTests: XCTestCase {
     }
 
     func testZeroTestAddDigit() {
+        state.currentText = "0"
         addRandomDigitAndAsertPresence()
     }
 
     func testZeroTestAddDot() {
+        state.currentText = "0"
         state.addDigit(".")
         XCTAssertEqual(state.currentText, "0.")
         XCTAssertTrue(state.hasDecimalDot)
@@ -99,13 +101,14 @@ class CalculatorStateTests: XCTestCase {
         numericalOperationsAux(state.sum, "add")
     }
 
-    func testSubstract() {
-        numericalOperationsAux(state.substract, "substract")
+    func testSubtract() {
+        numericalOperationsAux(state.subtract, "subtract")
     }
 
     //MARK:- Change Sign Operation
 
     func testChangeSignOfZero() {
+        state.currentText = "0"
         state.changeSign()
         XCTAssertEqual(state.currentText, "0")
         XCTAssertFalse(state.isNegative)
@@ -190,7 +193,7 @@ class CalculatorStateTests: XCTestCase {
     }
 
     func testSolveSubPositiveAnswer() {
-        state.prevOperation = .substract
+        state.prevOperation = .subtract
         state.prevNumber = Number(number: "10", base: .Base10)
         state.currentText = "1"
         state.solve()
@@ -201,7 +204,7 @@ class CalculatorStateTests: XCTestCase {
     }
 
     func testSolveSubNegativeAnswer() {
-        state.prevOperation = .substract
+        state.prevOperation = .subtract
         state.prevNumber = Number(number: "10", base: .Base10)
         state.currentText = "20"
         state.solve()
@@ -212,7 +215,7 @@ class CalculatorStateTests: XCTestCase {
     }
 
     func testSolveSubWithoutPrevNumber() {
-        state.prevOperation = .substract
+        state.prevOperation = .subtract
         state.currentText = "10"
         state.solve()
         XCTAssertEqual(state.prevNumber?.toString(), "0")
