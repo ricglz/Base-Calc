@@ -87,6 +87,23 @@ class CalculatorStateTests: XCTestCase {
         XCTAssertNil(state.prevNumber)
     }
     
+    //MARK:- Numerical operations
+    
+    func numericalOperationsAux(_ operation: () -> (),  _ prevOperation: String) {
+        operation()
+        XCTAssertTrue(state.willPerformArithmetic)
+        XCTAssertEqual(state.prevOperation?.rawValue, prevOperation)
+    }
+    
+    func testSum() {
+        numericalOperationsAux(state.sum, "add")
+    }
+    
+    func testSubstract() {
+        numericalOperationsAux(state.substract, "substract")
+    }
+    
+    
     //MARK:- Change Base Operation
     func testWholeNumberChangeBase() throws {
         state.currentText = "35"
