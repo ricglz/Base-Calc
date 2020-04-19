@@ -25,6 +25,51 @@ class CalculatorStateTests: XCTestCase {
         state = nil
     }
     
+    //MARK:- Add Digit operation
+    func testWillPerformAritmeticAddDot() {
+        state.willPerformArithmetic = true
+        state.addDigit(".")
+        XCTAssertEqual(state.currentText, "0.")
+        XCTAssertFalse(state.willPerformArithmetic)
+        XCTAssertTrue(state.hasDecimalDot)
+    }
+    
+    func addRandomDigitAndAsertPresence() {
+        let randomDigit = String(Int.random(in: 1..<10))
+        state.addDigit(randomDigit)
+        XCTAssertEqual(state.currentText.last, randomDigit.first)
+    }
+    
+    func testWillPerformAritmeticAddDigit() {
+        state.willPerformArithmetic = true
+        addRandomDigitAndAsertPresence()
+        XCTAssertFalse(state.willPerformArithmetic)
+        XCTAssertFalse(state.hasDecimalDot)
+    }
+    
+    func testHasDecimalAddDot() {
+        state.currentText = "0."
+        state.hasDecimalDot = true
+        state.addDigit(".")
+        XCTAssertEqual(state.currentText, "0.")
+        XCTAssertTrue(state.hasDecimalDot)
+    }
+    
+    func testZeroTestAddDigit() {
+        addRandomDigitAndAsertPresence()
+    }
+    
+    func testZeroTestAddDot() {
+        state.addDigit(".")
+        XCTAssertEqual(state.currentText, "0.")
+        XCTAssertTrue(state.hasDecimalDot)
+    }
+    
+    func testNotZeroTestAddDigit() {
+        addRandomDigitAndAsertPresence()
+        addRandomDigitAndAsertPresence()
+    }
+    
     //MARK:- Change Base Operation
     func testWholeNumberChangeBase() throws {
         state.currentText = "35"
