@@ -329,40 +329,40 @@ class NumberTests: XCTestCase {
     func testPowerOf2FloatingPoint() {
         num1 = Number(number: "8", base: .Base10)
         floating = num1.getFloatingPoint()
-        XCTAssertEqual(floating.signo, "0")
+        XCTAssertEqual(floating.sign, "0")
         XCTAssertEqual(floating.exp, "10000010")
-        XCTAssertEqual(floating.mantisa, "00000000000000000000000")
+        XCTAssertEqual(floating.mantissa, "00000000000000000000000")
     }
     
     func testPositive16BitFloatingPoint() {
         num1 = Number(number: "39887.5625", base: .Base10)
         floating = num1.getFloatingPoint()
-        XCTAssertEqual(floating.signo, "0")
+        XCTAssertEqual(floating.sign, "0")
         XCTAssertEqual(floating.exp, "10001110")
-        XCTAssertEqual(floating.mantisa, "00110111100111110010000")
+        XCTAssertEqual(floating.mantissa, "00110111100111110010000")
     }
     
     func testNegative16BitFloatingPoint() {
         num1 = Number(number: "-521.5", base: .Base16)
         floating = num1.getFloatingPoint()
-        XCTAssertEqual(floating.signo, "1")
+        XCTAssertEqual(floating.sign, "1")
         XCTAssertEqual(floating.exp, "10001001")
-        XCTAssertEqual(floating.mantisa, "01001000010101000000000")
+        XCTAssertEqual(floating.mantissa, "01001000010101000000000")
     }
     
     func testPositive32BitFloatingPoint() {
         num1 = Number(number: "10.1", base: .Base10)
-        floating = num1.getFloatingPoint(exponentDigits: 11, mantisaDigits: 52)
-        XCTAssertEqual(floating.signo, "0")
+        floating = num1.getFloatingPoint(exponentDigits: 11, mantissaDigits: 52)
+        XCTAssertEqual(floating.sign, "0")
         XCTAssertEqual(floating.exp, "10000000010")
-        XCTAssertEqual(floating.mantisa, "0100001100110011001100110011001100110011001100110011")
+        XCTAssertEqual(floating.mantissa, "0100001100110011001100110011001100110011001100110011")
     }
     
     func testNegative32BitFloatingPoint() {
         num1 = Number(number: "-1.FFFFFFFF", base: .Base16)
-        floating = num1.getFloatingPoint(exponentDigits: 11, mantisaDigits: 52)
-        XCTAssertEqual(floating.signo, "1")
+        floating = num1.getFloatingPoint(exponentDigits: 11, mantissaDigits: 52)
+        XCTAssertEqual(floating.sign, "1")
         XCTAssertEqual(floating.exp, "01111111111")
-        XCTAssertEqual(floating.mantisa, "1111111111111111111111111111111100000000000000000000")
+        XCTAssertEqual(floating.mantissa, "1111111111111111111111111111111100000000000000000000")
     }
 }
