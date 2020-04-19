@@ -16,18 +16,18 @@ enum Base: Int {
 }
 
 class FloatingPoint: NSObject {
-    var signo: String!
+    var sign: String!
     var exp: String!
-    var mantisa: String!
+    var mantissa: String!
     
-    init(signo: String, exp: String, mantisa: String){
-        self.signo = signo
+    init(sign: String, exp: String, mantissa: String){
+        self.sign = sign
         self.exp = exp
-        self.mantisa = mantisa
+        self.mantissa = mantissa
     }
     
     override var description: String {
-        return "\(signo!) \(exp!) \(mantisa!)"
+        return "\(sign!) \(exp!) \(mantissa!)"
     }
 }
 
@@ -156,36 +156,47 @@ class Number: NSObject {
     
     //MARK:- Floating Point Arithmetic
     
-    func getFloatingPoint(exponentDigits: Int = 8, mantisaDigits: Int = 23) -> FloatingPoint {
+    private func getSign() -> String {
+        value >= 0 ? "0" : "1"
+    }
+    
+    private func getExponent(_ exponentDigits: Int, _ expVal: Double) -> String {
+        let expBias = pow(2, Double(exponentDigits - 1)) - 1
+        let expPolarized = Int(expBias + expVal)
+        let expBinary = String(expPolarized, radix: 2)
+        
+        return String(repeating: "0", count: exponentDigits - expBinary.count) + expBinary
+    }
+    
+    private func getMantissa(_ mantissaDigits: Int, _ expVal: Double) -> String {
+        let mantissaVal = (self / pow(2.0, expVal)).toString(base: .Base2, precision: mantissaDigits)
+        
+        // Check if mantissa is empty
+        if let dotIndex = mantissaVal.range(of: ".") {
+            let fract = mantissaVal[dotIndex.upperBound...].prefix(mantissaDigits)
+            return String(fract + String(repeating: "0", count: mantissaDigits - fract.count))
+        } else {
+            return String(repeating: "0", count: mantissaDigits)
+        }
+    }
+    
+    func getFloatingPoint(exponentDigits: Int = 8, mantissaDigits: Int = 23) -> FloatingPoint {
         if value == 0.0 {
             return FloatingPoint(
-                signo: "0",
+                sign: "0",
                 exp: String(repeating: "0", count: exponentDigits),
-                mantisa: String(repeating: "0", count: mantisaDigits)
+                mantissa: String(repeating: "0", count: mantissaDigits)
             )
         }
         
-        // Obtain sign
-        let s = value >= 0 ? "0" : "1"
-        
-        // Obtain exponent
-        let expBias = pow(2, Double(exponentDigits - 1)) - 1
+        // Determine exponent decimal value
         let expVal = floor(log2(abs(value)))
-        let expPolarized = Int(expBias + expVal)
-        let expBinary = String(expPolarized, radix: 2)
-        let e = String(repeating: "0", count: exponentDigits - expBinary.count) + expBinary
         
-        // Obtain mantisa
-        let mantisaVal = (self / pow(2.0, expVal)).toString(base: .Base2, precision: mantisaDigits)
-        var m = ""
+        // Obtain floating point components
+        let sign = getSign()
+        let exponent = getExponent(exponentDigits, expVal)
+        let mantissa = getMantissa(mantissaDigits, expVal)
         
-        if let dotIndex = mantisaVal.range(of: ".") {
-            let fract = mantisaVal[dotIndex.upperBound...].prefix(mantisaDigits)
-            m = String(fract + String(repeating: "0", count: mantisaDigits - fract.count))
-        } else {
-            m = String(repeating: "0", count: mantisaDigits)
-        }
-        
-        return FloatingPoint(signo: s, exp: e, mantisa: m)
+        return FloatingPoint(sign: sign, exp: exponent, mantissa: mantissa)
     }
 }

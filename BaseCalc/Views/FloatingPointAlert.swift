@@ -29,7 +29,7 @@ struct FloatingPointAlertContent: View {
     
     init(number: Number) {
         self.single = String(describing: number.getFloatingPoint())
-        self.double = String(describing: number.getFloatingPoint(exponentDigits: 11, mantisaDigits: 52))
+        self.double = String(describing: number.getFloatingPoint(exponentDigits: 11, mantissaDigits: 52))
     }
     
     var body: some View {
