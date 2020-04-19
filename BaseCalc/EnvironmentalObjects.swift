@@ -65,7 +65,7 @@ class CalculatorState: ObservableObject {
         prevOperation = .add
     }
 
-    func substract() {
+    func subtract() {
         willPerformArithmetic = true
         prevOperation = .subtract
     }

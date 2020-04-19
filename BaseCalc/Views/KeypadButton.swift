@@ -52,7 +52,7 @@ struct KeypadButton: View {
             })
         case "-":
             let selected = calculatorState.willPerformArithmetic && calculatorState.prevOperation == Operation.subtract
-            return AnyView(Button(action: generalAction(calculatorState.substract)) {
+            return AnyView(Button(action: generalAction(calculatorState.subtract)) {
                 Text(label)
                     .modifier(ArithmeticButton(width: width, height: height, selected: selected))
                 })

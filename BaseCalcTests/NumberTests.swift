@@ -244,7 +244,7 @@ class NumberTests: XCTestCase {
         XCTAssertFalse(num3.hasFract)
     }
     
-    func testSubstractionThatEndsWithWhole() {
+    func testSubtractionThatEndsWithWhole() {
         num1 = Number(number: "1.7", base: .Base10)
         num2 = Number(number: "0.7", base: .Base10)
         num3 = num1 - num2
@@ -275,7 +275,7 @@ class NumberTests: XCTestCase {
         XCTAssertFalse(num2.hasFract)
     }
     
-    func testSubstractionWithMinusEqualThatEndsWithWhole() {
+    func testSubtractionWithMinusEqualThatEndsWithWhole() {
         num1 = Number(number: "1.3", base: .Base10)
         num2 = Number(number: "0.3", base: .Base10)
         num1 -= num2
