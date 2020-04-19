@@ -24,7 +24,7 @@ class AlertManagersTests: XCTestCase {
         let manager = GeneralAlertManager()
         XCTAssertFalse(manager.isShowing)
     }
-    
+
     func testPopUpPickerViewManagerShow() throws {
         let manager = PopUpPickerViewManager()
         XCTAssertEqual(manager.currentIndex, 8)
@@ -32,29 +32,29 @@ class AlertManagersTests: XCTestCase {
         XCTAssertTrue(manager.isShowing)
         XCTAssertEqual(manager.currentIndex, 4)
     }
-    
-    //MARK:- Toast Manager Tests
-    
+
+    //MARK:- Toast Manager Aux Function
     func assertEmptyToastManager(manager: ToastManager) {
         XCTAssertFalse(manager.isShowing)
         XCTAssertTrue(manager.content.isEmpty)
     }
-    
+
     func assertShowingToast(manager: ToastManager, message: String) {
         XCTAssertTrue(manager.isShowing)
         XCTAssertEqual(manager.content, message)
     }
-    
+
+    //MARK:- Toast Manager Tests
     func testToastManagerEmptyConstructor() throws {
         let manager = ToastManager()
         assertEmptyToastManager(manager: manager)
     }
-    
+
     func testToastManagerFilledConstructor() throws {
         let manager = ToastManager(isShowing: true, content: "Hello!")
         assertShowingToast(manager: manager, message: "Hello!")
     }
-    
+
     func testToastManagerShowToast() throws {
         let manager = ToastManager()
         assertEmptyToastManager(manager: manager)
