@@ -292,6 +292,15 @@ class NumberTests: XCTestCase {
         XCTAssertFalse(num2.hasFract)
     }
     
+    //MARK:- Testing number division (Double)
+    
+    func testDivisionWithDouble() {
+        num1 = Number(number: "1.5", base: .Base10)
+        num2 = num1 / 3
+        XCTAssertEqual(num2.value, 0.5)
+        XCTAssertTrue(num2.hasFract)
+    }
+    
     //MARK:- Testing radix complement
     
     func testRadixComplementNoDigits() {

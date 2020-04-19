@@ -121,6 +121,10 @@ class Number: NSObject {
         return newNum
     }
     
+    static func / (leftNum: Number, rightNum: Double) -> Number {
+        return leftNum * (1.0 / rightNum)
+    }
+    
     //MARK:- Radix Complement
     
     func radixComplement(digits: Int? = nil) -> Number {
