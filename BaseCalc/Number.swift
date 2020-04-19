@@ -15,6 +15,22 @@ enum Base: Int {
     case Base14; case Base15; case Base16;
 }
 
+class FloatingPoint: NSObject {
+    var signo: String!
+    var exp: String!
+    var mantisa: String!
+    
+    init(signo: String, exp: String, mantisa: String){
+        self.signo = signo
+        self.exp = exp
+        self.mantisa = mantisa
+    }
+    
+    override var description: String {
+        return "\(signo!) \(exp!) \(mantisa!)"
+    }
+}
+
 class Number: NSObject {
     var value: Double
     var base: Base
@@ -55,14 +71,14 @@ class Number: NSObject {
     
     //MARK:- Base Conversions
 
-    private func fractToString(_ fract: Double, _ base: Base) -> String {
+    private func fractToString(_ fract: Double, _ base: Base, _ precision: Int) -> String {
         var fractNum = fract
         let error = 1e-10
         var count = 1
 
         var result = ""
 
-        while fractNum > error && result.count < 15 {
+        while fractNum > error && result.count < precision {
             fractNum *= Double(base.rawValue)
             let wholeFractNum = Int(fractNum)
 
@@ -74,14 +90,14 @@ class Number: NSObject {
         return result
     }
 
-    func toString(base: Base? = nil) -> String {
+    func toString(base: Base? = nil, precision: Int = 15) -> String {
         let base = base ?? self.base
 
         let wholeNum = Int(value)
         let wholeStr = String(wholeNum, radix: base.rawValue, uppercase: true)
 
         let fractNum = abs(value) - abs(Double(wholeNum))
-        let fractStr = hasFract ? "." + fractToString(fractNum, base) : ""
+        let fractStr = hasFract ? "." + fractToString(fractNum, base, precision) : ""
 
         return wholeStr + fractStr
     }
@@ -136,5 +152,32 @@ class Number: NSObject {
     
     func radixComplementDiminished(digits: Int? = nil) -> Number {
         return radixComplement(digits: digits) - Number(number: "1", base: base)
+    }
+    
+    //MARK:- Floating Point Arithmetic
+    
+    func getFloatingPoint(exponentDigits: Int = 8, mantisaDigits: Int = 23) -> FloatingPoint {
+        // Obtain sign
+        let s = value >= 0 ? "0" : "1"
+        
+        // Obtain exponent
+        let expBias = pow(2, Double(exponentDigits - 1)) - 1
+        let expVal = floor(log2(abs(value)))
+        let expPolarized = Int(expBias + expVal)
+        let expBinary = String(expPolarized, radix: 2)
+        let e = String(repeating: "0", count: exponentDigits - expBinary.count) + expBinary
+        
+        // Obtain mantisa
+        let mantisaVal = (self / pow(2.0, expVal)).toString(base: .Base2, precision: mantisaDigits)
+        var m = ""
+        
+        if let dotIndex = mantisaVal.range(of: ".") {
+            let fract = mantisaVal[dotIndex.upperBound...].prefix(mantisaDigits)
+            m = String(fract + String(repeating: "0", count: mantisaDigits - fract.count))
+        } else {
+            m = String(repeating: "0", count: mantisaDigits)
+        }
+        
+        return FloatingPoint(signo: s, exp: e, mantisa: m)
     }
 }
