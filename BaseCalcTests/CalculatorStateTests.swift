@@ -70,6 +70,23 @@ class CalculatorStateTests: XCTestCase {
         addRandomDigitAndAsertPresence()
     }
     
+    //MARK:- All clear operation
+    func testAllClear() {
+        state.currentText = "-\(String(Int.random(in: 1..<10)))."
+        state.hasDecimalDot = true
+        state.willPerformArithmetic = true
+        state.isNegative = true
+        state.prevOperation = .add
+        state.prevNumber = Number(number: "0", base: .Base10)
+        state.allClear()
+        XCTAssertEqual(state.currentText, "0")
+        XCTAssertFalse(state.hasDecimalDot)
+        XCTAssertFalse(state.willPerformArithmetic)
+        XCTAssertFalse(state.isNegative)
+        XCTAssertNil(state.prevOperation)
+        XCTAssertNil(state.prevNumber)
+    }
+    
     //MARK:- Change Base Operation
     func testWholeNumberChangeBase() throws {
         state.currentText = "35"
