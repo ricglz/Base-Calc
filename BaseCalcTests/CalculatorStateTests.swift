@@ -148,4 +148,76 @@ class CalculatorStateTests: XCTestCase {
         XCTAssertEqual(state.currentText, "22")
     }
 
+    //MARK:- Solve Operation
+    func testSolveWithoutPreviousOperation() {
+        state.solve()
+        XCTAssertNil(state.prevNumber)
+        XCTAssertEqual(state.currentText, "0")
+        XCTAssertFalse(state.isNegative)
+        XCTAssertNil(state.prevOperation)
+    }
+    
+    func testSolveSumPositiveAnswer() {
+        state.prevOperation = .add
+        state.prevNumber = Number(number: "1", base: .Base10)
+        state.currentText = "10"
+        state.solve()
+        XCTAssertEqual(state.prevNumber?.toString(), "11")
+        XCTAssertEqual(state.currentText, "11")
+        XCTAssertFalse(state.isNegative)
+        XCTAssertNil(state.prevOperation)
+    }
+    
+    func testSolveSumNegativeAnswer() {
+        state.prevOperation = .add
+        state.prevNumber = Number(number: "-90", base: .Base10)
+        state.currentText = "10"
+        state.solve()
+        XCTAssertEqual(state.prevNumber?.toString(), "-80")
+        XCTAssertEqual(state.currentText, "-80")
+        XCTAssertTrue(state.isNegative)
+        XCTAssertNil(state.prevOperation)
+    }
+    
+    func testSolveSumWithoutPrevNumber() {
+        state.prevOperation = .add
+        state.currentText = "10"
+        state.solve()
+        XCTAssertEqual(state.prevNumber?.toString(), "20")
+        XCTAssertEqual(state.currentText, "20")
+        XCTAssertFalse(state.isNegative)
+        XCTAssertNil(state.prevOperation)
+    }
+    
+    func testSolveSubPositiveAnswer() {
+        state.prevOperation = .substract
+        state.prevNumber = Number(number: "10", base: .Base10)
+        state.currentText = "1"
+        state.solve()
+        XCTAssertEqual(state.prevNumber?.toString(), "9")
+        XCTAssertEqual(state.currentText, "9")
+        XCTAssertFalse(state.isNegative)
+        XCTAssertNil(state.prevOperation)
+    }
+    
+    func testSolveSubNegativeAnswer() {
+        state.prevOperation = .substract
+        state.prevNumber = Number(number: "10", base: .Base10)
+        state.currentText = "20"
+        state.solve()
+        XCTAssertEqual(state.prevNumber?.toString(), "-10")
+        XCTAssertEqual(state.currentText, "-10")
+        XCTAssertTrue(state.isNegative)
+        XCTAssertNil(state.prevOperation)
+    }
+    
+    func testSolveSubWithoutPrevNumber() {
+        state.prevOperation = .substract
+        state.currentText = "10"
+        state.solve()
+        XCTAssertEqual(state.prevNumber?.toString(), "0")
+        XCTAssertEqual(state.currentText, "0")
+        XCTAssertFalse(state.isNegative)
+        XCTAssertNil(state.prevOperation)
+    }
 }
