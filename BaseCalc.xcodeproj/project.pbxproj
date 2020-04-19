@@ -24,6 +24,8 @@
 		DBC1DC392432C95F00AC308C /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC1DC382432C95F00AC308C /* Header.swift */; };
 		DBC1DC3B2432CA1000AC308C /* Keypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC1DC3A2432CA1000AC308C /* Keypad.swift */; };
 		DBC1DC3D2432CB3600AC308C /* KeypadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC1DC3C2432CB3600AC308C /* KeypadButton.swift */; };
+		DBD1199C244CD19D0056EE42 /* FloatingPointAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD1199B244CD19D0056EE42 /* FloatingPointAlert.swift */; };
+		DBD1199E244CDBC10056EE42 /* GeneralAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD1199D244CDBC10056EE42 /* GeneralAlert.swift */; };
 		DBF0AA8E243528D90047A80D /* ComplementAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF0AA8D243528D90047A80D /* ComplementAlert.swift */; };
 		DBF5F4F3243A34A3005F9871 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF5F4F2243A34A3005F9871 /* Toast.swift */; };
 /* End PBXBuildFile section */
@@ -60,6 +62,8 @@
 		DBC1DC382432C95F00AC308C /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		DBC1DC3A2432CA1000AC308C /* Keypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keypad.swift; sourceTree = "<group>"; };
 		DBC1DC3C2432CB3600AC308C /* KeypadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeypadButton.swift; sourceTree = "<group>"; };
+		DBD1199B244CD19D0056EE42 /* FloatingPointAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPointAlert.swift; sourceTree = "<group>"; };
+		DBD1199D244CDBC10056EE42 /* GeneralAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralAlert.swift; sourceTree = "<group>"; };
 		DBF0AA8D243528D90047A80D /* ComplementAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplementAlert.swift; sourceTree = "<group>"; };
 		DBF5F4F2243A34A3005F9871 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -146,6 +150,8 @@
 				99E0B95B242698D400E357F4 /* PopUpPickerView.swift */,
 				993B2E6024356E3500DBFF2D /* GeneralPopUpView.swift */,
 				DBF0AA8D243528D90047A80D /* ComplementAlert.swift */,
+				DBD1199B244CD19D0056EE42 /* FloatingPointAlert.swift */,
+				DBD1199D244CDBC10056EE42 /* GeneralAlert.swift */,
 				DBF5F4F2243A34A3005F9871 /* Toast.swift */,
 			);
 			path = Views;
@@ -261,8 +267,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBD1199C244CD19D0056EE42 /* FloatingPointAlert.swift in Sources */,
 				DBC1DC3D2432CB3600AC308C /* KeypadButton.swift in Sources */,
 				DB29CDD1242401BD00AC13C9 /* Number.swift in Sources */,
+				DBD1199E244CDBC10056EE42 /* GeneralAlert.swift in Sources */,
 				DBC1DC392432C95F00AC308C /* Header.swift in Sources */,
 				992C4B41241F039400F496FC /* AppDelegate.swift in Sources */,
 				DBF0AA8E243528D90047A80D /* ComplementAlert.swift in Sources */,

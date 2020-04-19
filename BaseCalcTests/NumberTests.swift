@@ -15,6 +15,7 @@ class NumberTests: XCTestCase {
     private var num1: Number!
     private var num2: Number!
     private var num3: Number!
+    private var floating: FloatingPoint!
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -27,6 +28,7 @@ class NumberTests: XCTestCase {
         num1 = nil
         num2 = nil
         num3 = nil
+        floating = nil
     }
 
     //MARK:- Testing value of numbers
@@ -292,6 +294,15 @@ class NumberTests: XCTestCase {
         XCTAssertFalse(num2.hasFract)
     }
     
+    //MARK:- Testing number division (Double)
+    
+    func testDivisionWithDouble() {
+        num1 = Number(number: "1.5", base: .Base10)
+        num2 = num1 / 3
+        XCTAssertEqual(num2.value, 0.5)
+        XCTAssertTrue(num2.hasFract)
+    }
+    
     //MARK:- Testing radix complement
     
     func testRadixComplementNoDigits() {
@@ -313,5 +324,45 @@ class NumberTests: XCTestCase {
         num1 = Number(number: "1010", base: .Base2)
         XCTAssertEqual(num1.radixComplementDiminished(digits: 8).toString(), "11110101")
     }
-
+    
+    //MARK:- Testing floating point
+    func testPowerOf2FloatingPoint() {
+        num1 = Number(number: "8", base: .Base10)
+        floating = num1.getFloatingPoint()
+        XCTAssertEqual(floating.sign, "0")
+        XCTAssertEqual(floating.exp, "10000010")
+        XCTAssertEqual(floating.mantissa, "00000000000000000000000")
+    }
+    
+    func testPositive16BitFloatingPoint() {
+        num1 = Number(number: "39887.5625", base: .Base10)
+        floating = num1.getFloatingPoint()
+        XCTAssertEqual(floating.sign, "0")
+        XCTAssertEqual(floating.exp, "10001110")
+        XCTAssertEqual(floating.mantissa, "00110111100111110010000")
+    }
+    
+    func testNegative16BitFloatingPoint() {
+        num1 = Number(number: "-521.5", base: .Base16)
+        floating = num1.getFloatingPoint()
+        XCTAssertEqual(floating.sign, "1")
+        XCTAssertEqual(floating.exp, "10001001")
+        XCTAssertEqual(floating.mantissa, "01001000010101000000000")
+    }
+    
+    func testPositive32BitFloatingPoint() {
+        num1 = Number(number: "10.1", base: .Base10)
+        floating = num1.getFloatingPoint(exponentDigits: 11, mantissaDigits: 52)
+        XCTAssertEqual(floating.sign, "0")
+        XCTAssertEqual(floating.exp, "10000000010")
+        XCTAssertEqual(floating.mantissa, "0100001100110011001100110011001100110011001100110011")
+    }
+    
+    func testNegative32BitFloatingPoint() {
+        num1 = Number(number: "-1.FFFFFFFF", base: .Base16)
+        floating = num1.getFloatingPoint(exponentDigits: 11, mantissaDigits: 52)
+        XCTAssertEqual(floating.sign, "1")
+        XCTAssertEqual(floating.exp, "01111111111")
+        XCTAssertEqual(floating.mantissa, "1111111111111111111111111111111100000000000000000000")
+    }
 }

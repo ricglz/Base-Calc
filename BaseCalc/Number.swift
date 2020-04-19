@@ -15,6 +15,22 @@ enum Base: Int {
     case Base14; case Base15; case Base16;
 }
 
+class FloatingPoint: NSObject {
+    var sign: String!
+    var exp: String!
+    var mantissa: String!
+    
+    init(sign: String, exp: String, mantissa: String){
+        self.sign = sign
+        self.exp = exp
+        self.mantissa = mantissa
+    }
+    
+    override var description: String {
+        return "\(sign!) \(exp!) \(mantissa!)"
+    }
+}
+
 class Number: NSObject {
     var value: Double
     var base: Base
@@ -55,14 +71,14 @@ class Number: NSObject {
     
     //MARK:- Base Conversions
 
-    private func fractToString(_ fract: Double, _ base: Base) -> String {
+    private func fractToString(_ fract: Double, _ base: Base, _ precision: Int) -> String {
         var fractNum = fract
         let error = 1e-10
         var count = 1
 
         var result = ""
 
-        while fractNum > error && result.count < 15 {
+        while fractNum > error && result.count < precision {
             fractNum *= Double(base.rawValue)
             let wholeFractNum = Int(fractNum)
 
@@ -74,14 +90,14 @@ class Number: NSObject {
         return result
     }
 
-    func toString(base: Base? = nil) -> String {
+    func toString(base: Base? = nil, precision: Int = 15) -> String {
         let base = base ?? self.base
 
         let wholeNum = Int(value)
         let wholeStr = String(wholeNum, radix: base.rawValue, uppercase: true)
 
         let fractNum = abs(value) - abs(Double(wholeNum))
-        let fractStr = hasFract ? "." + fractToString(fractNum, base) : ""
+        let fractStr = hasFract ? "." + fractToString(fractNum, base, precision) : ""
 
         return wholeStr + fractStr
     }
@@ -121,6 +137,10 @@ class Number: NSObject {
         return newNum
     }
     
+    static func / (leftNum: Number, rightNum: Double) -> Number {
+        return leftNum * (1.0 / rightNum)
+    }
+    
     //MARK:- Radix Complement
     
     func radixComplement(digits: Int? = nil) -> Number {
@@ -132,5 +152,51 @@ class Number: NSObject {
     
     func radixComplementDiminished(digits: Int? = nil) -> Number {
         return radixComplement(digits: digits) - Number(number: "1", base: base)
+    }
+    
+    //MARK:- Floating Point Arithmetic
+    
+    private func getSign() -> String {
+        value >= 0 ? "0" : "1"
+    }
+    
+    private func getExponent(_ exponentDigits: Int, _ expVal: Double) -> String {
+        let expBias = pow(2, Double(exponentDigits - 1)) - 1
+        let expPolarized = Int(expBias + expVal)
+        let expBinary = String(expPolarized, radix: 2)
+        
+        return String(repeating: "0", count: exponentDigits - expBinary.count) + expBinary
+    }
+    
+    private func getMantissa(_ mantissaDigits: Int, _ expVal: Double) -> String {
+        let mantissaVal = (self / pow(2.0, expVal)).toString(base: .Base2, precision: mantissaDigits)
+        
+        // Check if mantissa is empty
+        if let dotIndex = mantissaVal.range(of: ".") {
+            let fract = mantissaVal[dotIndex.upperBound...].prefix(mantissaDigits)
+            return String(fract + String(repeating: "0", count: mantissaDigits - fract.count))
+        } else {
+            return String(repeating: "0", count: mantissaDigits)
+        }
+    }
+    
+    func getFloatingPoint(exponentDigits: Int = 8, mantissaDigits: Int = 23) -> FloatingPoint {
+        if value == 0.0 {
+            return FloatingPoint(
+                sign: "0",
+                exp: String(repeating: "0", count: exponentDigits),
+                mantissa: String(repeating: "0", count: mantissaDigits)
+            )
+        }
+        
+        // Determine exponent decimal value
+        let expVal = floor(log2(abs(value)))
+        
+        // Obtain floating point components
+        let sign = getSign()
+        let exponent = getExponent(exponentDigits, expVal)
+        let mantissa = getMantissa(mantissaDigits, expVal)
+        
+        return FloatingPoint(sign: sign, exp: exponent, mantissa: mantissa)
     }
 }

@@ -21,6 +21,7 @@ struct ContentView: View {
             }
             PopUpPickerView()
             ComplementAlert()
+            FloatingPointAlert()
             Toast()
         }
     }

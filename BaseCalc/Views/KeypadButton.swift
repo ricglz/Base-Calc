@@ -19,6 +19,7 @@ struct KeypadButton: View {
 
     @EnvironmentObject var calculatorState: CalculatorState
     @EnvironmentObject var complementManager: ComplementAlertManager
+    @EnvironmentObject var floatingPointManager: FloatingPointAlertManager
 
     var body: some View {
         return createButton()
@@ -66,8 +67,10 @@ struct KeypadButton: View {
                 Text(label)
                     .modifier(GrayButton(width: width, height: height))
             })
-        case "X":
-            return AnyView(Button(action: generalAction({})) {
+        case "FP":
+            return AnyView(Button(action: generalAction({
+                self.floatingPointManager.isShowing = true
+            })) {
                 Text(label)
                     .modifier(OrangeButton(width: width, height: height))
             })

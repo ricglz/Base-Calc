@@ -130,6 +130,8 @@ class PopUpPickerViewManager: GeneralAlertManager {
 
 class ComplementAlertManager: GeneralAlertManager {}
 
+class FloatingPointAlertManager: GeneralAlertManager {}
+
 class ToastManager: GeneralAlertManager {
     @Published var content: String = ""
 
