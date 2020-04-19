@@ -24,6 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             .environmentObject(CalculatorState())
             .environmentObject(PopUpPickerViewManager())
             .environmentObject(ComplementAlertManager())
+            .environmentObject(FloatingPointAlertManager())
             .environmentObject(ToastManager())
 
         // Use a UIHostingController as window root view controller.

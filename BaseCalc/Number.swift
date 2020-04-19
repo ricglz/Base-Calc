@@ -157,6 +157,14 @@ class Number: NSObject {
     //MARK:- Floating Point Arithmetic
     
     func getFloatingPoint(exponentDigits: Int = 8, mantisaDigits: Int = 23) -> FloatingPoint {
+        if value == 0.0 {
+            return FloatingPoint(
+                signo: "0",
+                exp: String(repeating: "0", count: exponentDigits),
+                mantisa: String(repeating: "0", count: mantisaDigits)
+            )
+        }
+        
         // Obtain sign
         let s = value >= 0 ? "0" : "1"
         
