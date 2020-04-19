@@ -103,6 +103,28 @@ class CalculatorStateTests: XCTestCase {
         numericalOperationsAux(state.substract, "substract")
     }
     
+    //MARK:- Change Sign Operation
+    
+    func testChangeSignOfZero() {
+        state.changeSign()
+        XCTAssertEqual(state.currentText, "0")
+        XCTAssertFalse(state.isNegative)
+    }
+    
+    func testChangeSignOfPositiveNumber() {
+        state.currentText = "13"
+        state.changeSign()
+        XCTAssertEqual(state.currentText, "-13")
+        XCTAssertTrue(state.isNegative)
+    }
+    
+    func testChangeSignOfNegativeNumber() {
+        state.currentText = "-42.1516"
+        state.changeSign()
+        XCTAssertEqual(state.currentText, "42.1516")
+        XCTAssertFalse(state.isNegative)
+    }
+    
     
     //MARK:- Change Base Operation
     func testWholeNumberChangeBase() throws {
