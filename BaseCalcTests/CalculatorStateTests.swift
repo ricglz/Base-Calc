@@ -26,6 +26,19 @@ class CalculatorStateTests: XCTestCase {
     }
     
     //MARK:- Change Base Operation
+    func testWholeNumberChangeBase() throws {
+        state.currentText = "35"
+        state.currentBase = .Base6
+        state.changeBase(.Base10)
+        XCTAssertEqual(state.currentText, "23")
+    }
+    
+    func testFloatNumberChangeBase() {
+        state.currentText = "101.1"
+        state.currentBase = .Base2
+        state.changeBase(.Base10)
+        XCTAssertEqual(state.currentText, "5.5")
+    }
 
     func testWholeNumberWithPointChangeBase() throws {
         state.currentText = "10."
