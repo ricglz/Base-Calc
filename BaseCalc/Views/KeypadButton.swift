@@ -50,29 +50,29 @@ struct KeypadButton: View {
                     .modifier(LightGrayButton(width: width, height: height, altCondition: false))
             })
         default:
-            let digits = [
-                "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B",
-                "C", "D", "E", "F"
-            ]
-            let disabled = digits.firstIndex(of: label)! >= calculatorState.currentBase.rawValue
-            return AnyView(Button(action: generalAction(addDigit)) {
-                Text(label)
-                    .modifier(LightGrayButton(width: width, height: height, altCondition: disabled))
-            }.disabled(disabled))
+            return makeDigitButton(label: label)
         }
     }
     
     func makeArithmeticButton(op: Operation) -> AnyView {
-        let selected = calculatorState.willPerformArithmetic && calculatorState.prevOperation == op
-        
-        return AnyView(Button(action: {
-            AudioServicesPlaySystemSound(self.systemSoundID)
-            self.generator.impactOccurred()
-            self.calculatorState.performArithmetic(op: op)
-        }) {
+        let selected = calculatorState.isOperationSelected(op: op)
+        let callback = { self.calculatorState.performArithmetic(op: op) }
+        return AnyView(Button(action: generalAction(callback)) {
             Text(label)
                 .modifier(OrangeButton(width: width, height: height, altCondition: selected))
         })
+    }
+    
+    func makeDigitButton(label: String) -> AnyView {
+        let digits = [
+            "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B",
+            "C", "D", "E", "F"
+        ]
+        let disabled = digits.firstIndex(of: label)! >= calculatorState.currentBase.rawValue
+        return AnyView(Button(action: generalAction(addDigit)) {
+            Text(label)
+                .modifier(LightGrayButton(width: width, height: height, altCondition: disabled))
+        }.disabled(disabled))
     }
 
     func generalAction(_ callback: @escaping () -> Void) -> () -> Void {

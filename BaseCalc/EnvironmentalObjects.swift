@@ -64,6 +64,10 @@ class CalculatorState: ObservableObject {
         willPerformArithmetic = true
         prevOperation = op
     }
+    
+    func isOperationSelected(op: Operation) -> Bool {
+        self.willPerformArithmetic && self.prevOperation == op
+    }
 
     func changeSign() {
         if currentText != "0" {
