@@ -33,7 +33,9 @@ struct ContentView_Previews: PreviewProvider {
             .environmentObject(CalculatorState())
             .environmentObject(PopUpPickerViewManager())
             .environmentObject(ComplementAlertManager())
+            .environmentObject(FloatingPointAlertManager())
             .environmentObject(ToastManager())
+            .environmentObject(LayoutState())
             .previewDevice(PreviewDevice(rawValue: "iPhone SE"))
     }
 }
