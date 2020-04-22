@@ -98,11 +98,13 @@ class CalculatorStateTests: XCTestCase {
     }
 
     func testSum() {
-        numericalOperationsAux(state.sum, "add")
+        let sum = { self.state.performArithmetic(op: .add) }
+        numericalOperationsAux(sum, "+")
     }
 
     func testSubtract() {
-        numericalOperationsAux(state.subtract, "subtract")
+        let subtract = { self.state.performArithmetic(op: .subtract) }
+        numericalOperationsAux(subtract, "-")
     }
 
     //MARK:- Change Sign Operation
