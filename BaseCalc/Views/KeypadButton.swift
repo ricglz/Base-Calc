@@ -37,14 +37,6 @@ struct KeypadButton: View {
                 Text(label)
                     .modifier(OrangeButton(width: width, height: height, altCondition: false))
             })
-        case "ß":
-            let disabled = calculatorState.isNegative || calculatorState.hasDecimalDot
-            return AnyView(Button(action: generalAction({
-                self.complementManager.isShowing.toggle()
-            })) {
-                Text(label)
-                    .modifier(DarkGrayButton(width: width, height: height, altCondition: disabled))
-            }.disabled(calculatorState.isNegative))
         case "+":
             let selected = calculatorState.willPerformArithmetic && calculatorState.prevOperation == Operation.add
             return AnyView(Button(action: generalAction(calculatorState.sum)) {
@@ -57,6 +49,18 @@ struct KeypadButton: View {
                 Text(label)
                     .modifier(OrangeButton(width: width, height: height, altCondition: selected))
                 })
+        case "x":
+            let selected = calculatorState.willPerformArithmetic && calculatorState.prevOperation == Operation.multiply
+            return AnyView(Button(action: generalAction(calculatorState.multiply)) {
+                Text(label)
+                    .modifier(OrangeButton(width: width, height: height, altCondition: selected))
+            })
+        case "÷":
+            let selected = calculatorState.willPerformArithmetic && calculatorState.prevOperation == Operation.divide
+            return AnyView(Button(action: generalAction(calculatorState.divide)) {
+                Text(label)
+                    .modifier(OrangeButton(width: width, height: height, altCondition: selected))
+            })
         case "=":
             return AnyView(Button(action: generalAction(calculatorState.solve)) {
                 Text(label)
@@ -66,13 +70,6 @@ struct KeypadButton: View {
             return AnyView(Button(action: generalAction(addDigit)) {
                 Text(label)
                     .modifier(LightGrayButton(width: width, height: height, altCondition: false))
-            })
-        case "FP":
-            return AnyView(Button(action: generalAction({
-                self.floatingPointManager.isShowing.toggle()
-            })) {
-                Text(label)
-                    .modifier(DarkGrayButton(width: width, height: height, altCondition: false))
             })
         default:
             let digits = [
