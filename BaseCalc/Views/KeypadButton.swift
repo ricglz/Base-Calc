@@ -37,30 +37,8 @@ struct KeypadButton: View {
                 Text(label)
                     .modifier(OrangeButton(width: width, height: height, altCondition: false))
             })
-        case "+":
-            let selected = calculatorState.willPerformArithmetic && calculatorState.prevOperation == Operation.add
-            return AnyView(Button(action: generalAction(calculatorState.sum)) {
-                Text(label)
-                    .modifier(OrangeButton(width: width, height: height, altCondition: selected))
-            })
-        case "-":
-            let selected = calculatorState.willPerformArithmetic && calculatorState.prevOperation == Operation.subtract
-            return AnyView(Button(action: generalAction(calculatorState.subtract)) {
-                Text(label)
-                    .modifier(OrangeButton(width: width, height: height, altCondition: selected))
-                })
-        case "x":
-            let selected = calculatorState.willPerformArithmetic && calculatorState.prevOperation == Operation.multiply
-            return AnyView(Button(action: generalAction(calculatorState.multiply)) {
-                Text(label)
-                    .modifier(OrangeButton(width: width, height: height, altCondition: selected))
-            })
-        case "÷":
-            let selected = calculatorState.willPerformArithmetic && calculatorState.prevOperation == Operation.divide
-            return AnyView(Button(action: generalAction(calculatorState.divide)) {
-                Text(label)
-                    .modifier(OrangeButton(width: width, height: height, altCondition: selected))
-            })
+        case "+", "-", "x", "÷":
+            return makeArithmeticButton(op: Operation(rawValue: label)!)
         case "=":
             return AnyView(Button(action: generalAction(calculatorState.solve)) {
                 Text(label)
@@ -82,6 +60,19 @@ struct KeypadButton: View {
                     .modifier(LightGrayButton(width: width, height: height, altCondition: disabled))
             }.disabled(disabled))
         }
+    }
+    
+    func makeArithmeticButton(op: Operation) -> AnyView {
+        let selected = calculatorState.willPerformArithmetic && calculatorState.prevOperation == op
+        
+        return AnyView(Button(action: {
+            AudioServicesPlaySystemSound(self.systemSoundID)
+            self.generator.impactOccurred()
+            self.calculatorState.performArithmetic(op: op)
+        }) {
+            Text(label)
+                .modifier(OrangeButton(width: width, height: height, altCondition: selected))
+        })
     }
 
     func generalAction(_ callback: @escaping () -> Void) -> () -> Void {
