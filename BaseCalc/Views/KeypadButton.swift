@@ -30,60 +30,60 @@ struct KeypadButton: View {
         case "AC":
             return AnyView(Button(action: generalAction(calculatorState.allClear)) {
                 Text(label)
-                    .modifier(OrangeButton(width: width, height: height))
+                    .modifier(OrangeButton(width: width, height: height, altCondition: false))
             })
         case "±":
             return AnyView(Button(action: generalAction(calculatorState.changeSign)) {
                 Text(label)
-                    .modifier(OrangeButton(width: width, height: height))
+                    .modifier(OrangeButton(width: width, height: height, altCondition: false))
             })
         case "ß":
-            let enabled = !(calculatorState.isNegative || calculatorState.hasDecimalDot)
+            let disabled = calculatorState.isNegative || calculatorState.hasDecimalDot
             return AnyView(Button(action: generalAction({
                 self.complementManager.isShowing = true
             })) {
                 Text(label)
-                    .modifier(ComplementButton(width: width, height: height, enabled: enabled))
+                    .modifier(DarkGrayButton(width: width, height: height, altCondition: disabled))
             }.disabled(calculatorState.isNegative))
         case "+":
             let selected = calculatorState.willPerformArithmetic && calculatorState.prevOperation == Operation.add
             return AnyView(Button(action: generalAction(calculatorState.sum)) {
                 Text(label)
-                    .modifier(ArithmeticButton(width: width, height: height, selected: selected))
+                    .modifier(OrangeButton(width: width, height: height, altCondition: selected))
             })
         case "-":
             let selected = calculatorState.willPerformArithmetic && calculatorState.prevOperation == Operation.subtract
             return AnyView(Button(action: generalAction(calculatorState.subtract)) {
                 Text(label)
-                    .modifier(ArithmeticButton(width: width, height: height, selected: selected))
+                    .modifier(OrangeButton(width: width, height: height, altCondition: selected))
                 })
         case "=":
             return AnyView(Button(action: generalAction(calculatorState.solve)) {
                 Text(label)
-                    .modifier(GrayButton(width: width, height: height))
+                    .modifier(LightGrayButton(width: width, height: height, altCondition: false))
             })
         case ".", "0":
             return AnyView(Button(action: generalAction(addDigit)) {
                 Text(label)
-                    .modifier(GrayButton(width: width, height: height))
+                    .modifier(LightGrayButton(width: width, height: height, altCondition: false))
             })
         case "FP":
             return AnyView(Button(action: generalAction({
                 self.floatingPointManager.isShowing = true
             })) {
                 Text(label)
-                    .modifier(OrangeButton(width: width, height: height))
+                    .modifier(DarkGrayButton(width: width, height: height, altCondition: false))
             })
         default:
             let digits = [
                 "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B",
                 "C", "D", "E", "F"
             ]
-            let enabled = digits.firstIndex(of: label)! < calculatorState.currentBase.rawValue
+            let disabled = digits.firstIndex(of: label)! >= calculatorState.currentBase.rawValue
             return AnyView(Button(action: generalAction(addDigit)) {
                 Text(label)
-                    .modifier(DigitButton(width: width, height: height, enabled: enabled))
-            }.disabled(!enabled))
+                    .modifier(LightGrayButton(width: width, height: height, altCondition: disabled))
+            }.disabled(!disabled))
         }
     }
 
