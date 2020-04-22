@@ -19,7 +19,7 @@ struct CustomButton: ViewModifier {
             .font(.title)
             .frame(width: width, height: height)
             .foregroundColor(altCondition ? altFG : mainFG)
-            .background(altCondition ? altBG : altFG)
+            .background(altCondition ? altBG : mainBG)
     }
 }
 

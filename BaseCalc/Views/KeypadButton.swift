@@ -83,7 +83,7 @@ struct KeypadButton: View {
             return AnyView(Button(action: generalAction(addDigit)) {
                 Text(label)
                     .modifier(LightGrayButton(width: width, height: height, altCondition: disabled))
-            }.disabled(!disabled))
+            }.disabled(disabled))
         }
     }
 
