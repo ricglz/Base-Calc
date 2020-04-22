@@ -28,7 +28,7 @@ struct GeneralAlert: View {
             AnyView(GeometryReader { geometry in
                 VStack {
                     ZStack(alignment: .center){
-                        Color.alertBackground
+                        Color.alertBG
                         self.Content()
                     }
                     .frame(

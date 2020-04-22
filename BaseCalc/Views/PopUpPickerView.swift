@@ -44,7 +44,7 @@ struct CustomToolbar: View {
 
     var body: some View {
         ZStack {
-            Color.toolbarBackground
+            Color.toolbarBG
             HStack {
                 Button(action: hidePopUp) {
                     Text("Done").foregroundColor(Color.blue)
@@ -66,7 +66,7 @@ struct CustomPickerView: View {
 
     var body: some View {
         ZStack {
-            Color.pickerviewBackground
+            Color.pickerviewBG
             HStack {
                 Picker("Select base", selection: $manager.currentIndex) {
                     ForEach(2..<17) { (number) in

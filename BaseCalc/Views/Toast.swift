@@ -25,7 +25,7 @@ struct Toast: View {
                             Spacer()
                         }
                         .frame(width: geometry.size.width * 0.75)
-                        .background(Color.disabledDigitBG)
+                        .background(Color.toastBG)
                         .cornerRadius(10)
                         
                         Spacer()

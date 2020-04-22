@@ -47,7 +47,7 @@ struct ComplementAlertContent: View {
                 .multilineTextAlignment(.center)
                 .keyboardType(.numberPad)
                 .padding(5)
-                .background(Color.pickerviewBackground)
+                .background(Color.darkLabelBG)
                 .foregroundColor(.white)
                 .cornerRadius(5)
                 .overlay(

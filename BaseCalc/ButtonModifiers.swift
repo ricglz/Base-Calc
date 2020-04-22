@@ -11,68 +11,68 @@ import SwiftUI
 
 struct CustomButton: ViewModifier {
     let width, height: CGFloat
+    let mainBG, mainFG, altBG, altFG: Color
+    let altCondition: Bool
 
     func body(content: Content) -> some View {
         content
             .font(.title)
             .frame(width: width, height: height)
+            .foregroundColor(altCondition ? altFG : mainFG)
+            .background(altCondition ? altBG : mainBG)
     }
 }
 
-struct DigitButton: ViewModifier {
+struct LightGrayButton: ViewModifier {
     let width, height: CGFloat
-    let enabled: Bool
+    let altCondition: Bool
     
     func body(content: Content) -> some View {
         content
-            .modifier(CustomButton(width: width, height: height))
-            .foregroundColor(enabled ? Color.white : Color.gray)
-            .background(enabled ? Color.enabledDigitBG : Color.disabledDigitBG)
+            .modifier(CustomButton(
+                width: width,
+                height: height,
+                mainBG: .enabledLightGrayBG,
+                mainFG: .white,
+                altBG: .disabledLightGrayBG,
+                altFG: .disabledLightGrayFG,
+                altCondition: altCondition
+            ))
     }
 }
 
-struct ComplementButton: ViewModifier {
+struct DarkGrayButton: ViewModifier {
     let width, height: CGFloat
-    let enabled: Bool
+    let altCondition: Bool
     
     func body(content: Content) -> some View {
         content
-            .modifier(CustomButton(width: width, height: height))
-            .foregroundColor(enabled ? Color.white : Color.gray)
-            .background(enabled ? Color.orange : Color.disabledOrangeBG)
-    }
-}
-
-struct ArithmeticButton: ViewModifier {
-    let width, height: CGFloat
-    let selected: Bool
-    
-    func body(content: Content) -> some View {
-        content
-            .modifier(CustomButton(width: width, height: height))
-            .foregroundColor(selected ? Color.orange : Color.white)
-            .background(selected ? Color.white : Color.orange)
-    }
-}
-
-struct GrayButton: ViewModifier {
-    let width, height: CGFloat
-    
-    func body(content: Content) -> some View {
-        content
-            .modifier(CustomButton(width: width, height: height))
-            .foregroundColor(Color.white)
-            .background(Color.enabledDigitBG)
+            .modifier(CustomButton(
+                width: width,
+                height: height,
+                mainBG: .enabledDarkGrayBG,
+                mainFG: .white,
+                altBG: .disabledDarkGrayBG,
+                altFG: .disabledDarkGrayFG,
+                altCondition: altCondition
+            ))
     }
 }
 
 struct OrangeButton: ViewModifier {
     let width, height: CGFloat
+    let altCondition: Bool
     
     func body(content: Content) -> some View {
         content
-            .modifier(CustomButton(width: width, height: height))
-            .foregroundColor(Color.white)
-            .background(Color.orange)
+            .modifier(CustomButton(
+                width: width,
+                height: height,
+                mainBG: .orange,
+                mainFG: .white,
+                altBG: .white,
+                altFG: .orange,
+                altCondition: altCondition
+            ))
     }
 }
