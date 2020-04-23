@@ -12,14 +12,19 @@ struct Header: View {
     @EnvironmentObject var layoutState: LayoutState
     
     var body: some View {
-        HStack {
-            HeaderBaseLabel()
-            Spacer()
-            Button(action: {}) {
-                Image(systemName: "info.circle")
+        VStack {
+            if !layoutState.isLandscape {
+                HStack {
+                    HeaderBaseLabel()
+                    Spacer()
+                    Button(action: {}) {
+                        Image(systemName: "info.circle")
+                    }
+                    .accentColor(.orange)
+                }.padding()
             }
-            .accentColor(.orange)
-        }.padding()
+            NumberLabel()
+        }
     }
 }
 
@@ -45,11 +50,19 @@ struct HeaderBaseLabel: View {
 
 struct NumberLabel: View {
     @EnvironmentObject var calculatorState: CalculatorState
+    @EnvironmentObject var layoutState: LayoutState
     @EnvironmentObject var toastManager: ToastManager
+    
     let generator = UIImpactFeedbackGenerator(style: .light)
 
     var body: some View {
-        HStack {
+        HStack(alignment: .top) {
+            if layoutState.isLandscape {
+                Button(action: {}) {
+                    Image(systemName: "info.circle")
+                }
+                .accentColor(.orange)
+            }
             Spacer()
             Text(calculatorState.currentText)
                 .font(.system(size: 50))

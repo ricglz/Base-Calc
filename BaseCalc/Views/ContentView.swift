@@ -13,10 +13,8 @@ struct ContentView: View {
         ZStack {
             Color.black
                 .edgesIgnoringSafeArea(.all)
-            VStack {
+            VStack (spacing: 0) {
                 Header()
-                Spacer()
-                NumberLabel()
                 Keypad()
             }
             PopUpPickerView()
