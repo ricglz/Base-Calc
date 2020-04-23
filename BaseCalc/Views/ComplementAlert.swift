@@ -22,6 +22,8 @@ struct ComplementAlert: View {
 }
 
 struct ComplementAlertContent: View {
+    @EnvironmentObject var layout: LayoutState
+    
     @State var digits: String
     let lowerDigitLimit: String
 
@@ -38,7 +40,7 @@ struct ComplementAlertContent: View {
                 .padding(.top)
 
             HStack {
-                Text("Select digits to compute:")
+                Text(layout.isLandscape ? "Select digits to compute:" : "Digits:")
                     .font(.subheadline)
                     .foregroundColor(.gray)
                 
@@ -122,6 +124,7 @@ struct ComplementAlert_Previews: PreviewProvider {
     static var previews: some View {
         ComplementAlert()
             .environmentObject(CalculatorState())
+            .environmentObject(LayoutState())
             .environmentObject(ComplementAlertManager(isShowing: true))
             .previewLayout(.fixed(width: 568, height: 320))
     }
