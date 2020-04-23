@@ -13,12 +13,10 @@ struct ComplementAlert: View {
     @EnvironmentObject var calculatorState: CalculatorState
 
     var body: some View {
-        GeneralAlert(
-            isShowing: manager.isShowing
-        ){ () -> AnyView in
-            AnyView(ComplementAlertContent(
+        GeneralAlert(isShowing: manager.isShowing) {
+            ComplementAlertContent(
                 digitValue: String(self.calculatorState.currentText.count)
-            ))
+            )
         }
     }
 }

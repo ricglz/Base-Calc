@@ -8,14 +8,11 @@
 
 import SwiftUI
 
-struct GeneralAlert: View {
-    let Content: () -> AnyView;
+struct GeneralAlert<Content: View>: View {
+    let Content: () -> Content
     let isShowing: Bool
     
-    init(bgColor: Color = Color.black,
-         isShowing: Bool,
-         Content: @escaping () -> AnyView
-    ) {
+    init(isShowing: Bool, Content: @escaping () -> Content) {
         self.isShowing = isShowing
         self.Content = Content
     }
@@ -24,8 +21,8 @@ struct GeneralAlert: View {
         GeneralPopUpView(
             transition: AnyTransition.scale(scale: 0.95).combined(with: .opacity),
             isShowing: isShowing
-        ) { () -> AnyView in
-            AnyView(GeometryReader { geometry in
+        ) {
+            GeometryReader { geometry in
                 VStack {
                     ZStack(alignment: .center){
                         Color.alertBG
@@ -44,7 +41,7 @@ struct GeneralAlert: View {
                     Spacer()
                         .frame(height: geometry.size.width * 0.75)
                 }
-            })
+            }
         }
     }
 }
