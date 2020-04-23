@@ -51,17 +51,19 @@ struct KeypadButton: View {
                     .modifier(LightGrayButton(width: width, height: height, altCondition: false))
             })
         case "AND", "NOR", "OR", "XOR", ">>", "<<", "X>>Y", "X<<Y":
+            let disabled = calculatorState.isNegative || calculatorState.hasDecimalDot
             return AnyView(Button(action: generalAction({})) {
                 Text(label)
-                    .modifier(DarkGrayButton(width: width, height: height, altCondition: false))
-            })
+                    .modifier(DarkGrayButton(width: width, height: height, altCondition: disabled))
+            }.disabled(disabled))
         case "ß":
+            let disabled = calculatorState.isNegative || calculatorState.hasDecimalDot
             return AnyView(Button(action: generalAction({
                 self.complementManager.isShowing = true
             })) {
                 Text(label)
-                    .modifier(DarkGrayButton(width: width, height: height, altCondition: false))
-            })
+                    .modifier(DarkGrayButton(width: width, height: height, altCondition: disabled))
+            }.disabled(disabled))
         case "FP":
             return AnyView(Button(action: generalAction({
                 self.floatingPointManager.isShowing = true
