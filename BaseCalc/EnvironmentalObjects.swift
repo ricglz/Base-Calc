@@ -34,7 +34,7 @@ class CalculatorState: ObservableObject {
                 currentText = digitToAdd
             }
 
-            willPerformArithmetic = false
+            willPerformArithmetic.toggle()
             hasDecimalDot = digitToAddIsDot
             return
         }
@@ -72,13 +72,12 @@ class CalculatorState: ObservableObject {
 
     func changeSign() {
         if currentText != "0" {
-            if currentText.prefix(1) == "-" {
+            if isNegative {
                 currentText.remove(at: currentText.startIndex)
-                isNegative = false
             } else {
                 currentText = "-" + currentText
-                isNegative = true
             }
+            isNegative.toggle()
         }
     }
     

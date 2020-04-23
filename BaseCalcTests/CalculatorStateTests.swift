@@ -123,6 +123,7 @@ class CalculatorStateTests: XCTestCase {
 
     func testChangeSignOfNegativeNumber() {
         state.currentText = "-42.1516"
+        state.isNegative = true
         state.changeSign()
         XCTAssertEqual(state.currentText, "42.1516")
         XCTAssertFalse(state.isNegative)

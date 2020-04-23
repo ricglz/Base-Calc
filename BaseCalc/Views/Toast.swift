@@ -48,7 +48,7 @@ struct Toast: View {
     /// Wait to later on disappear with animation
     func countDownToDissapear() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.manager.isShowing = false
+            self.manager.isShowing.toggle()
         }
     }
 }

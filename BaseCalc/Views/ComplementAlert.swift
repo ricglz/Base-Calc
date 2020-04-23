@@ -83,7 +83,7 @@ struct AlertButtons: View {
     var body: some View {
         HStack {
             Button(action: {
-                self.manager.isShowing = false
+                self.manager.isShowing.toggle()
             }){
                 Text("Cancel")
                     .accentColor(Color.red)
@@ -95,7 +95,7 @@ struct AlertButtons: View {
                 let number = Number(number: self.calculatorState.currentText, base: self.calculatorState.currentBase)
                 let complement = number.radixComplement(digits: Int(self.digits))
                 self.calculatorState.currentText = complement.toString()
-                self.manager.isShowing = false
+                self.manager.isShowing.toggle()
             }){
                 Text("ß compl.")
             }.disabled(!isDigitCountValid)
@@ -106,7 +106,7 @@ struct AlertButtons: View {
                 let number = Number(number: self.calculatorState.currentText, base: self.calculatorState.currentBase)
                 let complement = number.radixComplementDiminished(digits: Int(self.digits))
                 self.calculatorState.currentText = complement.toString()
-                self.manager.isShowing = false
+                self.manager.isShowing.toggle()
             }){
                 Text("ß⁻¹ compl.")
             }.disabled(!isDigitCountValid)
