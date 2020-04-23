@@ -89,11 +89,19 @@ struct LandscapeKeypad: View {
 
 struct Keypad_Previews: PreviewProvider {
     static var previews: some View {
-        Keypad()
-            .environmentObject(CalculatorState())
-            .environmentObject(PopUpPickerViewManager())
-            .environmentObject(LayoutState())
-            .previewLayout(.fixed(width: 600, height: 400))
-            .background(Color.black)
+        Group {
+            Keypad()
+                .environmentObject(CalculatorState())
+                .environmentObject(PopUpPickerViewManager())
+                .environmentObject(LayoutState(isLandscape: false))
+                .previewLayout(.fixed(width: 400, height: 600))
+            
+            Keypad()
+                .environmentObject(CalculatorState())
+                .environmentObject(PopUpPickerViewManager())
+                .environmentObject(LayoutState(isLandscape: true))
+                .previewLayout(.fixed(width: 600, height: 400))
+        }
+        .background(Color.black)
     }
 }

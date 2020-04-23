@@ -29,13 +29,24 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
-            .environmentObject(CalculatorState())
-            .environmentObject(PopUpPickerViewManager())
-            .environmentObject(ComplementAlertManager())
-            .environmentObject(FloatingPointAlertManager())
-            .environmentObject(ToastManager())
-            .environmentObject(LayoutState())
-            .previewDevice(PreviewDevice(rawValue: "iPhone SE"))
+        Group {
+            ContentView()
+                .environmentObject(CalculatorState())
+                .environmentObject(PopUpPickerViewManager())
+                .environmentObject(ComplementAlertManager())
+                .environmentObject(FloatingPointAlertManager())
+                .environmentObject(ToastManager())
+                .environmentObject(LayoutState(isLandscape: false))
+                .previewLayout(.fixed(width: 320, height: 568))
+            
+            ContentView()
+                .environmentObject(CalculatorState())
+                .environmentObject(PopUpPickerViewManager())
+                .environmentObject(ComplementAlertManager())
+                .environmentObject(FloatingPointAlertManager())
+                .environmentObject(ToastManager())
+                .environmentObject(LayoutState(isLandscape: true))
+                .previewLayout(.fixed(width: 568, height: 320))
+        }
     }
 }

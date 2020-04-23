@@ -14,9 +14,11 @@ enum Operation: String {
 }
 
 class LayoutState: ObservableObject {
-    @Published var isLandscape = true
+    @Published var isLandscape: Bool
 
-    init() {
+    init(isLandscape: Bool = false) {
+        self.isLandscape = isLandscape
+        
         UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         NotificationCenter.default.addObserver(self, selector: #selector(self.rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
     }

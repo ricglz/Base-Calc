@@ -101,7 +101,8 @@ struct KeypadButton_Previews: PreviewProvider {
     static var previews: some View {
         KeypadButton(label: "AC", width: 64, height: 64)
             .environmentObject(CalculatorState())
-            .environmentObject(PopUpPickerViewManager())
+            .environmentObject(ComplementAlertManager())
+            .environmentObject(FloatingPointAlertManager())
             .previewLayout(.sizeThatFits)
     }
 }

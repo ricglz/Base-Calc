@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct Header: View {
+    @EnvironmentObject var layoutState: LayoutState
+    
     var body: some View {
         HStack {
             HeaderBaseLabel()
@@ -71,6 +73,8 @@ struct Header_Previews: PreviewProvider {
         Header()
             .environmentObject(CalculatorState())
             .environmentObject(PopUpPickerViewManager())
+            .environmentObject(LayoutState(isLandscape: false))
             .previewLayout(.sizeThatFits)
+            .background(Color.black)
     }
 }
