@@ -30,7 +30,7 @@ struct GeneralAlert<Content: View>: View {
                     }
                     .frame(
                         width: geometry.size.width * 0.9,
-                        height: 200
+                        height: 150
                     )
                     .cornerRadius(10)
                     .overlay(
@@ -39,7 +39,7 @@ struct GeneralAlert<Content: View>: View {
                     )
 
                     Spacer()
-                        .frame(height: geometry.size.width * 0.75)
+                        .frame(height: geometry.size.height * 0.5)
                 }
             }
         }

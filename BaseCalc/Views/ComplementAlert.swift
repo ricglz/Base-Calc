@@ -35,28 +35,32 @@ struct ComplementAlertContent: View {
             Text("Radix complement")
                 .font(.headline)
                 .foregroundColor(.white)
-                .padding()
+                .padding(.top)
 
-            Text("Select digits to compute:")
-                .font(.subheadline)
-                .foregroundColor(.gray)
-
-            TextField("Digits", text: $digits)
-                .multilineTextAlignment(.center)
-                .keyboardType(.numberPad)
-                .padding(5)
-                .background(Color.darkLabelBG)
-                .foregroundColor(.white)
-                .cornerRadius(5)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 5)
-                        .stroke(Color.gray, lineWidth: 0.5)
-                )
-
-                Text("Enter a value between \(lowerDigitLimit) and 24")
-                    .font(.caption)
+            HStack {
+                Text("Select digits to compute:")
+                    .font(.subheadline)
                     .foregroundColor(.gray)
-                    .opacity(isDigitCountValid() ? 0 : 1)
+                
+                TextField("Digits", text: $digits)
+                    .multilineTextAlignment(.center)
+                    .keyboardType(.numberPad)
+                    .padding(5)
+                    .background(Color.darkLabelBG)
+                    .foregroundColor(.white)
+                    .cornerRadius(5)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 5)
+                            .stroke(Color.gray, lineWidth: 0.5)
+                    )
+            }
+            
+
+            Text("Enter a value between \(lowerDigitLimit) and 24")
+                .font(.caption)
+                .foregroundColor(.gray)
+                .opacity(isDigitCountValid() ? 0 : 1)
+                .padding(.bottom, 7)
 
             AlertButtons(
                 digits: digits,
@@ -110,7 +114,7 @@ struct AlertButtons: View {
             }.disabled(!isDigitCountValid)
 
         }
-        .padding(.vertical)
+        .padding(.bottom)
     }
 }
 
@@ -119,6 +123,6 @@ struct ComplementAlert_Previews: PreviewProvider {
         ComplementAlert()
             .environmentObject(CalculatorState())
             .environmentObject(ComplementAlertManager(isShowing: true))
-            .previewDevice(PreviewDevice(rawValue: "iPhone SE"))
+            .previewLayout(.fixed(width: 568, height: 320))
     }
 }

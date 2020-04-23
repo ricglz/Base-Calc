@@ -37,13 +37,16 @@ struct FloatingPointAlertContent: View {
                 .foregroundColor(.white)
                 .padding()
 
-            Text("Single Precision:")
-                .font(.subheadline)
-                .foregroundColor(.gray)
-            
-            Text(single)
-                .font(.subheadline)
-                .foregroundColor(.gray)
+            HStack {
+                Text("Single Precision:")
+                    .bold()
+                    .font(.subheadline)
+                    .foregroundColor(.white)
+                
+                Text(single)
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+            }
             
             Button("Dismiss"){
                 self.manager.isShowing.toggle()
@@ -60,6 +63,6 @@ struct FloatingPointAlert_Previews: PreviewProvider {
         FloatingPointAlert()
             .environmentObject(CalculatorState())
             .environmentObject(FloatingPointAlertManager(isShowing: true))
-            .previewDevice(PreviewDevice(rawValue: "iPhone SE"))
+            .previewLayout(.fixed(width: 568, height: 320))
     }
 }
