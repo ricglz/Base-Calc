@@ -49,6 +49,16 @@ struct KeypadButton: View {
                 Text(label)
                     .modifier(LightGrayButton(width: width, height: height, altCondition: false))
             })
+        case "AND", "NOR", "OR", "XOR", ">>", "<<", "X>>Y", "X<<Y", "FP", "ß":
+            return AnyView(Button(action: generalAction({})) {
+                Text(label)
+                    .modifier(DarkGrayButton(width: width, height: height, altCondition: false))
+            })
+        case "BASE":
+            return AnyView(Button(action: generalAction({})) {
+                Text(label + " \(calculatorState.currentBase.rawValue)")
+                    .modifier(DarkGrayButton(width: width * 2 + 6, height: height, altCondition: false))
+            })
         default:
             return makeDigitButton(label: label)
         }
