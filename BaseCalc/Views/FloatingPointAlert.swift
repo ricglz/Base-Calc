@@ -40,6 +40,8 @@ struct FloatingPointAlertContent: View {
 
             if layout.isLandscape {
                 HStack {
+                    Spacer()
+                    
                     Text("Single Precision:")
                         .bold()
                         .font(.subheadline)
@@ -48,6 +50,8 @@ struct FloatingPointAlertContent: View {
                     Text(single)
                         .font(.subheadline)
                         .foregroundColor(.gray)
+                    
+                    Spacer()
                 }
             } else {
                 VStack {
