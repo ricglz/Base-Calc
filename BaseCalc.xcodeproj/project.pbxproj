@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,8 @@
 		993B2E6124356E3500DBFF2D /* GeneralPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993B2E6024356E3500DBFF2D /* GeneralPopUpView.swift */; };
 		995ED081244CFD3D00E8E3B0 /* AlertManagersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995ED080244CFD3D00E8E3B0 /* AlertManagersTests.swift */; };
 		998DE0CD2421871D00A18EE3 /* EnvironmentalObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998DE0CC2421871D00A18EE3 /* EnvironmentalObjects.swift */; };
+		99DFD55824523A2F00B4E398 /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = 99DFD55724523A2F00B4E398 /* ViewInspector */; };
+		99DFD55A24523A7F00B4E398 /* GeneralPopUpViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DFD55924523A7F00B4E398 /* GeneralPopUpViewTests.swift */; };
 		99E0B95C242698D400E357F4 /* PopUpPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E0B95B242698D400E357F4 /* PopUpPickerView.swift */; };
 		99E0B9622426A11E00E357F4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E0B9612426A11E00E357F4 /* Extensions.swift */; };
 		DB29CDD1242401BD00AC13C9 /* Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB29CDD0242401BD00AC13C9 /* Number.swift */; };
@@ -56,6 +58,7 @@
 		993B2E6024356E3500DBFF2D /* GeneralPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPopUpView.swift; sourceTree = "<group>"; };
 		995ED080244CFD3D00E8E3B0 /* AlertManagersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManagersTests.swift; sourceTree = "<group>"; };
 		998DE0CC2421871D00A18EE3 /* EnvironmentalObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentalObjects.swift; sourceTree = "<group>"; };
+		99DFD55924523A7F00B4E398 /* GeneralPopUpViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPopUpViewTests.swift; sourceTree = "<group>"; };
 		99E0B95B242698D400E357F4 /* PopUpPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpPickerView.swift; sourceTree = "<group>"; };
 		99E0B9612426A11E00E357F4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		DB29CDD0242401BD00AC13C9 /* Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Number.swift; sourceTree = "<group>"; };
@@ -75,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99DFD55824523A2F00B4E398 /* ViewInspector in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,10 +95,11 @@
 		992275B024244E470019004F /* BaseCalcTests */ = {
 			isa = PBXGroup;
 			children = (
+				995ED080244CFD3D00E8E3B0 /* AlertManagersTests.swift */,
 				99065F872446C794003BC394 /* CalculatorStateTests.swift */,
+				99DFD55924523A7F00B4E398 /* GeneralPopUpViewTests.swift */,
 				DB29CDD2242546EA00AC13C9 /* NumberTests.swift */,
 				992275B324244E470019004F /* Info.plist */,
-				995ED080244CFD3D00E8E3B0 /* AlertManagersTests.swift */,
 			);
 			path = BaseCalcTests;
 			sourceTree = "<group>";
@@ -177,6 +182,9 @@
 				992275B524244E470019004F /* PBXTargetDependency */,
 			);
 			name = BaseCalcTests;
+			packageProductDependencies = (
+				99DFD55724523A2F00B4E398 /* ViewInspector */,
+			);
 			productName = BaseCalcTests;
 			productReference = 992275AF24244E470019004F /* BaseCalcTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -226,6 +234,9 @@
 				Base,
 			);
 			mainGroup = 992C4B34241F039400F496FC;
+			packageReferences = (
+				99DFD55624523A2F00B4E398 /* XCRemoteSwiftPackageReference "ViewInspector" */,
+			);
 			productRefGroup = 992C4B3E241F039400F496FC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -263,6 +274,7 @@
 			files = (
 				DB29CDD3242546EA00AC13C9 /* NumberTests.swift in Sources */,
 				995ED081244CFD3D00E8E3B0 /* AlertManagersTests.swift in Sources */,
+				99DFD55A24523A7F00B4E398 /* GeneralPopUpViewTests.swift in Sources */,
 				99065F882446C794003BC394 /* CalculatorStateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -535,6 +547,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		99DFD55624523A2F00B4E398 /* XCRemoteSwiftPackageReference "ViewInspector" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nalexn/ViewInspector";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.3.11;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		99DFD55724523A2F00B4E398 /* ViewInspector */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99DFD55624523A2F00B4E398 /* XCRemoteSwiftPackageReference "ViewInspector" */;
+			productName = ViewInspector;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 992C4B35241F039400F496FC /* Project object */;
 }
