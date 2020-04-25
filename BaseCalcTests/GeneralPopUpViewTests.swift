@@ -18,22 +18,22 @@ class GeneralPopUpViewTests: XCTestCase {
     
     // MARK:- Helper functions
     
-    private func generalContent() -> AnyView {
-        AnyView(Text("Hello World!"))
+    private func generalContent() -> some View {
+        Text("Hello World!")
     }
     
     // MARK:- Shows Content Tests
     
     func testIsShowingContent() throws {
-        let view = GeneralPopUpView(isShowing: true, Content: generalContent)
+        let view = GeneralPopUpView(isShowing: true, view: generalContent)
         let zStack = try view.inspect().zStack()
         XCTAssertFalse(zStack.isEmpty)
-        let content = try zStack.anyView(1).text().string()
+        let content = try zStack.text(1).string()
         XCTAssertEqual(content, "Hello World!")
     }
     
     func testIsNotShowingContent() throws {
-        let view = GeneralPopUpView(isShowing: false, Content: generalContent)
+        let view = GeneralPopUpView(isShowing: false, view: generalContent)
         let zStack = try view.inspect().zStack()
         XCTAssertTrue(zStack.isEmpty)
     }
