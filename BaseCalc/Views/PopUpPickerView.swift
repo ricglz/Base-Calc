@@ -12,8 +12,8 @@ struct PopUpPickerView: View {
     @EnvironmentObject var manager: PopUpPickerViewManager
 
     var body: some View {
-        GeneralPopUpView(isShowing: manager.isShowing) { () -> AnyView in
-            AnyView(GeometryReader { (geometry) in
+        GeneralPopUpView(isShowing: manager.isShowing) {
+            GeometryReader { (geometry) in
                 VStack {
                     Spacer()
                     PickerViewWithDoneToolbar().frame(
@@ -21,7 +21,7 @@ struct PopUpPickerView: View {
                     )
                 }
                 .edgesIgnoringSafeArea(.bottom)
-            })
+            }
         }
     }
 }

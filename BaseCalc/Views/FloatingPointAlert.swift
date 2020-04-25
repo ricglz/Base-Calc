@@ -13,12 +13,10 @@ struct FloatingPointAlert: View {
     @EnvironmentObject var manager: FloatingPointAlertManager
     
     var body: some View {
-        GeneralAlert(
-            isShowing: manager.isShowing
-        ){ () -> AnyView in
-            AnyView(FloatingPointAlertContent(
+        GeneralAlert(isShowing: manager.isShowing) {
+            FloatingPointAlertContent(
                 number: Number(number: self.calculatorState.currentText, base: self.calculatorState.currentBase)
-            ))
+            )
         }
     }
 }

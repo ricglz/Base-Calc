@@ -8,19 +8,19 @@
 
 import SwiftUI
 
-struct GeneralPopUpView: View {
+struct GeneralPopUpView<Content: View>: View {
     let isShowing: Bool;
-    let Content: () -> AnyView;
+    let view: () -> Content;
     let transition: AnyTransition
     let bgColor: Color
 
     init(bgColor: Color = Color.black,
          transition: AnyTransition = .move(edge: .bottom),
          isShowing: Bool,
-         Content: @escaping () -> AnyView
+         view: @escaping () -> Content
     ) {
         self.isShowing = isShowing
-        self.Content = Content
+        self.view = view
         self.transition = transition
         self.bgColor = bgColor
     }
@@ -31,9 +31,9 @@ struct GeneralPopUpView: View {
                 bgColor
                      .edgesIgnoringSafeArea(.all)
                      .opacity(0.75)
-                Content()
-                .transition(transition)
-                .animation(.default)
+                view()
+                    .transition(transition)
+                    .animation(.default)
             }
         }.animation(.default)
     }
