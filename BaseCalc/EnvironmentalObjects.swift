@@ -80,7 +80,7 @@ class CalculatorState: ObservableObject {
             isNegative.toggle()
         }
     }
-    
+
     func changeBase(_ newBase: Base) {
         let currNumber = Number(number: currentText, base: currentBase)
         currentText = currNumber.toString(base: newBase)
@@ -89,24 +89,23 @@ class CalculatorState: ObservableObject {
     }
 
     func solve() {
-        if prevOperation != nil {
-            var answer: Number!
-            let currentNumber = Number(number: currentText, base: currentBase)
+        let currentNumber = Number(number: currentText, base: currentBase)
 
-            switch prevOperation {
-            case .add:
-                answer = (prevNumber ?? currentNumber) + currentNumber
-            case .subtract:
-                answer = (prevNumber ?? currentNumber) - currentNumber
-            default:
-                print(prevOperation!.rawValue)
-            }
-
-            prevNumber = answer
-            currentText = answer.toString()
-            isNegative = answer.value < 0
-            prevOperation = nil
+        switch prevOperation {
+        case .add:
+            changePrevNumber(answer: (prevNumber ?? currentNumber) + currentNumber)
+        case .subtract:
+            changePrevNumber(answer: (prevNumber ?? currentNumber) - currentNumber)
+        case .none:
+            print(prevOperation == nil)
         }
+    }
+
+    private func changePrevNumber(answer: Number) {
+        prevNumber = answer
+        currentText = answer.toString()
+        isNegative = answer.value < 0
+        prevOperation = nil
     }
 }
 
