@@ -11,6 +11,7 @@ import SwiftUI
 struct ComplementAlert: View {
     @EnvironmentObject var manager: ComplementAlertManager
     @EnvironmentObject var calculatorState: CalculatorState
+    internal let inspection = Inspection<Self>()
 
     var body: some View {
         GeneralAlert(isShowing: manager.isShowing) {
@@ -18,6 +19,7 @@ struct ComplementAlert: View {
                 digitValue: String(self.calculatorState.currentText.count)
             )
         }
+        .onReceive(inspection.notice) { self.inspection.visit(self, $0) }
     }
 }
 
@@ -53,10 +55,10 @@ struct ComplementAlertContent: View {
                         .stroke(Color.gray, lineWidth: 0.5)
                 )
 
-                Text("Enter a value between \(lowerDigitLimit) and 24")
-                    .font(.caption)
-                    .foregroundColor(.gray)
-                    .opacity(isDigitCountValid() ? 0 : 1)
+            Text("Enter a value between \(lowerDigitLimit) and 24")
+                .font(.caption)
+                .foregroundColor(.gray)
+                .opacity(isDigitCountValid() ? 0 : 1)
 
             AlertButtons(
                 digits: digits,

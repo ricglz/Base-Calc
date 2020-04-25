@@ -6,29 +6,55 @@
 //  Copyright © 2020 The Senate. All rights reserved.
 //
 
+import Combine
 import XCTest
+import SwiftUI
+import ViewInspector
+
+@testable import BaseCalc
+
+extension Inspection: InspectionEmissary where V: Inspectable { }
+
+extension ComplementAlert: Inspectable {}
+extension ComplementAlertContent: Inspectable {}
+extension GeneralAlert: Inspectable {}
 
 class ComplementAlertTests: XCTestCase {
-
+    
+    var view : ComplementAlert!
+    let type = GeneralPopUpView<GeometryReader<VStack<TupleView<(ModifiedContent<ModifiedContent<ModifiedContent<ZStack<TupleView<(Color, ComplementAlertContent)>>, _FrameLayout>, _ClipEffect<RoundedRectangle>>, _OverlayModifier<_ShapeView<_StrokedShape<RoundedRectangle>, Color>>>, ModifiedContent<Spacer, _FrameLayout>)>>>>.self
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
-
-        // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
-        XCUIApplication().launch()
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        try super.setUpWithError()
+        view = ComplementAlert()
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    func runViewHosting() {
+        let manager = ComplementAlertManager(isShowing: true)
+        let state = CalculatorState()
+        
+        ViewHosting.host(
+            view: view.environmentObject(manager).environmentObject(state)
+        )
     }
-
-    func testExample() throws {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+    func getViewVstack(_ view: InspectableView<ViewType.View<ComplementAlert>>)
+        throws -> InspectableView<ViewType.VStack> {
+        try view.view(GeneralAlert<ComplementAlertContent>.self).view(type)
+                .zStack().geometryReader(1).vStack().zStack(0)
+                .view(ComplementAlertContent.self, 1).vStack()
+    }
+    
+    func testShowsCorrectContent() throws {
+        let exp = view.inspection.inspect { view in
+            let vstack = try self.getViewVstack(view)
+            XCTAssertFalse(vstack.isEmpty)
+            let text = try vstack.text(0).string()
+            XCTAssertEqual(text, "Radix complement")
+            
+        }
+        runViewHosting()
+        wait(for: [exp], timeout: 0.1)
     }
 
 }
