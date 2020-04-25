@@ -16,9 +16,9 @@ enum Base: Int {
 }
 
 class FloatingPoint: NSObject {
-    var sign: String!
-    var exp: String!
-    var mantissa: String!
+    var sign: String
+    var exp: String
+    var mantissa: String
     
     init(sign: String, exp: String, mantissa: String){
         self.sign = sign
@@ -27,7 +27,7 @@ class FloatingPoint: NSObject {
     }
     
     override var description: String {
-        return "\(sign!) \(exp!) \(mantissa!)"
+        return "\(sign) \(exp) \(mantissa)"
     }
 }
 
