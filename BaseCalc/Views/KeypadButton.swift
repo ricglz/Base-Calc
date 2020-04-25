@@ -40,7 +40,7 @@ struct KeypadButton: View {
         case "ß":
             let disabled = calculatorState.isNegative || calculatorState.hasDecimalDot
             return AnyView(Button(action: generalAction({
-                self.complementManager.isShowing = true
+                self.complementManager.isShowing.toggle()
             })) {
                 Text(label)
                     .modifier(DarkGrayButton(width: width, height: height, altCondition: disabled))
@@ -69,7 +69,7 @@ struct KeypadButton: View {
             })
         case "FP":
             return AnyView(Button(action: generalAction({
-                self.floatingPointManager.isShowing = true
+                self.floatingPointManager.isShowing.toggle()
             })) {
                 Text(label)
                     .modifier(DarkGrayButton(width: width, height: height, altCondition: false))
