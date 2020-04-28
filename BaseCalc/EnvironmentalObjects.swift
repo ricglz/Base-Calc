@@ -20,10 +20,10 @@ class LayoutState: ObservableObject {
         self.isLandscape = isLandscape
         
         UIDevice.current.beginGeneratingDeviceOrientationNotifications()
-        NotificationCenter.default.addObserver(self, selector: #selector(self.rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.onRotation), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
 
-    @objc func rotated() {
+    @objc func onRotation() {
         self.isLandscape = UIDevice.current.orientation.isLandscape
     }
 }
