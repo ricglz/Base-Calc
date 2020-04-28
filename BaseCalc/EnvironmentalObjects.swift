@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 enum Operation: String {
-    case add; case subtract;
+    case add = "+"; case subtract = "-"; case multiply = "x"; case divide = "÷";
 }
 
 class CalculatorState: ObservableObject {
@@ -60,14 +60,13 @@ class CalculatorState: ObservableObject {
         prevNumber = nil
     }
 
-    func sum() {
+    func performArithmetic(op: Operation) {
         willPerformArithmetic = true
-        prevOperation = .add
+        prevOperation = op
     }
-
-    func subtract() {
-        willPerformArithmetic = true
-        prevOperation = .subtract
+    
+    func isOperationSelected(op: Operation) -> Bool {
+        willPerformArithmetic && prevOperation == op
     }
 
     func changeSign() {
@@ -96,7 +95,7 @@ class CalculatorState: ObservableObject {
             changePrevNumber(answer: (prevNumber ?? currentNumber) + currentNumber)
         case .subtract:
             changePrevNumber(answer: (prevNumber ?? currentNumber) - currentNumber)
-        case .none:
+        default:
             print(prevOperation == nil)
         }
     }

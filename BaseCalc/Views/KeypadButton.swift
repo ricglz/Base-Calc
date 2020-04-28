@@ -37,26 +37,8 @@ struct KeypadButton: View {
                 Text(label)
                     .modifier(OrangeButton(width: width, height: height, altCondition: false))
             })
-        case "ß":
-            let disabled = calculatorState.isNegative || calculatorState.hasDecimalDot
-            return AnyView(Button(action: generalAction({
-                self.complementManager.isShowing.toggle()
-            })) {
-                Text(label)
-                    .modifier(DarkGrayButton(width: width, height: height, altCondition: disabled))
-            }.disabled(calculatorState.isNegative))
-        case "+":
-            let selected = calculatorState.willPerformArithmetic && calculatorState.prevOperation == Operation.add
-            return AnyView(Button(action: generalAction(calculatorState.sum)) {
-                Text(label)
-                    .modifier(OrangeButton(width: width, height: height, altCondition: selected))
-            })
-        case "-":
-            let selected = calculatorState.willPerformArithmetic && calculatorState.prevOperation == Operation.subtract
-            return AnyView(Button(action: generalAction(calculatorState.subtract)) {
-                Text(label)
-                    .modifier(OrangeButton(width: width, height: height, altCondition: selected))
-                })
+        case "+", "-", "x", "÷":
+            return makeArithmeticButton(op: Operation(rawValue: label)!)
         case "=":
             return AnyView(Button(action: generalAction(calculatorState.solve)) {
                 Text(label)
@@ -67,24 +49,30 @@ struct KeypadButton: View {
                 Text(label)
                     .modifier(LightGrayButton(width: width, height: height, altCondition: false))
             })
-        case "FP":
-            return AnyView(Button(action: generalAction({
-                self.floatingPointManager.isShowing.toggle()
-            })) {
-                Text(label)
-                    .modifier(DarkGrayButton(width: width, height: height, altCondition: false))
-            })
         default:
-            let digits = [
-                "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B",
-                "C", "D", "E", "F"
-            ]
-            let disabled = digits.firstIndex(of: label)! >= calculatorState.currentBase.rawValue
-            return AnyView(Button(action: generalAction(addDigit)) {
-                Text(label)
-                    .modifier(LightGrayButton(width: width, height: height, altCondition: disabled))
-            }.disabled(disabled))
+            return makeDigitButton(label: label)
         }
+    }
+    
+    func makeArithmeticButton(op: Operation) -> AnyView {
+        let selected = calculatorState.isOperationSelected(op: op)
+        let callback = { self.calculatorState.performArithmetic(op: op) }
+        return AnyView(Button(action: generalAction(callback)) {
+            Text(label)
+                .modifier(OrangeButton(width: width, height: height, altCondition: selected))
+        })
+    }
+    
+    func makeDigitButton(label: String) -> AnyView {
+        let digits = [
+            "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B",
+            "C", "D", "E", "F"
+        ]
+        let disabled = digits.firstIndex(of: label)! >= calculatorState.currentBase.rawValue
+        return AnyView(Button(action: generalAction(addDigit)) {
+            Text(label)
+                .modifier(LightGrayButton(width: width, height: height, altCondition: disabled))
+        }.disabled(disabled))
     }
 
     func generalAction(_ callback: @escaping () -> Void) -> () -> Void {
