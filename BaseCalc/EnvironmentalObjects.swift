@@ -13,6 +13,21 @@ enum Operation: String {
     case add = "+"; case subtract = "-"; case multiply = "x"; case divide = "÷";
 }
 
+class LayoutState: ObservableObject {
+    @Published var isLandscape: Bool
+
+    init(isLandscape: Bool = false) {
+        self.isLandscape = isLandscape
+        
+        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+        NotificationCenter.default.addObserver(self, selector: #selector(self.onRotation), name: UIDevice.orientationDidChangeNotification, object: nil)
+    }
+
+    @objc func onRotation() {
+        self.isLandscape = UIDevice.current.orientation.isLandscape
+    }
+}
+
 class CalculatorState: ObservableObject {
     @Published var currentBase: Base = .Base10
     @Published var prevNumber: Number? = nil

@@ -13,10 +13,8 @@ struct ContentView: View {
         ZStack {
             Color.black
                 .edgesIgnoringSafeArea(.all)
-            VStack {
+            VStack (spacing: 0) {
                 Header()
-                Spacer()
-                NumberLabel()
                 Keypad()
             }
             PopUpPickerView()
@@ -27,13 +25,30 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+struct ContentViewPreviewModifiers: ViewModifier {
+    let isLandscape: Bool
+    let width, height: CGFloat
+
+    func body(content: Content) -> some View {
+        content
             .environmentObject(CalculatorState())
             .environmentObject(PopUpPickerViewManager())
             .environmentObject(ComplementAlertManager())
+            .environmentObject(FloatingPointAlertManager())
             .environmentObject(ToastManager())
-            .previewDevice(PreviewDevice(rawValue: "iPhone SE"))
+            .environmentObject(LayoutState(isLandscape: isLandscape))
+            .previewLayout(.fixed(width: width, height: height))
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            ContentView()
+                .modifier(ContentViewPreviewModifiers(isLandscape: false, width: 320, height: 568))
+            
+            ContentView()
+                .modifier(ContentViewPreviewModifiers(isLandscape: true, width: 568, height: 320))
+        }
     }
 }

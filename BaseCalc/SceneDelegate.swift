@@ -26,6 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             .environmentObject(ComplementAlertManager())
             .environmentObject(FloatingPointAlertManager())
             .environmentObject(ToastManager())
+            .environmentObject(LayoutState())
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
