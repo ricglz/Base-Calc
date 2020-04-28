@@ -66,7 +66,7 @@ class CalculatorState: ObservableObject {
     }
     
     func isOperationSelected(op: Operation) -> Bool {
-        self.willPerformArithmetic && self.prevOperation == op
+        willPerformArithmetic && prevOperation == op
     }
 
     func changeSign() {
@@ -95,9 +95,8 @@ class CalculatorState: ObservableObject {
             changePrevNumber(answer: (prevNumber ?? currentNumber) + currentNumber)
         case .subtract:
             changePrevNumber(answer: (prevNumber ?? currentNumber) - currentNumber)
-        case .none:
+        default:
             print(prevOperation == nil)
-        default: break
         }
     }
 
