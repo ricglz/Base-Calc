@@ -19,6 +19,7 @@ struct KeypadButton: View {
 
     @EnvironmentObject var calculatorState: CalculatorState
     @EnvironmentObject var complementManager: ComplementAlertManager
+    @EnvironmentObject var baseManager: PopUpPickerViewManager
     @EnvironmentObject var floatingPointManager: FloatingPointAlertManager
 
     var body: some View {
@@ -49,13 +50,33 @@ struct KeypadButton: View {
                 Text(label)
                     .modifier(LightGrayButton(width: width, height: height, altCondition: false))
             })
-        case "AND", "NOR", "OR", "XOR", ">>", "<<", "X>>Y", "X<<Y", "FP", "ß":
+        case "AND", "NOR", "OR", "XOR", ">>", "<<", "X>>Y", "X<<Y":
+            let disabled = calculatorState.isNegative || calculatorState.hasDecimalDot
             return AnyView(Button(action: generalAction({})) {
+                Text(label)
+                    .modifier(DarkGrayButton(width: width, height: height, altCondition: disabled))
+            }.disabled(disabled))
+        case "ß":
+            let disabled = calculatorState.isNegative || calculatorState.hasDecimalDot
+            return AnyView(Button(action: generalAction({
+                self.complementManager.isShowing = true
+            })) {
+                Text(label)
+                    .modifier(DarkGrayButton(width: width, height: height, altCondition: disabled))
+            }.disabled(disabled))
+        case "FP":
+            return AnyView(Button(action: generalAction({
+                self.floatingPointManager.isShowing = true
+            })) {
                 Text(label)
                     .modifier(DarkGrayButton(width: width, height: height, altCondition: false))
             })
         case "BASE":
-            return AnyView(Button(action: generalAction({})) {
+            return AnyView(Button(action: generalAction({
+                self.baseManager.showPickerView(
+                    self.calculatorState.currentBase
+                )
+            })) {
                 Text(label + " \(calculatorState.currentBase.rawValue)")
                     .modifier(DarkGrayButton(width: width * 2 + 6, height: height, altCondition: false))
             })

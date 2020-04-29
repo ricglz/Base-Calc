@@ -24,7 +24,11 @@ class LayoutState: ObservableObject {
     }
 
     @objc func onRotation() {
-        self.isLandscape = UIDevice.current.orientation.isLandscape
+        let orientation = UIDevice.current.orientation
+        
+        if orientation == .portrait || orientation.isLandscape {
+            self.isLandscape = orientation.isLandscape
+        }
     }
 }
 

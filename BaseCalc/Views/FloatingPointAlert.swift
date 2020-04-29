@@ -23,6 +23,7 @@ struct FloatingPointAlert: View {
 
 struct FloatingPointAlertContent: View {
     @EnvironmentObject var manager: FloatingPointAlertManager
+    @EnvironmentObject var layout: LayoutState
     let single, double: String
     
     init(number: Number) {
@@ -37,13 +38,34 @@ struct FloatingPointAlertContent: View {
                 .foregroundColor(.white)
                 .padding()
 
-            Text("Single Precision:")
-                .font(.subheadline)
-                .foregroundColor(.gray)
-            
-            Text(single)
-                .font(.subheadline)
-                .foregroundColor(.gray)
+            if layout.isLandscape {
+                HStack {
+                    Spacer()
+                    
+                    Text("Single Precision:")
+                        .bold()
+                        .font(.subheadline)
+                        .foregroundColor(.white)
+                    
+                    Text(single)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                    
+                    Spacer()
+                }
+            } else {
+                VStack {
+                    Text("Single Precision:")
+                        .bold()
+                        .font(.subheadline)
+                        .foregroundColor(.white)
+                    
+                    Text(single)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
+                
+            }
             
             Button("Dismiss"){
                 self.manager.isShowing.toggle()
@@ -60,6 +82,7 @@ struct FloatingPointAlert_Previews: PreviewProvider {
         FloatingPointAlert()
             .environmentObject(CalculatorState())
             .environmentObject(FloatingPointAlertManager(isShowing: true))
-            .previewDevice(PreviewDevice(rawValue: "iPhone SE"))
+            .environmentObject(LayoutState())
+            .previewLayout(.fixed(width: 568, height: 320))
     }
 }

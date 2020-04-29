@@ -69,7 +69,7 @@ struct NumberLabel: View {
                 .foregroundColor(.white)
                 .lineLimit(1)
                 .allowsTightening(true)
-                .minimumScaleFactor(0.5)
+                .minimumScaleFactor(layoutState.isLandscape ? 1 : 0.5)
         }.padding().frame(minHeight: 92)
             .onLongPressGesture(perform: copyToClipboard)
     }
