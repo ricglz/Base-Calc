@@ -89,7 +89,7 @@ struct KeypadButton: View {
     
     func makeArithmeticButton(op: Operation) -> AnyView {
         let selected = calculatorState.isOperationSelected(op: op)
-        let callback = { self.calculatorState.performArithmetic(op: op) }
+        let callback = { self.calculatorState.performOperation(op: op) }
         return AnyView(Button(action: generalAction(callback)) {
             Text(label)
                 .modifier(OrangeButton(width: width, height: height, altCondition: selected))
@@ -100,7 +100,7 @@ struct KeypadButton: View {
         let highlighted = calculatorState.isOperationSelected(op: op)
         let disabled = calculatorState.isNegative || calculatorState.hasDecimalDot
 
-        let callback = { self.calculatorState.performArithmetic(op: op) }
+        let callback = { self.calculatorState.performOperation(op: op) }
         return AnyView(Button(action: generalAction(callback)) {
             Text(label)
                 .modifier(HighlightableDarkGrayButton(width: width, height: height, disabled: disabled, highlighted: highlighted))

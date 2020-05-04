@@ -83,7 +83,7 @@ class CalculatorState: ObservableObject {
         prevNumber = nil
     }
 
-    func performArithmetic(op: Operation) {
+    func performOperation(op: Operation) {
         willPerformOperation = true
         prevOperation = op
     }
