@@ -199,4 +199,14 @@ class Number: NSObject {
         
         return FloatingPoint(sign: sign, exp: exponent, mantissa: mantissa)
     }
+
+    //MARK:- Bitwise Operations
+
+    static func & (leftNum: Number, rightNum: Number) -> Number {
+        let leftVal = Int(leftNum.value)
+        let rightVal = Int(rightNum.value)
+        let result = String(leftVal & rightVal)
+
+        return Number(number: result, base: rightNum.base)
+    }
 }
