@@ -53,13 +53,13 @@ struct KeypadButton: View {
         case "AND":
             return makeBitwiseButton(op: Operation(rawValue: label)!)
         case "NOR", "OR", "XOR", ">>", "<<", "X>>Y", "X<<Y":
-            let disabled = calculatorState.isNegative || calculatorState.hasDecimalDot
+            let disabled = !calculatorState.isNonNegativeInteger()
             return AnyView(Button(action: generalAction({})) {
                 Text(label)
                     .modifier(DarkGrayButton(width: width, height: height, altCondition: disabled))
             }.disabled(disabled))
         case "ß":
-            let disabled = calculatorState.isNegative || calculatorState.hasDecimalDot
+            let disabled = !calculatorState.isNonNegativeInteger()
             return AnyView(Button(action: generalAction({
                 self.complementManager.isShowing = true
             })) {
@@ -98,7 +98,7 @@ struct KeypadButton: View {
     
     func makeBitwiseButton(op: Operation) -> AnyView {
         let highlighted = calculatorState.isOperationSelected(op: op)
-        let disabled = calculatorState.isNegative || calculatorState.hasDecimalDot
+        let disabled = !calculatorState.isNonNegativeInteger()
 
         let callback = { self.calculatorState.performOperation(op: op) }
         return AnyView(Button(action: generalAction(callback)) {

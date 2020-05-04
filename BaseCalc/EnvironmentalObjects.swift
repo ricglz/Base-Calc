@@ -83,6 +83,10 @@ class CalculatorState: ObservableObject {
         prevNumber = nil
     }
 
+    func isNonNegativeInteger() -> Bool {
+        !(isNegative || hasDecimalDot)
+    }
+
     func performOperation(op: Operation) {
         willPerformOperation = true
         prevOperation = op
