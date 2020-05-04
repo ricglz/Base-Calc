@@ -10,7 +10,11 @@ import Foundation
 import SwiftUI
 
 enum Operation: String {
-    case add = "+"; case subtract = "-"; case multiply = "x"; case divide = "÷";
+    case add = "+";
+    case subtract = "-";
+    case multiply = "x";
+    case divide = "÷";
+    case and = "AND";
 }
 
 class LayoutState: ObservableObject {
@@ -38,13 +42,13 @@ class CalculatorState: ObservableObject {
     @Published var prevOperation: Operation? = nil
     @Published var currentText: String = "0"
     @Published var hasDecimalDot: Bool = false
-    @Published var willPerformArithmetic: Bool = false
+    @Published var willPerformOperation: Bool = false
     @Published var isNegative: Bool = false
 
     func addDigit(_ digitToAdd: String) {
         let digitToAddIsDot = digitToAdd == "."
 
-        if willPerformArithmetic {
+        if willPerformOperation {
             prevNumber = Number(number: currentText, base: currentBase)
 
             if digitToAddIsDot {
@@ -53,7 +57,7 @@ class CalculatorState: ObservableObject {
                 currentText = digitToAdd
             }
 
-            willPerformArithmetic.toggle()
+            willPerformOperation.toggle()
             hasDecimalDot = digitToAddIsDot
             return
         }
@@ -73,19 +77,19 @@ class CalculatorState: ObservableObject {
     func allClear() {
         currentText = "0"
         hasDecimalDot = false
-        willPerformArithmetic = false
+        willPerformOperation = false
         isNegative = false
         prevOperation = nil
         prevNumber = nil
     }
 
     func performArithmetic(op: Operation) {
-        willPerformArithmetic = true
+        willPerformOperation = true
         prevOperation = op
     }
     
     func isOperationSelected(op: Operation) -> Bool {
-        willPerformArithmetic && prevOperation == op
+        willPerformOperation && prevOperation == op
     }
 
     func changeSign() {
@@ -114,6 +118,8 @@ class CalculatorState: ObservableObject {
             changePrevNumber(answer: (prevNumber ?? currentNumber) + currentNumber)
         case .subtract:
             changePrevNumber(answer: (prevNumber ?? currentNumber) - currentNumber)
+        case .and:
+            changePrevNumber(answer: (prevNumber ?? currentNumber) & currentNumber)
         default:
             print(prevOperation == nil)
         }

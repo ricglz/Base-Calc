@@ -17,8 +17,8 @@ struct SimpleButton: ViewModifier {
         content
             .font(.title)
             .frame(width: width, height: height)
-            .foregroundColor(bgColor)
-            .background(fgColor)
+            .foregroundColor(fgColor)
+            .background(bgColor)
     }
 }
 

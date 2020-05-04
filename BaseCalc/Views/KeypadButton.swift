@@ -50,7 +50,9 @@ struct KeypadButton: View {
                 Text(label)
                     .modifier(LightGrayButton(width: width, height: height, altCondition: false))
             })
-        case "AND", "NOR", "OR", "XOR", ">>", "<<", "X>>Y", "X<<Y":
+        case "AND":
+            return makeBitwiseButton(op: Operation(rawValue: label)!)
+        case "NOR", "OR", "XOR", ">>", "<<", "X>>Y", "X<<Y":
             let disabled = calculatorState.isNegative || calculatorState.hasDecimalDot
             return AnyView(Button(action: generalAction({})) {
                 Text(label)
@@ -94,6 +96,17 @@ struct KeypadButton: View {
         })
     }
     
+    func makeBitwiseButton(op: Operation) -> AnyView {
+        let highlighted = calculatorState.isOperationSelected(op: op)
+        let disabled = calculatorState.isNegative || calculatorState.hasDecimalDot
+
+        let callback = { self.calculatorState.performArithmetic(op: op) }
+        return AnyView(Button(action: generalAction(callback)) {
+            Text(label)
+                .modifier(HighlightableDarkGrayButton(width: width, height: height, disabled: disabled, highlighted: highlighted))
+        }.disabled(disabled))
+    }
+
     func makeDigitButton(label: String) -> AnyView {
         let digits = [
             "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B",
