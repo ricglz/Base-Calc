@@ -130,12 +130,28 @@ class Number: NSObject {
     static func -= (leftNum: inout Number, rightNum: Number) {
         leftNum = leftNum - rightNum
     }
+
+    static func * (leftNum: Number, rightNum: Number) -> Number {
+        let sumValue = leftNum.value * rightNum.value
+        let newNum = Number(number: String(sumValue), base: .Base10)
+        newNum.setBase(base: rightNum.base)
+
+        return newNum
+    }
     
     static func * (leftNum: Number, rightNum: Double) -> Number {
         let multValue = leftNum.value * rightNum
         let newNum = Number(number: String(multValue), base: .Base10)
         newNum.setBase(base: leftNum.base)
         
+        return newNum
+    }
+
+    static func / (leftNum: Number, rightNum: Number) -> Number {
+        let divValue = leftNum.value / rightNum.value
+        let newNum = Number(number: String(divValue), base: .Base10)
+        newNum.setBase(base: leftNum.base)
+
         return newNum
     }
     

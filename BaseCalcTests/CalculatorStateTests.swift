@@ -107,6 +107,16 @@ class CalculatorStateTests: XCTestCase {
         numericalOperationsAux(subtract, "-")
     }
 
+    func testMultiplication() {
+        let multiply = { self.state.performOperation(op: .multiply) }
+        numericalOperationsAux(multiply, "x")
+    }
+
+    func testDivision() {
+        let divide = { self.state.performOperation(op: .divide) }
+        numericalOperationsAux(divide, "÷")
+    }
+
     //MARK:- Bitwise operations
 
     func testAnd() {

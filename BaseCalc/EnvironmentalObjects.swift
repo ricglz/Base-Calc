@@ -134,6 +134,10 @@ class CalculatorState: ObservableObject {
             changePrevNumber(answer: (prevNumber ?? currentNumber) + currentNumber)
         case .subtract:
             changePrevNumber(answer: (prevNumber ?? currentNumber) - currentNumber)
+        case .multiply:
+            changePrevNumber(answer: (prevNumber ?? currentNumber) * currentNumber)
+        case .divide:
+            changePrevNumber(answer: (prevNumber ?? currentNumber) / currentNumber)
         case .and:
             changePrevNumber(answer: (prevNumber ?? currentNumber) & currentNumber)
         case .or:
