@@ -278,4 +278,16 @@ class CalculatorStateTests: XCTestCase {
         XCTAssertFalse(state.isNegative)
         XCTAssertNil(state.prevOperation)
     }
+
+    func testChainedOperations() {
+        state.addDigit("2")
+        state.performOperation(op: .add)
+        state.addDigit("3")
+        state.performOperation(op: .multiply)
+        XCTAssertEqual(state.currentText, "5")
+        XCTAssertTrue(state.isOperationSelected(op: .multiply))
+        state.addDigit("4")
+        state.solve()
+        XCTAssertEqual(state.currentText, "20")
+    }
 }
