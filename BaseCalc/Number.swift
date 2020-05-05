@@ -31,6 +31,8 @@ class FloatingPoint: NSObject {
     }
 }
 
+infix operator ~| : AdditionPrecedence
+
 class Number: NSObject {
     var value: Double
     var base: Base
@@ -224,5 +226,17 @@ class Number: NSObject {
         let result = String(leftVal ^ rightVal)
 
         return Number(number: result, base: rightNum.base)
+    }
+
+    static func ~| (leftNum: Number, rightNum: Number) -> Number {
+        let orResult = leftNum | rightNum
+
+        let ogBase = orResult.base
+        orResult.setBase(base: .Base2)
+
+        let norResult = orResult.radixComplementDiminished()
+        norResult.setBase(base: ogBase)
+
+        return norResult
     }
 }

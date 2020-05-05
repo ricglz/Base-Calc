@@ -17,6 +17,7 @@ enum Operation: String {
     case and = "AND";
     case or = "OR";
     case xor = "XOR";
+    case nor = "NOR";
 }
 
 class LayoutState: ObservableObject {
@@ -130,6 +131,8 @@ class CalculatorState: ObservableObject {
             changePrevNumber(answer: (prevNumber ?? currentNumber) | currentNumber)
         case .xor:
             changePrevNumber(answer: (prevNumber ?? currentNumber) ^ currentNumber)
+        case .nor:
+            changePrevNumber(answer: (prevNumber ?? currentNumber) ~| currentNumber)
         default:
             print(prevOperation == nil)
         }

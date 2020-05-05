@@ -124,6 +124,11 @@ class CalculatorStateTests: XCTestCase {
         numericalOperationsAux(xor, "XOR")
     }
 
+    func testNor() {
+        let nor = { self.state.performOperation(op: .nor) }
+        numericalOperationsAux(nor, "NOR")
+    }
+
     //MARK:- Change Sign Operation
 
     func testChangeSignOfZero() {
