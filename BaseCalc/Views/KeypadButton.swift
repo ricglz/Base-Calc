@@ -50,9 +50,9 @@ struct KeypadButton: View {
                 Text(label)
                     .modifier(LightGrayButton(width: width, height: height, altCondition: false))
             })
-        case "AND":
+        case "AND", "OR", "XOR", "NOR":
             return makeBitwiseButton(op: Operation(rawValue: label)!)
-        case "NOR", "OR", "XOR", ">>", "<<", "X>>Y", "X<<Y":
+        case ">>", "<<", "X>>Y", "X<<Y":
             let disabled = calculatorState.isInvalidForBitOperations()
             return AnyView(Button(action: generalAction({})) {
                 Text(label)

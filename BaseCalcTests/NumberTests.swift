@@ -389,4 +389,31 @@ class NumberTests: XCTestCase {
         XCTAssertFalse(num3.hasFract)
         XCTAssertEqual(num3.base, Base.Base10)
     }
+
+    func testOrOperation(){
+        num1 = Number(number: "10", base: .Base10)
+        num2 = Number(number: "3", base: .Base10)
+        num3 = num1 | num2
+        XCTAssertEqual(num3.value, 11.0)
+        XCTAssertFalse(num3.hasFract)
+        XCTAssertEqual(num3.base, Base.Base10)
+    }
+
+    func testXorOperation(){
+        num1 = Number(number: "10", base: .Base10)
+        num2 = Number(number: "3", base: .Base10)
+        num3 = num1 ^ num2
+        XCTAssertEqual(num3.value, 9.0)
+        XCTAssertFalse(num3.hasFract)
+        XCTAssertEqual(num3.base, Base.Base10)
+    }
+
+    func testNorOperation(){
+        num1 = Number(number: "10", base: .Base10)
+        num2 = Number(number: "3", base: .Base10)
+        num3 = num1 ~| num2
+        XCTAssertEqual(num3.value, 4.0)
+        XCTAssertFalse(num3.hasFract)
+        XCTAssertEqual(num3.base, Base.Base10)
+    }
 }
