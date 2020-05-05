@@ -50,9 +50,11 @@ struct KeypadButton: View {
                 Text(label)
                     .modifier(LightGrayButton(width: width, height: height, altCondition: false))
             })
-        case "AND", "OR", "XOR", "NOR":
+        case "AND", "OR", "XOR", "NOR", "X<<Y":
             return makeBitwiseButton(op: Operation(rawValue: label)!)
-        case ">>", "<<", "X>>Y", "X<<Y":
+        case "<<":
+            return makeSingleShiftButton(op: Operation(rawValue: label)!)
+        case ">>", "X>>Y":
             let disabled = calculatorState.isInvalidForBitOperations()
             return AnyView(Button(action: generalAction({})) {
                 Text(label)
@@ -104,6 +106,15 @@ struct KeypadButton: View {
         return AnyView(Button(action: generalAction(callback)) {
             Text(label)
                 .modifier(HighlightableDarkGrayButton(width: width, height: height, disabled: disabled, highlighted: highlighted))
+        }.disabled(disabled))
+    }
+
+    func makeSingleShiftButton(op: Operation) -> AnyView {
+        let disabled = calculatorState.isInvalidForBitOperations()
+        let callback = { self.calculatorState.performSingleShift(shift: op) }
+        return AnyView(Button(action: generalAction(callback)) {
+            Text(label)
+                .modifier(DarkGrayButton(width: width, height: height, altCondition: disabled))
         }.disabled(disabled))
     }
 
