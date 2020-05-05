@@ -105,7 +105,7 @@ struct KeypadButton: View {
 
     func makeSingleShiftButton(op: Operation) -> AnyView {
         let disabled = calculatorState.isInvalidForBitOperations()
-        let callback = { self.calculatorState.performSingleShift(shift: op) }
+        let callback = { self.calculatorState.performOperation(op: op) }
         return AnyView(Button(action: generalAction(callback)) {
             Text(label)
                 .modifier(DarkGrayButton(width: width, height: height, altCondition: disabled))
