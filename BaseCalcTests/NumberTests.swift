@@ -212,6 +212,48 @@ class NumberTests: XCTestCase {
         XCTAssertFalse(num1.hasFract)
     }
 
+    //MARK:- Testing number multiplication
+
+    func testSameBaseWholeMultiplication() {
+        num1 = Number(number: "F", base: .Base16)
+        num2 = Number(number: "A", base: .Base16)
+        num3 = num1 * num2
+        XCTAssertEqual(num3.value, 150)
+        XCTAssertFalse(num3.hasFract)
+    }
+
+    func testDifferentBaseWholeMultiplication() {
+        num1 = Number(number: "50", base: .Base9)
+        num2 = Number(number: "100", base: .Base7)
+        num3 = num1 * num2
+        XCTAssertEqual(num3.value, 2205)
+        XCTAssertFalse(num3.hasFract)
+    }
+
+    func testSameBaseFloatingMultiplication() {
+        num1 = Number(number: "101.01", base: .Base2)
+        num2 = Number(number: "1.1", base: .Base2)
+        num3 = num1 * num2
+        XCTAssertEqual(num3.value, 7.875)
+        XCTAssertTrue(num3.hasFract)
+    }
+
+    func testDifferentBaseFloatingMultiplication() {
+        num1 = Number(number: "1200.2", base: .Base5)
+        num2 = Number(number: "35.6", base: .Base15)
+        num3 = num1 * num2
+        XCTAssertEqual(num3.value, 8840.16)
+        XCTAssertTrue(num3.hasFract)
+    }
+
+    func testFloatingMultiplicationThatResultsInWhole() {
+        num1 = Number(number: "1.5", base: .Base10)
+        num2 = Number(number: "2", base: .Base10)
+        num3 = num1 * num2
+        XCTAssertEqual(num3.value, 3)
+        XCTAssertFalse(num3.hasFract)
+    }
+
     //MARK:- Testing number subtraction
 
     func testSameBaseWholeSubtraction() {
