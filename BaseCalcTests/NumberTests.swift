@@ -327,6 +327,48 @@ class NumberTests: XCTestCase {
         XCTAssertFalse(num1.hasFract)
     }
 
+    //MARK:- Testing number division
+
+    func testSameBaseWholeDivision() {
+        num1 = Number(number: "10", base: .Base16)
+        num2 = Number(number: "2", base: .Base16)
+        num3 = num1 / num2
+        XCTAssertEqual(num3.value, 8)
+        XCTAssertFalse(num3.hasFract)
+    }
+
+    func testDifferentBaseWholeDivision() {
+        num1 = Number(number: "176", base: .Base9)
+        num2 = Number(number: "101", base: .Base7)
+        num3 = num1 / num2
+        XCTAssertEqual(num3.value, 3)
+        XCTAssertFalse(num3.hasFract)
+    }
+
+    func testSameBaseFloatingDivision() {
+        num1 = Number(number: "101.01", base: .Base2)
+        num2 = Number(number: "1.1", base: .Base2)
+        num3 = num1 / num2
+        XCTAssertEqual(num3.value, 3.5)
+        XCTAssertTrue(num3.hasFract)
+    }
+
+    func testDifferentBaseFloatingDivision() {
+        num1 = Number(number: "14.6", base: .Base8)
+        num2 = Number(number: "4.4", base: .Base5)
+        num3 = num1 / num2
+        XCTAssertEqual(num3.value, 2.65625)
+        XCTAssertTrue(num3.hasFract)
+    }
+
+    func testFloatingDivisionThatResultsInWhole() {
+        num1 = Number(number: "6.5", base: .Base10)
+        num2 = Number(number: "0.5", base: .Base10)
+        num3 = num1 / num2
+        XCTAssertEqual(num3.value, 13)
+        XCTAssertFalse(num3.hasFract)
+    }
+
     //MARK:- Testing number multiplication (Double)
 
     func testMultiplicationWithDouble() {

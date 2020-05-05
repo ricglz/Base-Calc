@@ -112,6 +112,11 @@ class CalculatorStateTests: XCTestCase {
         numericalOperationsAux(multiply, "x")
     }
 
+    func testDivision() {
+        let divide = { self.state.performOperation(op: .divide) }
+        numericalOperationsAux(divide, "÷")
+    }
+
     //MARK:- Bitwise operations
 
     func testAnd() {

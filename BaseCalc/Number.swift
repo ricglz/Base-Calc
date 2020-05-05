@@ -146,6 +146,14 @@ class Number: NSObject {
         
         return newNum
     }
+
+    static func / (leftNum: Number, rightNum: Number) -> Number {
+        let divValue = leftNum.value / rightNum.value
+        let newNum = Number(number: String(divValue), base: .Base10)
+        newNum.setBase(base: leftNum.base)
+
+        return newNum
+    }
     
     static func / (leftNum: Number, rightNum: Double) -> Number {
         return leftNum * (1.0 / rightNum)
