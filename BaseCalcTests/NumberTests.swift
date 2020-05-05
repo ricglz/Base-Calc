@@ -326,6 +326,7 @@ class NumberTests: XCTestCase {
     }
 
     //MARK:- Testing floating point
+
     func testZeroValueFloatingPoint() {
         num1 = Number(number: "0", base: .Base10)
         floating = num1.getFloatingPoint()
@@ -376,5 +377,16 @@ class NumberTests: XCTestCase {
         XCTAssertEqual(floating.sign, "1")
         XCTAssertEqual(floating.exp, "01111111111")
         XCTAssertEqual(floating.mantissa, "1111111111111111111111111111111100000000000000000000")
+    }
+
+    //MARK:- Testing Bitwise Operations
+
+    func testAndOperation(){
+        num1 = Number(number: "10", base: .Base10)
+        num2 = Number(number: "3", base: .Base10)
+        num3 = num1 & num2
+        XCTAssertEqual(num3.value, 2.0)
+        XCTAssertFalse(num3.hasFract)
+        XCTAssertEqual(num3.base, Base.Base10)
     }
 }

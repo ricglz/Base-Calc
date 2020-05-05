@@ -27,10 +27,10 @@ class CalculatorStateTests: XCTestCase {
 
     //MARK:- Add Digit operation
     func testWillPerformAritmeticAddDot() {
-        state.willPerformArithmetic = true
+        state.willPerformOperation = true
         state.addDigit(".")
         XCTAssertEqual(state.currentText, "0.")
-        XCTAssertFalse(state.willPerformArithmetic)
+        XCTAssertFalse(state.willPerformOperation)
         XCTAssertTrue(state.hasDecimalDot)
     }
 
@@ -41,9 +41,9 @@ class CalculatorStateTests: XCTestCase {
     }
 
     func testWillPerformAritmeticAddDigit() {
-        state.willPerformArithmetic = true
+        state.willPerformOperation = true
         addRandomDigitAndAsertPresence()
-        XCTAssertFalse(state.willPerformArithmetic)
+        XCTAssertFalse(state.willPerformOperation)
         XCTAssertFalse(state.hasDecimalDot)
     }
 
@@ -76,14 +76,14 @@ class CalculatorStateTests: XCTestCase {
     func testAllClear() {
         state.currentText = "-\(String(Int.random(in: 1..<10)))."
         state.hasDecimalDot = true
-        state.willPerformArithmetic = true
+        state.willPerformOperation = true
         state.isNegative = true
         state.prevOperation = .add
         state.prevNumber = Number(number: "0", base: .Base10)
         state.allClear()
         XCTAssertEqual(state.currentText, "0")
         XCTAssertFalse(state.hasDecimalDot)
-        XCTAssertFalse(state.willPerformArithmetic)
+        XCTAssertFalse(state.willPerformOperation)
         XCTAssertFalse(state.isNegative)
         XCTAssertNil(state.prevOperation)
         XCTAssertNil(state.prevNumber)
@@ -93,18 +93,25 @@ class CalculatorStateTests: XCTestCase {
 
     func numericalOperationsAux(_ operation: () -> (),  _ prevOperation: String) {
         operation()
-        XCTAssertTrue(state.willPerformArithmetic)
+        XCTAssertTrue(state.willPerformOperation)
         XCTAssertEqual(state.prevOperation?.rawValue, prevOperation)
     }
 
     func testSum() {
-        let sum = { self.state.performArithmetic(op: .add) }
+        let sum = { self.state.performOperation(op: .add) }
         numericalOperationsAux(sum, "+")
     }
 
     func testSubtract() {
-        let subtract = { self.state.performArithmetic(op: .subtract) }
+        let subtract = { self.state.performOperation(op: .subtract) }
         numericalOperationsAux(subtract, "-")
+    }
+
+    //MARK:- Bitwise operations
+
+    func testAnd() {
+        let and = { self.state.performOperation(op: .and) }
+        numericalOperationsAux(and, "AND")
     }
 
     //MARK:- Change Sign Operation
