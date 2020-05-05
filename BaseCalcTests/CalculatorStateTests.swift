@@ -139,19 +139,9 @@ class CalculatorStateTests: XCTestCase {
         numericalOperationsAux(nor, "NOR")
     }
 
-    func testLeftShift1() {
-        let leftShift1 = { self.state.performOperation(op: .leftShift1) }
-        numericalOperationsAux(leftShift1, "<<")
-    }
-
     func testLeftShiftN() {
         let leftShiftN = { self.state.performOperation(op: .leftShiftN) }
         numericalOperationsAux(leftShiftN, "X<<Y")
-    }
-
-    func testRightShift1() {
-        let rightShift1 = { self.state.performOperation(op: .rightShift1) }
-        numericalOperationsAux(rightShift1, ">>")
     }
 
     func testRightShiftN() {
@@ -277,5 +267,17 @@ class CalculatorStateTests: XCTestCase {
         XCTAssertEqual(state.currentText, "0")
         XCTAssertFalse(state.isNegative)
         XCTAssertNil(state.prevOperation)
+    }
+
+    func testChainedOperations() {
+        state.addDigit("2")
+        state.performOperation(op: .add)
+        state.addDigit("3")
+        state.performOperation(op: .multiply)
+        XCTAssertEqual(state.currentText, "5")
+        XCTAssertTrue(state.isOperationSelected(op: .multiply))
+        state.addDigit("4")
+        state.solve()
+        XCTAssertEqual(state.currentText, "20")
     }
 }

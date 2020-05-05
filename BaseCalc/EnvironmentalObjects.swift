@@ -95,8 +95,17 @@ class CalculatorState: ObservableObject {
     }
 
     func performOperation(op: Operation) {
-        willPerformOperation = true
+        if prevOperation != nil {
+            solve()
+        }
+
         prevOperation = op
+
+        if op == .leftShift1 || op == .rightShift1 {
+            solve()
+        } else {
+            willPerformOperation = true
+        }
     }
     
     func isOperationSelected(op: Operation) -> Bool {
@@ -119,11 +128,6 @@ class CalculatorState: ObservableObject {
         currentText = currNumber.toString(base: newBase)
         hasDecimalDot = currNumber.hasFract
         currentBase = newBase
-    }
-
-    func performSingleShift(shift: Operation){
-        prevOperation = shift
-        solve()
     }
 
     func solve() {
