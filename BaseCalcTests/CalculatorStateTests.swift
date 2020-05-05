@@ -114,6 +114,11 @@ class CalculatorStateTests: XCTestCase {
         numericalOperationsAux(and, "AND")
     }
 
+    func testOr() {
+        let or = { self.state.performOperation(op: .or) }
+        numericalOperationsAux(or, "OR")
+    }
+
     //MARK:- Change Sign Operation
 
     func testChangeSignOfZero() {

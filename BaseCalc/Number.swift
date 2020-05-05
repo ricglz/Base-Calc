@@ -209,4 +209,12 @@ class Number: NSObject {
 
         return Number(number: result, base: rightNum.base)
     }
+
+    static func | (leftNum: Number, rightNum: Number) -> Number {
+        let leftVal = Int(leftNum.value)
+        let rightVal = Int(rightNum.value)
+        let result = String(leftVal | rightVal)
+
+        return Number(number: result, base: rightNum.base)
+    }
 }
