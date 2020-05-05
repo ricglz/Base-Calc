@@ -18,6 +18,10 @@ enum Operation: String {
     case or = "OR";
     case xor = "XOR";
     case nor = "NOR";
+    case leftShift1 = "<<";
+    case leftShiftN = "X<<Y";
+    case rightShift1 = ">>";
+    case rightShiftN = "X>>Y";
 }
 
 class LayoutState: ObservableObject {
@@ -117,6 +121,11 @@ class CalculatorState: ObservableObject {
         currentBase = newBase
     }
 
+    func performSingleShift(shift: Operation){
+        prevOperation = shift
+        solve()
+    }
+
     func solve() {
         let currentNumber = Number(number: currentText, base: currentBase)
 
@@ -133,6 +142,14 @@ class CalculatorState: ObservableObject {
             changePrevNumber(answer: (prevNumber ?? currentNumber) ^ currentNumber)
         case .nor:
             changePrevNumber(answer: (prevNumber ?? currentNumber) ~| currentNumber)
+        case .leftShiftN:
+            changePrevNumber(answer: (prevNumber ?? currentNumber) << currentNumber)
+        case .leftShift1:
+            changePrevNumber(answer: currentNumber << Number(number: "1", base: currentBase))
+        case .rightShiftN:
+            changePrevNumber(answer: (prevNumber ?? currentNumber) >> currentNumber)
+        case .rightShift1:
+            changePrevNumber(answer: currentNumber >> Number(number: "1", base: currentBase))
         default:
             print(prevOperation == nil)
         }

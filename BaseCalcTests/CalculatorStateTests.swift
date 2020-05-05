@@ -129,6 +129,26 @@ class CalculatorStateTests: XCTestCase {
         numericalOperationsAux(nor, "NOR")
     }
 
+    func testLeftShift1() {
+        let leftShift1 = { self.state.performOperation(op: .leftShift1) }
+        numericalOperationsAux(leftShift1, "<<")
+    }
+
+    func testLeftShiftN() {
+        let leftShiftN = { self.state.performOperation(op: .leftShiftN) }
+        numericalOperationsAux(leftShiftN, "X<<Y")
+    }
+
+    func testRightShift1() {
+        let rightShift1 = { self.state.performOperation(op: .rightShift1) }
+        numericalOperationsAux(rightShift1, ">>")
+    }
+
+    func testRightShiftN() {
+        let rightShiftN = { self.state.performOperation(op: .rightShiftN) }
+        numericalOperationsAux(rightShiftN, "X>>Y")
+    }
+
     //MARK:- Change Sign Operation
 
     func testChangeSignOfZero() {

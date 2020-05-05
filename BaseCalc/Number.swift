@@ -239,4 +239,26 @@ class Number: NSObject {
 
         return norResult
     }
+
+    static func << (leftNum: Number, rightNum: Number) -> Number {
+        let leftVal = Int(leftNum.value)
+        let rightVal = Int(rightNum.value)
+        
+        let decVal = String(leftVal << rightVal)
+        let result = Number(number: decVal, base: .Base10)
+        
+        result.setBase(base: rightNum.base)
+        return result
+    }
+
+    static func >> (leftNum: Number, rightNum: Number) -> Number {
+        let leftVal = Int(leftNum.value)
+        let rightVal = Int(rightNum.value)
+        
+        let decVal = String(leftVal >> rightVal)
+        let result = Number(number: decVal, base: .Base10)
+        
+        result.setBase(base: rightNum.base)
+        return result
+    }
 }
