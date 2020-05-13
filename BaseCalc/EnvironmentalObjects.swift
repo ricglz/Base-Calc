@@ -146,7 +146,7 @@ class CalculatorState: ObservableObject {
             let number = try Number(number: currentText, base: currentBase)
             return String(describing: number.getFloatingPoint())
         } catch {
-            return "Error"
+            return "Error: Number is too big"
         }
     }
     
