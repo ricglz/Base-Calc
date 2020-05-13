@@ -96,14 +96,8 @@ struct AlertButtons: View {
             Spacer()
 
             Button(action: {
-                do {
-                    let number = try Number(number: self.calculatorState.currentText, base: self.calculatorState.currentBase)
-                    let complement = try number.radixComplement(digits: Int(self.digits))
-                    self.calculatorState.currentText = complement.toString()
-                    self.manager.isShowing.toggle()
-                } catch {
-                    print("Error")
-                }
+                self.calculatorState.getRadixComplement(digits: Int(self.digits)!)
+                self.manager.isShowing.toggle()
             }){
                 Text("ß compl.")
             }.disabled(!isDigitCountValid)
@@ -111,14 +105,8 @@ struct AlertButtons: View {
             Spacer()
 
             Button(action: {
-                do {
-                    let number = try Number(number: self.calculatorState.currentText, base: self.calculatorState.currentBase)
-                    let complement = try number.radixComplementDiminished(digits: Int(self.digits))
-                    self.calculatorState.currentText = complement.toString()
-                    self.manager.isShowing.toggle()
-                } catch {
-                    print("Error")
-                }
+                self.calculatorState.getRadixComplementDiminished(digits: Int(self.digits)!)
+                self.manager.isShowing.toggle()
             }){
                 Text("ß⁻¹ compl.")
             }.disabled(!isDigitCountValid)
