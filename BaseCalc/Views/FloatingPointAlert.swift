@@ -14,22 +14,15 @@ struct FloatingPointAlert: View {
     
     var body: some View {
         GeneralAlert(isShowing: manager.isShowing) {
-            FloatingPointAlertContent(
-                number: Number(number: self.calculatorState.currentText, base: self.calculatorState.currentBase)
-            )
+            FloatingPointAlertContent()
         }
     }
 }
 
 struct FloatingPointAlertContent: View {
     @EnvironmentObject var manager: FloatingPointAlertManager
+    @EnvironmentObject var calculatorState: CalculatorState
     @EnvironmentObject var layout: LayoutState
-    let single, double: String
-    
-    init(number: Number) {
-        self.single = String(describing: number.getFloatingPoint())
-        self.double = String(describing: number.getFloatingPoint(exponentDigits: 11, mantissaDigits: 52))
-    }
     
     var body: some View {
         VStack(alignment: .center) {
@@ -47,7 +40,7 @@ struct FloatingPointAlertContent: View {
                         .font(.subheadline)
                         .foregroundColor(.white)
                     
-                    Text(single)
+                    Text(calculatorState.getFloatingPoint())
                         .font(.subheadline)
                         .foregroundColor(.gray)
                     
@@ -60,7 +53,7 @@ struct FloatingPointAlertContent: View {
                         .font(.subheadline)
                         .foregroundColor(.white)
                     
-                    Text(single)
+                    Text(calculatorState.getFloatingPoint())
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }

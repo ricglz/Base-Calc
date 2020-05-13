@@ -79,7 +79,7 @@ class CalculatorStateTests: XCTestCase {
         state.willPerformOperation = true
         state.isNegative = true
         state.prevOperation = .add
-        state.prevNumber = Number(number: "0", base: .Base10)
+        state.prevNumber = try! Number(number: "0", base: .Base10)
         state.allClear()
         XCTAssertEqual(state.currentText, "0")
         XCTAssertFalse(state.hasDecimalDot)
@@ -197,17 +197,9 @@ class CalculatorStateTests: XCTestCase {
     }
 
     //MARK:- Solve Operation
-    func testSolveWithoutPreviousOperation() {
-        state.solve()
-        XCTAssertNil(state.prevNumber)
-        XCTAssertEqual(state.currentText, "0")
-        XCTAssertFalse(state.isNegative)
-        XCTAssertNil(state.prevOperation)
-    }
-
     func testSolveSumPositiveAnswer() {
         state.prevOperation = .add
-        state.prevNumber = Number(number: "1", base: .Base10)
+        state.prevNumber = try! Number(number: "1", base: .Base10)
         state.currentText = "10"
         state.solve()
         XCTAssertEqual(state.prevNumber?.toString(), "11")
@@ -218,7 +210,7 @@ class CalculatorStateTests: XCTestCase {
 
     func testSolveSumNegativeAnswer() {
         state.prevOperation = .add
-        state.prevNumber = Number(number: "-90", base: .Base10)
+        state.prevNumber = try! Number(number: "-90", base: .Base10)
         state.currentText = "10"
         state.solve()
         XCTAssertEqual(state.prevNumber?.toString(), "-80")
@@ -227,19 +219,9 @@ class CalculatorStateTests: XCTestCase {
         XCTAssertNil(state.prevOperation)
     }
 
-    func testSolveSumWithoutPrevNumber() {
-        state.prevOperation = .add
-        state.currentText = "10"
-        state.solve()
-        XCTAssertEqual(state.prevNumber?.toString(), "20")
-        XCTAssertEqual(state.currentText, "20")
-        XCTAssertFalse(state.isNegative)
-        XCTAssertNil(state.prevOperation)
-    }
-
     func testSolveSubPositiveAnswer() {
         state.prevOperation = .subtract
-        state.prevNumber = Number(number: "10", base: .Base10)
+        state.prevNumber = try! Number(number: "10", base: .Base10)
         state.currentText = "1"
         state.solve()
         XCTAssertEqual(state.prevNumber?.toString(), "9")
@@ -250,22 +232,12 @@ class CalculatorStateTests: XCTestCase {
 
     func testSolveSubNegativeAnswer() {
         state.prevOperation = .subtract
-        state.prevNumber = Number(number: "10", base: .Base10)
+        state.prevNumber = try! Number(number: "10", base: .Base10)
         state.currentText = "20"
         state.solve()
         XCTAssertEqual(state.prevNumber?.toString(), "-10")
         XCTAssertEqual(state.currentText, "-10")
         XCTAssertTrue(state.isNegative)
-        XCTAssertNil(state.prevOperation)
-    }
-
-    func testSolveSubWithoutPrevNumber() {
-        state.prevOperation = .subtract
-        state.currentText = "10"
-        state.solve()
-        XCTAssertEqual(state.prevNumber?.toString(), "0")
-        XCTAssertEqual(state.currentText, "0")
-        XCTAssertFalse(state.isNegative)
         XCTAssertNil(state.prevOperation)
     }
 

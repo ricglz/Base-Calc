@@ -8,6 +8,10 @@
 
 import Foundation
 
+enum NumberError: Error {
+    case couldNotInit
+}
+
 enum Base: Int {
     case Base2 = 2; case Base3; case Base4; case Base5;
     case Base6; case Base7; case Base8; case Base9;
@@ -38,7 +42,7 @@ class Number: NSObject {
     var base: Base
     var hasFract: Bool
 
-    init(number: String, base: Base){
+    init(number: String, base: Base) throws {
         self.base = base
         var num = number
 
@@ -55,18 +59,19 @@ class Number: NSObject {
             let fractStr = String(digits[(dotPos+1)...])
 
             // Calculate Fract Denominator
-            let fractNum = Int(fractStr, radix: base.rawValue)!
+            guard let fractNum = Int(fractStr, radix: base.rawValue) else { throw NumberError.couldNotInit }
             let fractDiv = "1" + String(repeating: "0", count: fractStr.count)
-            let fractDen = Int(fractDiv, radix: base.rawValue)!
+            guard let fractDen = Int(fractDiv, radix: base.rawValue) else { throw NumberError.couldNotInit }
             
             // Combine Whole and Fract
-            let wholeVal = Int(wholeStr, radix: base.rawValue)!
+            guard let wholeVal = Int(wholeStr, radix: base.rawValue) else { throw NumberError.couldNotInit }
             let fractVal = Double(fractNum) / Double(fractDen)
             self.value = (abs(Double(wholeVal)) + fractVal) * sign
             self.hasFract = self.value != floor(self.value)
 
         } else {
-            self.value = Double(Int(num, radix: base.rawValue)!)
+            guard let wholeVal = Int(num, radix: base.rawValue) else { throw NumberError.couldNotInit }
+            self.value = Double(wholeVal)
             self.hasFract = false
         }
     }
@@ -110,66 +115,66 @@ class Number: NSObject {
     
     //MARK:- Arithmetic Operations
     
-    static func + (leftNum: Number, rightNum: Number) -> Number {
+    static func + (leftNum: Number, rightNum: Number) throws -> Number {
         let sumValue = leftNum.value + rightNum.value
-        let newNum = Number(number: String(sumValue), base: .Base10)
+        let newNum = try Number(number: String(sumValue), base: .Base10)
         newNum.setBase(base: rightNum.base)
         
         return newNum
     }
     
-    static func += (leftNum: inout Number, rightNum: Number) {
-        leftNum = leftNum + rightNum
+    static func += (leftNum: inout Number, rightNum: Number) throws {
+        leftNum = try leftNum + rightNum
     }
     
-    static func - (leftNum: Number, rightNum: Number) -> Number {
-        let negNum = rightNum * -1
-        return leftNum + negNum
+    static func - (leftNum: Number, rightNum: Number) throws -> Number {
+        let negNum = try rightNum * -1
+        return try leftNum + negNum
     }
     
-    static func -= (leftNum: inout Number, rightNum: Number) {
-        leftNum = leftNum - rightNum
+    static func -= (leftNum: inout Number, rightNum: Number) throws {
+        leftNum = try leftNum - rightNum
     }
 
-    static func * (leftNum: Number, rightNum: Number) -> Number {
+    static func * (leftNum: Number, rightNum: Number) throws -> Number {
         let sumValue = leftNum.value * rightNum.value
-        let newNum = Number(number: String(sumValue), base: .Base10)
+        let newNum = try Number(number: String(sumValue), base: .Base10)
         newNum.setBase(base: rightNum.base)
 
         return newNum
     }
     
-    static func * (leftNum: Number, rightNum: Double) -> Number {
+    static func * (leftNum: Number, rightNum: Double) throws -> Number {
         let multValue = leftNum.value * rightNum
-        let newNum = Number(number: String(multValue), base: .Base10)
+        let newNum = try Number(number: String(multValue), base: .Base10)
         newNum.setBase(base: leftNum.base)
         
         return newNum
     }
 
-    static func / (leftNum: Number, rightNum: Number) -> Number {
+    static func / (leftNum: Number, rightNum: Number) throws -> Number {
         let divValue = leftNum.value / rightNum.value
-        let newNum = Number(number: String(divValue), base: .Base10)
+        let newNum = try Number(number: String(divValue), base: .Base10)
         newNum.setBase(base: leftNum.base)
 
         return newNum
     }
     
-    static func / (leftNum: Number, rightNum: Double) -> Number {
-        return leftNum * (1.0 / rightNum)
+    static func / (leftNum: Number, rightNum: Double) throws -> Number {
+        return try leftNum * (1.0 / rightNum)
     }
     
     //MARK:- Radix Complement
     
-    func radixComplement(digits: Int? = nil) -> Number {
+    func radixComplement(digits: Int? = nil) throws -> Number {
         let digits = digits ?? self.toString().count
         let complementNumber = "1" + String(repeating: "0", count: digits)
         
-        return Number(number: complementNumber, base: base) - self
+        return try Number(number: complementNumber, base: base) - self
     }
     
-    func radixComplementDiminished(digits: Int? = nil) -> Number {
-        return radixComplement(digits: digits) - Number(number: "1", base: base)
+    func radixComplementDiminished(digits: Int? = nil) throws -> Number {
+        return try radixComplement(digits: digits) - Number(number: "1", base: base)
     }
     
     //MARK:- Floating Point Arithmetic
@@ -187,7 +192,7 @@ class Number: NSObject {
     }
     
     private func getMantissa(_ mantissaDigits: Int, _ expVal: Double) -> String {
-        let mantissaVal = (self / pow(2.0, expVal)).toString(base: .Base2, precision: mantissaDigits)
+        let mantissaVal = (try! self / pow(2.0, expVal)).toString(base: .Base2, precision: mantissaDigits)
         
         // Check if mantissa is empty
         if let dotIndex = mantissaVal.range(of: ".") {
@@ -220,59 +225,59 @@ class Number: NSObject {
 
     //MARK:- Bitwise Operations
 
-    static func & (leftNum: Number, rightNum: Number) -> Number {
+    static func & (leftNum: Number, rightNum: Number) throws -> Number {
         let leftVal = Int(leftNum.value)
         let rightVal = Int(rightNum.value)
         let result = String(leftVal & rightVal)
 
-        return Number(number: result, base: rightNum.base)
+        return try Number(number: result, base: rightNum.base)
     }
 
-    static func | (leftNum: Number, rightNum: Number) -> Number {
+    static func | (leftNum: Number, rightNum: Number) throws -> Number {
         let leftVal = Int(leftNum.value)
         let rightVal = Int(rightNum.value)
         let result = String(leftVal | rightVal)
 
-        return Number(number: result, base: rightNum.base)
+        return try Number(number: result, base: rightNum.base)
     }
 
-    static func ^ (leftNum: Number, rightNum: Number) -> Number {
+    static func ^ (leftNum: Number, rightNum: Number) throws -> Number {
         let leftVal = Int(leftNum.value)
         let rightVal = Int(rightNum.value)
         let result = String(leftVal ^ rightVal)
 
-        return Number(number: result, base: rightNum.base)
+        return try Number(number: result, base: rightNum.base)
     }
 
-    static func ~| (leftNum: Number, rightNum: Number) -> Number {
-        let orResult = leftNum | rightNum
+    static func ~| (leftNum: Number, rightNum: Number) throws -> Number {
+        let orResult = try leftNum | rightNum
 
         let ogBase = orResult.base
         orResult.setBase(base: .Base2)
 
-        let norResult = orResult.radixComplementDiminished()
+        let norResult = try orResult.radixComplementDiminished()
         norResult.setBase(base: ogBase)
 
         return norResult
     }
 
-    static func << (leftNum: Number, rightNum: Number) -> Number {
+    static func << (leftNum: Number, rightNum: Number) throws -> Number {
         let leftVal = Int(leftNum.value)
         let rightVal = Int(rightNum.value)
         
         let decVal = String(leftVal << rightVal)
-        let result = Number(number: decVal, base: .Base10)
+        let result = try Number(number: decVal, base: .Base10)
         
         result.setBase(base: rightNum.base)
         return result
     }
 
-    static func >> (leftNum: Number, rightNum: Number) -> Number {
+    static func >> (leftNum: Number, rightNum: Number) throws -> Number {
         let leftVal = Int(leftNum.value)
         let rightVal = Int(rightNum.value)
         
         let decVal = String(leftVal >> rightVal)
-        let result = Number(number: decVal, base: .Base10)
+        let result = try Number(number: decVal, base: .Base10)
         
         result.setBase(base: rightNum.base)
         return result

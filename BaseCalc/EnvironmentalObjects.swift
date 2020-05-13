@@ -56,8 +56,6 @@ class CalculatorState: ObservableObject {
         let digitToAddIsDot = digitToAdd == "."
 
         if willPerformOperation {
-            prevNumber = Number(number: currentText, base: currentBase)
-
             if digitToAddIsDot {
                 currentText = "0."
             } else {
@@ -89,6 +87,10 @@ class CalculatorState: ObservableObject {
         prevOperation = nil
         prevNumber = nil
     }
+    
+    func enterErrorState() {
+        currentText = "Error"
+    }
 
     func isInvalidForBitOperations() -> Bool {
         isNegative || hasDecimalDot
@@ -105,6 +107,11 @@ class CalculatorState: ObservableObject {
             solve()
         } else {
             willPerformOperation = true
+            do {
+                prevNumber = try Number(number: currentText, base: currentBase)
+            } catch {
+                enterErrorState()
+            }
         }
     }
     
@@ -124,42 +131,88 @@ class CalculatorState: ObservableObject {
     }
 
     func changeBase(_ newBase: Base) {
-        let currNumber = Number(number: currentText, base: currentBase)
-        currentText = currNumber.toString(base: newBase)
-        hasDecimalDot = currNumber.hasFract
-        currentBase = newBase
+        do {
+            let currNumber = try Number(number: currentText, base: currentBase)
+            currentText = currNumber.toString(base: newBase)
+            hasDecimalDot = currNumber.hasFract
+            currentBase = newBase
+        } catch {
+            enterErrorState()
+        }
+    }
+    
+    func getFloatingPoint() -> String {
+        do {
+            let number = try Number(number: currentText, base: currentBase)
+            return String(describing: number.getFloatingPoint())
+        } catch {
+            return "Error: Number is too big"
+        }
+    }
+    
+    func getRadixComplement(digits: Int) {
+        do {
+            let number = try Number(number: currentText, base: currentBase)
+            let complement = try number.radixComplement(digits: digits)
+            currentText = complement.toString()
+        } catch {
+            enterErrorState()
+        }
+    }
+    
+    func getRadixComplementDiminished(digits: Int) {
+        do {
+            let number = try Number(number: currentText, base: currentBase)
+            let complement = try number.radixComplementDiminished(digits: digits)
+            currentText = complement.toString()
+        } catch {
+            enterErrorState()
+        }
     }
 
     func solve() {
-        let currentNumber = Number(number: currentText, base: currentBase)
+        if prevOperation == nil {
+            return
+        }
+        
+        do {
+            let currentNumber = try Number(number: currentText, base: currentBase)
+            
+            if prevNumber == nil  && !(prevOperation! == .leftShift1 || prevOperation! == .rightShift1) {
+                enterErrorState()
+                return
+            }
 
-        switch prevOperation {
-        case .add:
-            changePrevNumber(answer: (prevNumber ?? currentNumber) + currentNumber)
-        case .subtract:
-            changePrevNumber(answer: (prevNumber ?? currentNumber) - currentNumber)
-        case .multiply:
-            changePrevNumber(answer: (prevNumber ?? currentNumber) * currentNumber)
-        case .divide:
-            changePrevNumber(answer: (prevNumber ?? currentNumber) / currentNumber)
-        case .and:
-            changePrevNumber(answer: (prevNumber ?? currentNumber) & currentNumber)
-        case .or:
-            changePrevNumber(answer: (prevNumber ?? currentNumber) | currentNumber)
-        case .xor:
-            changePrevNumber(answer: (prevNumber ?? currentNumber) ^ currentNumber)
-        case .nor:
-            changePrevNumber(answer: (prevNumber ?? currentNumber) ~| currentNumber)
-        case .leftShiftN:
-            changePrevNumber(answer: (prevNumber ?? currentNumber) << currentNumber)
-        case .leftShift1:
-            changePrevNumber(answer: currentNumber << Number(number: "1", base: currentBase))
-        case .rightShiftN:
-            changePrevNumber(answer: (prevNumber ?? currentNumber) >> currentNumber)
-        case .rightShift1:
-            changePrevNumber(answer: currentNumber >> Number(number: "1", base: currentBase))
-        default:
-            print(prevOperation == nil)
+            switch prevOperation {
+            case .add:
+                changePrevNumber(answer: try prevNumber! + currentNumber)
+            case .subtract:
+                changePrevNumber(answer: try prevNumber! - currentNumber)
+            case .multiply:
+                changePrevNumber(answer: try prevNumber! * currentNumber)
+            case .divide:
+                changePrevNumber(answer: try prevNumber! / currentNumber)
+            case .and:
+                changePrevNumber(answer: try prevNumber! & currentNumber)
+            case .or:
+                changePrevNumber(answer: try prevNumber! | currentNumber)
+            case .xor:
+                changePrevNumber(answer: try prevNumber! ^ currentNumber)
+            case .nor:
+                changePrevNumber(answer: try prevNumber! ~| currentNumber)
+            case .leftShiftN:
+                changePrevNumber(answer: try prevNumber! << currentNumber)
+            case .leftShift1:
+                changePrevNumber(answer: try currentNumber << Number(number: "1", base: currentBase))
+            case .rightShiftN:
+                changePrevNumber(answer: try prevNumber! >> currentNumber)
+            case .rightShift1:
+                changePrevNumber(answer: try currentNumber >> Number(number: "1", base: currentBase))
+            default:
+                print(prevOperation == nil)
+            }
+        } catch {
+            enterErrorState()
         }
     }
 
