@@ -171,6 +171,10 @@ class CalculatorState: ObservableObject {
     }
 
     func solve() {
+        if prevOperation == nil {
+            return
+        }
+        
         do {
             let currentNumber = try Number(number: currentText, base: currentBase)
             

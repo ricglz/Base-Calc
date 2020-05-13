@@ -15,7 +15,8 @@ struct ComplementAlert: View {
     var body: some View {
         GeneralAlert(isShowing: manager.isShowing) {
             ComplementAlertContent(
-                digitValue: String(self.calculatorState.currentText.count)
+                value: self.calculatorState.currentText,
+                base: self.calculatorState.currentBase
             )
         }
     }
@@ -25,11 +26,19 @@ struct ComplementAlertContent: View {
     @EnvironmentObject var layout: LayoutState
     
     @State var digits: String
-    let lowerDigitLimit: String
+    let lowerDigitLimit, upperDigitLimit: Int
+    let digitLimitMsg: String
 
-    init(digitValue: String) {
-        _digits = State(initialValue: digitValue)
-        lowerDigitLimit = digitValue
+    init(value: String, base: Base) {
+        _digits = State(initialValue: String(value.count))
+        lowerDigitLimit = value.count
+        upperDigitLimit = Int(log(1e16)/log(Double(base.rawValue)))
+        
+        if lowerDigitLimit > upperDigitLimit {
+            digitLimitMsg = "Number is too big"
+        } else {
+            digitLimitMsg = "Enter a value between \(lowerDigitLimit) and \(upperDigitLimit)"
+        }
     }
 
     var body: some View {
@@ -58,7 +67,7 @@ struct ComplementAlertContent: View {
             }
             
 
-            Text("Enter a value between \(lowerDigitLimit) and 24")
+            Text(digitLimitMsg)
                 .font(.caption)
                 .foregroundColor(.gray)
                 .opacity(isDigitCountValid() ? 0 : 1)
@@ -73,7 +82,7 @@ struct ComplementAlertContent: View {
     }
 
     func isDigitCountValid() -> Bool {
-        Int(self.digits) ?? 0 <= 24 && Int(self.digits) ?? 0 >= Int(self.lowerDigitLimit)!
+        Int(self.digits) ?? 0 <= self.upperDigitLimit && Int(self.digits) ?? 0 >= self.lowerDigitLimit
     }
 }
 
