@@ -174,7 +174,7 @@ class CalculatorState: ObservableObject {
         do {
             let currentNumber = try Number(number: currentText, base: currentBase)
             
-            if prevNumber == nil {
+            if prevNumber == nil  && !(prevOperation! == .leftShift1 || prevOperation! == .rightShift1) {
                 enterErrorState()
                 return
             }
