@@ -518,4 +518,35 @@ class NumberTests: XCTestCase {
         XCTAssertFalse(num3.hasFract)
         XCTAssertEqual(num3.base, Base.Base10)
     }
+
+    //MARK:- Testing error throwing
+    func testCouldNotInitWholeNumber() {
+        XCTAssertThrowsError(try Number(number: "12345678901234567890", base: .Base10)) { error in
+            XCTAssertEqual(error as! NumberError, NumberError.couldNotInit)
+        }
+    }
+
+    func testCouldNotInitWholeNumberWithPoint() {
+        XCTAssertThrowsError(try Number(number: "12345678901234567890.", base: .Base10)) { error in
+            XCTAssertEqual(error as! NumberError, NumberError.couldNotInit)
+        }
+    }
+
+    func testCouldNotInitDifferentBase() {
+        XCTAssertThrowsError(try Number(number: "FFFFFFFFFFFFFFFF", base: .Base16)) { error in
+            XCTAssertEqual(error as! NumberError, NumberError.couldNotInit)
+        }
+    }
+
+    func testCouldNotInitLongFract() {
+        XCTAssertThrowsError(try Number(number: "0.12345678901234567890", base: .Base10)) { error in
+            XCTAssertEqual(error as! NumberError, NumberError.couldNotInit)
+        }
+    }
+
+    func testCouldNotInitLongFloat() {
+        XCTAssertThrowsError(try Number(number: "12345678901234567890.FFFF", base: .Base16)) { error in
+            XCTAssertEqual(error as! NumberError, NumberError.couldNotInit)
+        }
+    }
 }
