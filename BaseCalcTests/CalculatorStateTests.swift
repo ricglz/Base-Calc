@@ -252,4 +252,38 @@ class CalculatorStateTests: XCTestCase {
         state.solve()
         XCTAssertEqual(state.currentText, "20")
     }
+
+    //MARK:- Error State
+
+    func testPerformOperationError(){
+        state.currentText = "12345678901234567890"
+        state.performOperation(op: .add)
+        state.currentText = "Error"
+    }
+
+    func testChangeBaseError(){
+        state.currentText = "12345678901234567890"
+        state.changeBase(.Base2)
+        state.currentText = "Error"
+    }
+
+    func testRadixComplementError(){
+        state.currentText = "12345678901234567890"
+        state.getRadixComplement(digits: 20)
+        state.currentText = "Error"
+    }
+
+    func testRadixComplementDiminishedError(){
+        state.currentText = "12345678901234567890"
+        state.getRadixComplementDiminished(digits: 20)
+        state.currentText = "Error"
+    }
+
+    func testSolveError(){
+        state.currentText = "12345678900"
+        state.performOperation(op: .multiply)
+        state.currentText = "12345678900"
+        state.solve()
+        state.currentText = "Error"
+    }
 }
