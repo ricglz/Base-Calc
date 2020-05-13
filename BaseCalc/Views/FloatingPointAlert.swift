@@ -15,7 +15,8 @@ struct FloatingPointAlert: View {
     var body: some View {
         GeneralAlert(isShowing: manager.isShowing) {
             FloatingPointAlertContent(
-                number: Number(number: self.calculatorState.currentText, base: self.calculatorState.currentBase)
+                val: self.calculatorState.currentText,
+                base: self.calculatorState.currentBase
             )
         }
     }
@@ -24,11 +25,18 @@ struct FloatingPointAlert: View {
 struct FloatingPointAlertContent: View {
     @EnvironmentObject var manager: FloatingPointAlertManager
     @EnvironmentObject var layout: LayoutState
-    let single, double: String
+    let single: String
     
-    init(number: Number) {
-        self.single = String(describing: number.getFloatingPoint())
-        self.double = String(describing: number.getFloatingPoint(exponentDigits: 11, mantissaDigits: 52))
+    init(val: String, base: Base) {
+        do {
+            let number = try Number(number: val, base: base)
+            
+            self.single = String(describing: number.getFloatingPoint())
+            // self.double = String(describing: number.getFloatingPoint(exponentDigits: 11, mantissaDigits: 52))
+        } catch {
+            print("Error")
+            self.single = "Error"
+        }
     }
     
     var body: some View {

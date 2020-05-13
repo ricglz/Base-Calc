@@ -56,7 +56,12 @@ class CalculatorState: ObservableObject {
         let digitToAddIsDot = digitToAdd == "."
 
         if willPerformOperation {
-            prevNumber = Number(number: currentText, base: currentBase)
+            do {
+                prevNumber = try Number(number: currentText, base: currentBase)
+            } catch {
+                print("Error")
+                return
+            }
 
             if digitToAddIsDot {
                 currentText = "0."
@@ -124,42 +129,50 @@ class CalculatorState: ObservableObject {
     }
 
     func changeBase(_ newBase: Base) {
-        let currNumber = Number(number: currentText, base: currentBase)
-        currentText = currNumber.toString(base: newBase)
-        hasDecimalDot = currNumber.hasFract
-        currentBase = newBase
+        do {
+            let currNumber = try Number(number: currentText, base: currentBase)
+            currentText = currNumber.toString(base: newBase)
+            hasDecimalDot = currNumber.hasFract
+            currentBase = newBase
+        } catch {
+            print("Error")
+        }
     }
 
     func solve() {
-        let currentNumber = Number(number: currentText, base: currentBase)
+        do {
+            let currentNumber = try Number(number: currentText, base: currentBase)
 
-        switch prevOperation {
-        case .add:
-            changePrevNumber(answer: (prevNumber ?? currentNumber) + currentNumber)
-        case .subtract:
-            changePrevNumber(answer: (prevNumber ?? currentNumber) - currentNumber)
-        case .multiply:
-            changePrevNumber(answer: (prevNumber ?? currentNumber) * currentNumber)
-        case .divide:
-            changePrevNumber(answer: (prevNumber ?? currentNumber) / currentNumber)
-        case .and:
-            changePrevNumber(answer: (prevNumber ?? currentNumber) & currentNumber)
-        case .or:
-            changePrevNumber(answer: (prevNumber ?? currentNumber) | currentNumber)
-        case .xor:
-            changePrevNumber(answer: (prevNumber ?? currentNumber) ^ currentNumber)
-        case .nor:
-            changePrevNumber(answer: (prevNumber ?? currentNumber) ~| currentNumber)
-        case .leftShiftN:
-            changePrevNumber(answer: (prevNumber ?? currentNumber) << currentNumber)
-        case .leftShift1:
-            changePrevNumber(answer: currentNumber << Number(number: "1", base: currentBase))
-        case .rightShiftN:
-            changePrevNumber(answer: (prevNumber ?? currentNumber) >> currentNumber)
-        case .rightShift1:
-            changePrevNumber(answer: currentNumber >> Number(number: "1", base: currentBase))
-        default:
-            print(prevOperation == nil)
+            switch prevOperation {
+            case .add:
+                changePrevNumber(answer: try (prevNumber ?? currentNumber) + currentNumber)
+            case .subtract:
+                changePrevNumber(answer: try (prevNumber ?? currentNumber) - currentNumber)
+            case .multiply:
+                changePrevNumber(answer: try (prevNumber ?? currentNumber) * currentNumber)
+            case .divide:
+                changePrevNumber(answer: try (prevNumber ?? currentNumber) / currentNumber)
+            case .and:
+                changePrevNumber(answer: try (prevNumber ?? currentNumber) & currentNumber)
+            case .or:
+                changePrevNumber(answer: try (prevNumber ?? currentNumber) | currentNumber)
+            case .xor:
+                changePrevNumber(answer: try (prevNumber ?? currentNumber) ^ currentNumber)
+            case .nor:
+                changePrevNumber(answer: try (prevNumber ?? currentNumber) ~| currentNumber)
+            case .leftShiftN:
+                changePrevNumber(answer: try (prevNumber ?? currentNumber) << currentNumber)
+            case .leftShift1:
+                changePrevNumber(answer: try currentNumber << Number(number: "1", base: currentBase))
+            case .rightShiftN:
+                changePrevNumber(answer: try (prevNumber ?? currentNumber) >> currentNumber)
+            case .rightShift1:
+                changePrevNumber(answer: try currentNumber >> Number(number: "1", base: currentBase))
+            default:
+                print(prevOperation == nil)
+            }
+        } catch {
+            print("Error")
         }
     }
 
