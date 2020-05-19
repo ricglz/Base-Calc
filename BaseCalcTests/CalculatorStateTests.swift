@@ -117,6 +117,16 @@ class CalculatorStateTests: XCTestCase {
         numericalOperationsAux(divide, "÷")
     }
 
+    func testOperationChange() {
+        state.addDigit("2")
+        testSum()
+        testMultiplication()
+        XCTAssertEqual(state.currentText, "2")
+        state.addDigit("4")
+        state.solve()
+        XCTAssertEqual(state.currentText, "8")
+    }
+
     //MARK:- Bitwise operations
 
     func testAnd() {
