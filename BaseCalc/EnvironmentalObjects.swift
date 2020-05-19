@@ -97,7 +97,7 @@ class CalculatorState: ObservableObject {
     }
 
     func performOperation(op: Operation) {
-        if prevOperation != nil {
+        if prevOperation != nil && !willPerformOperation {
             solve()
         }
 
