@@ -37,6 +37,7 @@ struct ContentViewPreviewModifiers: ViewModifier {
             .environmentObject(FloatingPointAlertManager())
             .environmentObject(ToastManager())
             .environmentObject(LayoutState(isLandscape: isLandscape))
+            .environmentObject(InfoViewManager())
             .previewLayout(.fixed(width: width, height: height))
     }
 }

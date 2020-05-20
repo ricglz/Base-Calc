@@ -26,6 +26,7 @@ struct Header: View {
                     .accentColor(.orange)
                     .sheet(isPresented: $infoViewManager.isShowing) {
                         InfoView()
+                            .environmentObject(self.infoViewManager)
                     }
                 }.padding()
             }
@@ -73,6 +74,7 @@ struct NumberLabel: View {
                 .accentColor(.orange)
                 .sheet(isPresented: $infoViewManager.isShowing) {
                     InfoView()
+                        .environmentObject(self.infoViewManager)
                 }
             }
             Spacer()
