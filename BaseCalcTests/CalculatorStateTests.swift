@@ -104,12 +104,12 @@ class CalculatorStateTests: XCTestCase {
 
     func testSubtract() {
         let subtract = { self.state.performOperation(op: .subtract) }
-        numericalOperationsAux(subtract, "-")
+        numericalOperationsAux(subtract, "−")
     }
 
     func testMultiplication() {
         let multiply = { self.state.performOperation(op: .multiply) }
-        numericalOperationsAux(multiply, "x")
+        numericalOperationsAux(multiply, "×")
     }
 
     func testDivision() {

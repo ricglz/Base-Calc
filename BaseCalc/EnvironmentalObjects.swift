@@ -11,8 +11,8 @@ import SwiftUI
 
 enum Operation: String {
     case add = "+";
-    case subtract = "-";
-    case multiply = "x";
+    case subtract = "−";
+    case multiply = "×";
     case divide = "÷";
     case and = "AND";
     case or = "OR";
@@ -244,6 +244,8 @@ class PopUpPickerViewManager: GeneralAlertManager {
 class ComplementAlertManager: GeneralAlertManager {}
 
 class FloatingPointAlertManager: GeneralAlertManager {}
+
+class InfoViewManager: GeneralAlertManager {}
 
 class ToastManager: GeneralAlertManager {
     @Published var content: String = ""
