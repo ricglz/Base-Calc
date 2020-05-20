@@ -21,6 +21,7 @@
 		99E0B9622426A11E00E357F4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E0B9612426A11E00E357F4 /* Extensions.swift */; };
 		DB29CDD1242401BD00AC13C9 /* Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB29CDD0242401BD00AC13C9 /* Number.swift */; };
 		DB29CDD3242546EA00AC13C9 /* NumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB29CDD2242546EA00AC13C9 /* NumberTests.swift */; };
+		DB6DEA512475722800DF6B48 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6DEA502475722800DF6B48 /* InfoView.swift */; };
 		DBC1DC362432C7DF00AC308C /* ButtonModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC1DC352432C7DF00AC308C /* ButtonModifiers.swift */; };
 		DBC1DC392432C95F00AC308C /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC1DC382432C95F00AC308C /* Header.swift */; };
 		DBC1DC3B2432CA1000AC308C /* Keypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC1DC3A2432CA1000AC308C /* Keypad.swift */; };
@@ -60,6 +61,7 @@
 		99E0B9612426A11E00E357F4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		DB29CDD0242401BD00AC13C9 /* Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Number.swift; sourceTree = "<group>"; };
 		DB29CDD2242546EA00AC13C9 /* NumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberTests.swift; sourceTree = "<group>"; };
+		DB6DEA502475722800DF6B48 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		DBC1DC352432C7DF00AC308C /* ButtonModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModifiers.swift; sourceTree = "<group>"; };
 		DBC1DC382432C95F00AC308C /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		DBC1DC3A2432CA1000AC308C /* Keypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keypad.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				DBC1DC3A2432CA1000AC308C /* Keypad.swift */,
 				DBC1DC3C2432CB3600AC308C /* KeypadButton.swift */,
 				DBC1DC382432C95F00AC308C /* Header.swift */,
+				DB6DEA502475722800DF6B48 /* InfoView.swift */,
 				99E0B95B242698D400E357F4 /* PopUpPickerView.swift */,
 				993B2E6024356E3500DBFF2D /* GeneralPopUpView.swift */,
 				DBF0AA8D243528D90047A80D /* ComplementAlert.swift */,
@@ -275,6 +278,7 @@
 				DBC1DC3D2432CB3600AC308C /* KeypadButton.swift in Sources */,
 				DB29CDD1242401BD00AC13C9 /* Number.swift in Sources */,
 				DBD1199E244CDBC10056EE42 /* GeneralAlert.swift in Sources */,
+				DB6DEA512475722800DF6B48 /* InfoView.swift in Sources */,
 				DBC1DC392432C95F00AC308C /* Header.swift in Sources */,
 				992C4B41241F039400F496FC /* AppDelegate.swift in Sources */,
 				DBF0AA8E243528D90047A80D /* ComplementAlert.swift in Sources */,
