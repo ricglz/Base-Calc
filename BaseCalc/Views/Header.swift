@@ -10,6 +10,7 @@ import SwiftUI
 
 struct Header: View {
     @EnvironmentObject var layoutState: LayoutState
+    @EnvironmentObject var infoViewManager: InfoViewManager
     
     var body: some View {
         VStack {
@@ -17,10 +18,16 @@ struct Header: View {
                 HStack {
                     HeaderBaseLabel()
                     Spacer()
-                    Button(action: {}) {
+                    Button(action: {
+                        self.infoViewManager.isShowing.toggle()
+                    }) {
                         Image(systemName: "info.circle")
                     }
                     .accentColor(.orange)
+                    .sheet(isPresented: $infoViewManager.isShowing) {
+                        InfoView()
+                            .environmentObject(self.infoViewManager)
+                    }
                 }.padding()
             }
             NumberLabel()
@@ -52,16 +59,23 @@ struct NumberLabel: View {
     @EnvironmentObject var calculatorState: CalculatorState
     @EnvironmentObject var layoutState: LayoutState
     @EnvironmentObject var toastManager: ToastManager
+    @EnvironmentObject var infoViewManager: InfoViewManager
     
     let generator = UIImpactFeedbackGenerator(style: .light)
 
     var body: some View {
         HStack(alignment: .top) {
             if layoutState.isLandscape {
-                Button(action: {}) {
+                Button(action: {
+                    self.infoViewManager.isShowing.toggle()
+                }) {
                     Image(systemName: "info.circle")
                 }
                 .accentColor(.orange)
+                .sheet(isPresented: $infoViewManager.isShowing) {
+                    InfoView()
+                        .environmentObject(self.infoViewManager)
+                }
             }
             Spacer()
             Text(calculatorState.currentText)
@@ -86,6 +100,7 @@ struct Header_Previews: PreviewProvider {
         Header()
             .environmentObject(CalculatorState())
             .environmentObject(PopUpPickerViewManager())
+            .environmentObject(InfoViewManager())
             .environmentObject(LayoutState(isLandscape: false))
             .previewLayout(.sizeThatFits)
             .background(Color.black)

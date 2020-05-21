@@ -38,7 +38,7 @@ struct KeypadButton: View {
                 Text(label)
                     .modifier(OrangeButton(width: width, height: height, altCondition: false))
             })
-        case "+", "-", "x", "÷":
+        case "+", "−", "×", "÷":
             return makeArithmeticButton(op: Operation(rawValue: label)!)
         case "=":
             return AnyView(Button(action: generalAction(calculatorState.solve)) {
