@@ -76,7 +76,7 @@ struct KeypadButton: View {
                 )
             })) {
                 Text(label + " \(calculatorState.currentBase.rawValue)")
-                    .modifier(DarkGrayButton(width: width * 2 + 6, height: height, altCondition: false))
+                    .modifier(OrangeButton(width: width * 2 + 6, height: height, altCondition: false))
             })
         default:
             return makeDigitButton(label: label)

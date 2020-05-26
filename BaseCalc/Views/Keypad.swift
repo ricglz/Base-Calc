@@ -49,7 +49,7 @@ struct KeypadSection: View {
         GeometryReader { geometry in
             createKeypad(
                 buttons: self.buttons,
-                width: getDimension(dim: geometry.size.width, elem: self.buttons[0].count, pad: self.btnPadding),
+                width: getDimension(dim: geometry.size.width, elem: self.buttons[1].count, pad: self.btnPadding),
                 height: getDimension(dim: geometry.size.height, elem: self.buttons.count, pad: self.btnPadding),
                 pad: self.btnPadding
             )
@@ -76,12 +76,12 @@ struct LandscapeKeypad: View {
     var body: some View {
         KeypadSection(
             buttons: [
-                ["AND", "NOR", "D", "E", "F", "AC"],
-                ["OR", "XOR", "A", "B", "C", "±"],
-                [">>", "X>>Y", "7", "8", "9", "+"],
-                ["<<", "X<<Y", "4", "5", "6", "−"],
-                ["FP", "ß", "1", "2", "3", "×"],
-                ["BASE", "=", "0", ".", "÷"],
+                ["BASE", "D", "E", "F", "AC"],
+                ["AND", "NOR", "A", "B", "C", "±"],
+                ["OR", "XOR", "7", "8", "9", "+"],
+                [">>", "X>>Y", "4", "5", "6", "−"],
+                ["<<", "X<<Y", "1", "2", "3", "×"],
+                ["FP", "ß", "=", "0", ".", "÷"],
             ]
         )
     }
