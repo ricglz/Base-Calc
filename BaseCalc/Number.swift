@@ -228,25 +228,31 @@ class Number: NSObject {
     static func & (leftNum: Number, rightNum: Number) throws -> Number {
         let leftVal = Int(leftNum.value)
         let rightVal = Int(rightNum.value)
-        let result = String(leftVal & rightVal)
+        let strResult = String(leftVal & rightVal)
+        let result = try Number(number: strResult, base: .Base10)
 
-        return try Number(number: result, base: rightNum.base)
+        result.setBase(base: rightNum.base)
+        return result
     }
 
     static func | (leftNum: Number, rightNum: Number) throws -> Number {
         let leftVal = Int(leftNum.value)
         let rightVal = Int(rightNum.value)
-        let result = String(leftVal | rightVal)
+        let strResult = String(leftVal | rightVal)
+        let result = try Number(number: strResult, base: .Base10)
 
-        return try Number(number: result, base: rightNum.base)
+        result.setBase(base: rightNum.base)
+        return result
     }
 
     static func ^ (leftNum: Number, rightNum: Number) throws -> Number {
         let leftVal = Int(leftNum.value)
         let rightVal = Int(rightNum.value)
-        let result = String(leftVal ^ rightVal)
+        let strResult = String(leftVal ^ rightVal)
+        let result = try Number(number: strResult, base: .Base10)
 
-        return try Number(number: result, base: rightNum.base)
+        result.setBase(base: rightNum.base)
+        return result
     }
 
     static func ~| (leftNum: Number, rightNum: Number) throws -> Number {
