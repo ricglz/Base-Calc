@@ -473,6 +473,15 @@ class NumberTests: XCTestCase {
         XCTAssertFalse(num3.hasFract)
         XCTAssertEqual(num3.base, Base.Base10)
     }
+    
+    func testAndOperationDiffBase(){
+        num1 = try! Number(number: "11011", base: .Base2)
+        num2 = try! Number(number: "1110", base: .Base2)
+        num3 = try! num1 & num2
+        XCTAssertEqual(num3.value, 10)
+        XCTAssertFalse(num3.hasFract)
+        XCTAssertEqual(num3.base, Base.Base2)
+    }
 
     func testOrOperation(){
         num1 = try! Number(number: "10", base: .Base10)
@@ -481,6 +490,15 @@ class NumberTests: XCTestCase {
         XCTAssertEqual(num3.value, 11.0)
         XCTAssertFalse(num3.hasFract)
         XCTAssertEqual(num3.base, Base.Base10)
+    }
+    
+    func testOrOperationDiffBase(){
+        num1 = try! Number(number: "11011", base: .Base2)
+        num2 = try! Number(number: "100", base: .Base2)
+        num3 = try! num1 | num2
+        XCTAssertEqual(num3.value, 31)
+        XCTAssertFalse(num3.hasFract)
+        XCTAssertEqual(num3.base, Base.Base2)
     }
 
     func testXorOperation(){
@@ -491,6 +509,15 @@ class NumberTests: XCTestCase {
         XCTAssertFalse(num3.hasFract)
         XCTAssertEqual(num3.base, Base.Base10)
     }
+    
+    func testXorOperationDiffBase(){
+        num1 = try! Number(number: "ABC", base: .Base16)
+        num2 = try! Number(number: "DEF", base: .Base16)
+        num3 = try! num1 ^ num2
+        XCTAssertEqual(num3.value, 1875.0)
+        XCTAssertFalse(num3.hasFract)
+        XCTAssertEqual(num3.base, Base.Base16)
+    }
 
     func testNorOperation(){
         num1 = try! Number(number: "10", base: .Base10)
@@ -499,6 +526,15 @@ class NumberTests: XCTestCase {
         XCTAssertEqual(num3.value, 4.0)
         XCTAssertFalse(num3.hasFract)
         XCTAssertEqual(num3.base, Base.Base10)
+    }
+    
+    func testNorOperationDiffBase(){
+        num1 = try! Number(number: "ABC", base: .Base16)
+        num2 = try! Number(number: "DE", base: .Base16)
+        num3 = try! num1 ~| num2
+        XCTAssertEqual(num3.value, 1281.0)
+        XCTAssertFalse(num3.hasFract)
+        XCTAssertEqual(num3.base, Base.Base16)
     }
 
     func testLeftShiftOperation(){
@@ -509,6 +545,15 @@ class NumberTests: XCTestCase {
         XCTAssertFalse(num3.hasFract)
         XCTAssertEqual(num3.base, Base.Base10)
     }
+    
+    func testLeftShiftOperationDiffBase(){
+        num1 = try! Number(number: "11011", base: .Base2)
+        num2 = try! Number(number: "1", base: .Base2)
+        num3 = try! num1 << num2
+        XCTAssertEqual(num3.value, 54)
+        XCTAssertFalse(num3.hasFract)
+        XCTAssertEqual(num3.base, Base.Base2)
+    }
 
     func testRightShiftOperation(){
         num1 = try! Number(number: "10", base: .Base10)
@@ -517,6 +562,15 @@ class NumberTests: XCTestCase {
         XCTAssertEqual(num3.value, 2.0)
         XCTAssertFalse(num3.hasFract)
         XCTAssertEqual(num3.base, Base.Base10)
+    }
+    
+    func testRightShiftOperationDiffBase(){
+        num1 = try! Number(number: "11011", base: .Base2)
+        num2 = try! Number(number: "1", base: .Base2)
+        num3 = try! num1 >> num2
+        XCTAssertEqual(num3.value, 13)
+        XCTAssertFalse(num3.hasFract)
+        XCTAssertEqual(num3.base, Base.Base2)
     }
 
     //MARK:- Testing error throwing
